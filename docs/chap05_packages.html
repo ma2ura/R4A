@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.529">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>R for Empirical Accounting Research - 5&nbsp; パッケージ</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chap06_function.html" rel="next">
+<link href="./chap04_dataframe.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap05_packages.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Empirical Accounting Research</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rによる実証会計入門</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第1部 R言語の基礎</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap03_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">コード作成の作法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap04_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Rの基礎</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap04_dataframe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データフレーム</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap05_packages.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap06_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap07_pipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">パイプ演算子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_tidydata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 前処理と記述統計量</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第3部 データの可視化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li>
+<a href="#%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-よく使うパッケージ" class="nav-link active" data-scroll-target="#%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">5.1</span> よく使うパッケージ</a>
+  <ul class="collapse">
+<li><a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" id="toc-パッケージのインストール" class="nav-link" data-scroll-target="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="header-section-number">5.1.1</span> パッケージのインストール</a></li>
+  <li><a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF" id="toc-パッケージの読み込み" class="nav-link" data-scroll-target="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><span class="header-section-number">5.1.2</span> パッケージの読み込み</a></li>
+  </ul>
+</li>
+  <li><a href="#tidyverse%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%BE%A4" id="toc-tidyverseパッケージ群" class="nav-link" data-scroll-target="#tidyverse%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%BE%A4"><span class="header-section-number">5.2</span> tidyverseパッケージ群</a></li>
+  <li>
+<a href="#%E3%81%8A%E3%81%99%E3%81%99%E3%82%81%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-おすすめパッケージ" class="nav-link" data-scroll-target="#%E3%81%8A%E3%81%99%E3%81%99%E3%82%81%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">5.3</span> おすすめパッケージ</a>
+  <ul class="collapse">
+<li><a href="#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%9E%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86" id="toc-テキストマイニング自然言語処理" class="nav-link" data-scroll-target="#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%83%9E%E3%82%A4%E3%83%8B%E3%83%B3%E3%82%B0%E8%87%AA%E7%84%B6%E8%A8%80%E8%AA%9E%E5%87%A6%E7%90%86"><span class="header-section-number">5.3.1</span> テキストマイニング・自然言語処理</a></li>
+  <li><a href="#%E5%A4%9A%E5%A4%89%E9%87%8F%E8%A7%A3%E6%9E%90" id="toc-多変量解析" class="nav-link" data-scroll-target="#%E5%A4%9A%E5%A4%89%E9%87%8F%E8%A7%A3%E6%9E%90"><span class="header-section-number">5.3.2</span> 多変量解析</a></li>
+  <li><a href="#%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92" id="toc-機械学習" class="nav-link" data-scroll-target="#%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92"><span class="header-section-number">5.3.3</span> 機械学習</a></li>
+  <li><a href="#%E4%BD%9C%E8%A1%A8%E4%BD%9C%E5%9B%B3" id="toc-作表作図" class="nav-link" data-scroll-target="#%E4%BD%9C%E8%A1%A8%E4%BD%9C%E5%9B%B3"><span class="header-section-number">5.3.4</span> 作表・作図</a></li>
+  </ul>
+</li>
+  <li><a href="#%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" id="toc-まとめてインストール" class="nav-link" data-scroll-target="#%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><span class="header-section-number">5.4</span> まとめてインストール</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap05_packages.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="よく使うパッケージ" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="よく使うパッケージ">
+<span class="header-section-number">5.1</span> よく使うパッケージ</h2>
+<p>Rはパッケージを使うことで、様々な機能を追加することができます。 ここでは、よく使うパッケージを紹介します。</p>
+<section id="パッケージのインストール" class="level3" data-number="5.1.1"><h3 data-number="5.1.1" class="anchored" data-anchor-id="パッケージのインストール">
+<span class="header-section-number">5.1.1</span> パッケージのインストール</h3>
+<p>パッケージをインストールするには、<code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>を使います。 package<span style="color: red">s</span>のsを忘れないようにしましょう。 <img src="img/install_packages.png" class="img-fluid" alt="install.packages"></p>
+<p>Rのバージョンをアップデートしない限り、一度インストールすれば、次回からはインストールする必要はありません。</p>
+<p>例として、今後必ず使う<code>tidyverse</code>というパッケージをインストールしてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>関数の引数にインストールしたいパッケージ名を<code>""</code>で囲んで指定します。 <code>tidyverse</code>はある一貫した哲学のもとに開発されたパッケージ群で、データの可視化や加工、モデリングなどの機能を提供します。非常に有用なので、導入しておきましょう。</p>
+</section><section id="パッケージの読み込み" class="level3" data-number="5.1.2"><h3 data-number="5.1.2" class="anchored" data-anchor-id="パッケージの読み込み">
+<span class="header-section-number">5.1.2</span> パッケージの読み込み</h3>
+<p>パッケージをインストールしただけでは、パッケージの機能を使うことはできません。 パッケージの機能を使うには、<code><a href="https://rdrr.io/r/base/library.html">library()</a></code>関数を使ってパッケージを読み込む必要があります。 <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>でパッケージを読み込むときは、<code>""</code>で囲む必要はありません。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/library.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>library</figcaption></figure>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>表示されたメッセージをみると、コアパッケージとして以下のものが読み込まれていることがわかります。</p>
+<div class="columns">
+<div class="column" style="width:49%;">
+<ul>
+<li><code>✔ dplyr     1.1.4</code></li>
+<li><code>✔ forcats   1.0.0</code></li>
+<li><code>✔ ggplot2   3.4.4</code></li>
+<li><code>✔ lubridate 1.9.3</code></li>
+<li><code>✔ purrr     1.0.2</code></li>
+</ul>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column" style="width:49%;">
+<ul>
+<li><code>✔ readr     2.1.4</code></li>
+<li><code>✔ stringr   1.5.1</code></li>
+<li><code>✔ tibble    3.2.1</code></li>
+<li><code>✔ tidyr     1.3.0</code></li>
+</ul>
+</div>
+</div>
+<p>また、<code>Conflicts</code>として基本関数と関数名が重複しているものとして、<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>と<code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lag()</a></code>が表示されています。</p>
+<ul>
+<li>✖ <code>dplyr::filter() masks stats::filter()</code>
+</li>
+<li>✖ <code>dplyr::lag()    masks stats::lag()</code>
+</li>
+</ul>
+<p>これらの関数は、<code>dplyr</code>パッケージの関数を使うことで、基本関数の機能を上書きしてしまうので、注意が必要です。 明示的に特定のパッケージの関数を使いたい場合は、<code>パッケージ名::関数名()</code>という形で指定します。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/chohuku_package.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>パッケージを指定</figcaption></figure>
+</div>
+<p>毎回、<code><a href="https://rdrr.io/r/base/library.html">library()</a></code>関数を使ってパッケージを読み込むのは面倒なので、Rの設定ファイルに読み込むパッケージを記述しておくこともできますが、ここでは省略します。</p>
+</section></section><section id="tidyverseパッケージ群" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="tidyverseパッケージ群">
+<span class="header-section-number">5.2</span> tidyverseパッケージ群</h2>
+<p>これで、次の非常に便利なパッケージを使うことができるようになります。</p>
+<ul>
+<li>
+<code>dplyr</code>パッケージ
+<ul>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>関数：新しい変数を作成・追加する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>関数：条件に合うデータを抽出する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>関数：特定の変数を抽出する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>関数：データを並び替える</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>関数：グループ化する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>関数：統計量を計算する</li>
+</ul>
+</li>
+<li>
+<code>tidyr</code>パッケージ
+<ul>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>関数：ロングをワイドに変換</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code>関数：ワイドをロングに変換</li>
+</ul>
+</li>
+<li>
+<code>ggplot2</code>パッケージ
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数：作図する</li>
+</ul>
+</li>
+<li>
+<code>lubridate</code>パッケージ
+<ul>
+<li>
+<code><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd()</a></code>関数：年月日を表す文字列を日付型に変換</li>
+<li>
+<code><a href="https://lubridate.tidyverse.org/reference/ymd_hms.html">ymd_hms()</a></code>関数：年月日時分秒を表す文字列を日時型に変換</li>
+</ul>
+</li>
+<li>
+<code>readr</code>パッケージ
+<ul>
+<li>
+<code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>関数：csvファイルを読み込む</li>
+<li>
+<code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code>関数：csvファイルを書き出す</li>
+</ul>
+</li>
+<li>
+<code>purrr</code>パッケージ
+<ul>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>関数：関数をベクトルの各要素に適用する</li>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>関数：関数をベクトルの各要素に適用し、数値ベクトルを返す</li>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_df()</a></code>関数：関数をベクトルの各要素に適用し、データフレームを返す</li>
+</ul>
+</li>
+<li>
+<code>stringr</code>パッケージ
+<ul>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>関数：文字列にパターンが含まれるかどうかを判定する</li>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code>関数：文字列の一部を置換する</li>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract()</a></code>関数：文字列からパターンにマッチする部分を抽出する</li>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a></code>関数：文字列の一部を抽出する</li>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code>関数：文字列を分割する</li>
+</ul>
+</li>
+</ul>
+<p>これらの関数は、<code>tidyverse</code>パッケージを読み込むことで、自動的に使えるようになります。</p>
+</section><section id="おすすめパッケージ" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="おすすめパッケージ">
+<span class="header-section-number">5.3</span> おすすめパッケージ</h2>
+<p>他にも、次のようなパッケージを使います。</p>
+<section id="テキストマイニング自然言語処理" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="テキストマイニング自然言語処理">
+<span class="header-section-number">5.3.1</span> テキストマイニング・自然言語処理</h3>
+<ul>
+<li>
+<a href="https://rmecab.jp/wiki/index.php?RMeCab"><code>RMecab</code>パッケージ</a>
+<ul>
+<li>
+<code>mecab()</code>関数：形態素解析を行う</li>
+<li>
+<code>mecabDic()</code>関数：辞書を作成する</li>
+</ul>
+</li>
+<li>
+<a href="https://www.tidytextmining.com/"><code>tidytext</code>パッケージ</a>
+<ul>
+<li>
+<code>unnest_tokens()</code>関数：テキストを単語に分割する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>関数：単語の出現頻度を計算する</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>関数：データフレームの結合を行う</li>
+</ul>
+</li>
+</ul></section><section id="多変量解析" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="多変量解析">
+<span class="header-section-number">5.3.2</span> 多変量解析</h3>
+<ul>
+<li>
+<code>psych</code>パッケージ
+<ul>
+<li>
+<code>describe()</code>関数：データの要約統計量を計算する</li>
+<li>
+<code><a href="https://scales.r-lib.org/reference/alpha.html">alpha()</a></code>関数：クロンバックのα係数を計算する</li>
+<li>
+<code>fa()</code>関数：因子分析を行う</li>
+</ul>
+</li>
+<li>
+<code>lavaan</code>パッケージ
+<ul>
+<li>
+<code>cfa()</code>関数：検証的因子分析を行う</li>
+<li>
+<code>sem()</code>関数：構造方程式モデルを推定する</li>
+</ul>
+</li>
+<li>
+<code>semPlot</code>パッケージ
+<ul>
+<li>
+<code>semPaths()</code>関数：構造方程式モデルを可視化する</li>
+</ul>
+</li>
+<li>
+<code>gmodels</code>パッケージ
+<ul>
+<li>
+<code>CrossTable()</code>関数：クロス集計表を作成する</li>
+</ul>
+</li>
+</ul></section><section id="機械学習" class="level3" data-number="5.3.3"><h3 data-number="5.3.3" class="anchored" data-anchor-id="機械学習">
+<span class="header-section-number">5.3.3</span> 機械学習</h3>
+<ul>
+<li>
+<code>RWeka</code>パッケージ
+<ul>
+<li>
+<code>J48()</code>関数：決定木を作成する</li>
+<li>
+<code>RandomForest()</code>関数：ランダムフォレストを作成する</li>
+<li>
+<code>Logistic()</code>関数：ロジスティック回帰を作成する</li>
+</ul>
+</li>
+<li>
+<code>caret</code>パッケージ
+<ul>
+<li>
+<code>train()</code>関数：機械学習モデルを学習する</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code>関数：機械学習モデルを使って予測する</li>
+</ul>
+</li>
+</ul></section><section id="作表作図" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="作表作図">
+<span class="header-section-number">5.3.4</span> 作表・作図</h3>
+<ul>
+<li>
+<code>modelsummary</code>パッケージ
+<ul>
+<li>
+<code>modelsummary()</code>関数：モデルの結果を表形式で表示する</li>
+</ul>
+</li>
+<li>
+<code>knitr</code>パッケージ
+<ul>
+<li>
+<code>kable()</code>関数：データフレームを表形式で表示する</li>
+</ul>
+</li>
+<li>
+<code>kableExtra</code>パッケージ
+<ul>
+<li>
+<code>kable_styling()</code>関数：<code>kable()</code>関数で作成した表を装飾する</li>
+</ul>
+</li>
+<li>
+<code>patchwork</code>パッケージ
+<ul>
+<li>
+<code>+</code>演算子で複数のグラフを結合できる</li>
+</ul>
+</li>
+<li>
+<code>ggrepel</code>パッケージ
+<ul>
+<li>
+<code>geom_text_repel()</code>関数：重ならないようにテキストを配置する</li>
+</ul>
+</li>
+<li>
+<code>plotly</code>パッケージ
+<ul>
+<li>
+<code>ggplotly()</code>関数：<code>ggplot2</code>で作成したグラフをインタラクティブにする</li>
+</ul>
+</li>
+</ul></section></section><section id="まとめてインストール" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="まとめてインストール">
+<span class="header-section-number">5.4</span> まとめてインストール</h2>
+<p>複数のパッケージをインストールしたり、読み込んだりするのは面倒ですが、<code>pacman</code>パッケージを使えば、一度にまとめて行うことができます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("pacman")</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">psych</span>, <span class="va">ggthemes</span>, <span class="va">knitr</span>, <span class="va">kableExtra</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>読みだそうとしているパッケージがインストールされていない場合は、自動的にインストールしてくれます。</p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chap04_dataframe.html" class="pagination-link  aria-label=">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データフレーム</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chap06_function.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>関数</span>">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>

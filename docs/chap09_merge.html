@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.529">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>R for Empirical Accounting Research - 9&nbsp; データの結合</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./chap09_handling.html" rel="next">
+<link href="./part02.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "一致なし",
+    "search-matching-documents-text": "一致した文書",
+    "search-copy-link-title": "検索へのリンクをコピー",
+    "search-hide-matches-text": "追加の検索結果を非表示",
+    "search-more-match-text": "追加の検索結果",
+    "search-more-matches-text": "追加の検索結果",
+    "search-clear-button-title": "消去",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "検索",
+    "search-label": "サーチ"
+  }
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+</head>
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part02.html">第2部 前処理と記述統計量</a></li><li class="breadcrumb-item"><a href="./chap09_merge.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Empirical Accounting Research</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="サーチ"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rによる実証会計入門</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第1部 R言語の基礎</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap03_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">コード作成の作法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap04_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Rの基礎</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap04_dataframe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データフレーム</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap05_packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap06_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap07_pipe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">パイプ演算子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_tidydata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 前処理と記述統計量</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第3部 データの可視化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+   
+  <ul>
+<li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%AE%E7%B5%90%E5%90%88" id="toc-データフレームの結合" class="nav-link active" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%AE%E7%B5%90%E5%90%88"><span class="header-section-number">9.1</span> データフレームの結合</a></li>
+  <li>
+<a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E7%B8%A6%E3%81%AB%E7%B5%90%E5%90%88%E3%81%99%E3%82%8B" id="toc-データを縦に結合する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E7%B8%A6%E3%81%AB%E7%B5%90%E5%90%88%E3%81%99%E3%82%8B"><span class="header-section-number">9.2</span> データを縦に結合する</a>
+  <ul class="collapse">
+<li><a href="#rbind%E9%96%A2%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-rbind関数の場合" class="nav-link" data-scroll-target="#rbind%E9%96%A2%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">9.2.1</span> <code>rbind()</code>関数の場合</a></li>
+  <li><a href="#bind_rows%E9%96%A2%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-bind_rows関数の場合" class="nav-link" data-scroll-target="#bind_rows%E9%96%A2%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">9.2.2</span> <code>bind_rows()</code>関数の場合</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%A8%AA%E3%81%AB%E7%B5%90%E5%90%88%E3%81%99%E3%82%8B" id="toc-データを横に結合する" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%A8%AA%E3%81%AB%E7%B5%90%E5%90%88%E3%81%99%E3%82%8B"><span class="header-section-number">9.3</span> データを横に結合する</a>
+  <ul class="collapse">
+<li><a href="#join%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%BF%E3%81%86" id="toc-join関数を使う" class="nav-link" data-scroll-target="#join%E9%96%A2%E6%95%B0%E3%82%92%E4%BD%BF%E3%81%86"><span class="header-section-number">9.3.1</span> JOIN関数を使う</a></li>
+  <li><a href="#join%E9%96%A2%E6%95%B0" id="toc-join関数" class="nav-link" data-scroll-target="#join%E9%96%A2%E6%95%B0"><span class="header-section-number">9.3.2</span> JOIN関数</a></li>
+  </ul>
+</li>
+  <li><a href="#%E7%95%B0%E3%81%AA%E3%82%8B%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%AE%E7%B5%90%E5%90%88" id="toc-異なるサイズのデータフレームの結合" class="nav-link" data-scroll-target="#%E7%95%B0%E3%81%AA%E3%82%8B%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%81%AE%E7%B5%90%E5%90%88"><span class="header-section-number">9.4</span> 異なるサイズのデータフレームの結合</a></li>
+  <li>
+<a href="#%E8%A6%B3%E6%B8%AC%E5%80%A4%E3%81%8C%E3%83%A6%E3%83%8B%E3%83%BC%E3%82%AF%E3%81%A7%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88" id="toc-観測値がユニークでない場合" class="nav-link" data-scroll-target="#%E8%A6%B3%E6%B8%AC%E5%80%A4%E3%81%8C%E3%83%A6%E3%83%8B%E3%83%BC%E3%82%AF%E3%81%A7%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88"><span class="header-section-number">9.5</span> 観測値がユニークでない場合</a>
+  <ul class="collapse">
+<li><a href="#%E5%A4%9A%E5%AF%BE1%E3%81%AE%E7%B5%90%E5%90%88" id="toc-多対1の結合" class="nav-link" data-scroll-target="#%E5%A4%9A%E5%AF%BE1%E3%81%AE%E7%B5%90%E5%90%88"><span class="header-section-number">9.5.1</span> 多対1の結合</a></li>
+  <li><a href="#%E5%AF%BE%E5%A4%9A%E3%81%AE%E7%B5%90%E5%90%88" id="toc-対多の結合" class="nav-link" data-scroll-target="#%E5%AF%BE%E5%A4%9A%E3%81%AE%E7%B5%90%E5%90%88"><span class="header-section-number">9.5.2</span> 1対多の結合</a></li>
+  <li><a href="#%E5%A4%9A%E5%AF%BE%E5%A4%9A%E3%81%AE%E7%B5%90%E5%90%88" id="toc-多対多の結合" class="nav-link" data-scroll-target="#%E5%A4%9A%E5%AF%BE%E5%A4%9A%E3%81%AE%E7%B5%90%E5%90%88"><span class="header-section-number">9.5.3</span> 多対多の結合</a></li>
+  </ul>
+</li>
+  <li><a href="#join%E9%96%A2%E6%95%B0%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3" id="toc-join関数のオプション" class="nav-link" data-scroll-target="#join%E9%96%A2%E6%95%B0%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3"><span class="header-section-number">9.6</span> JOIN関数のオプション</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part02.html">第2部 前処理と記述統計量</a></li><li class="breadcrumb-item"><a href="./chap09_merge.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>利用するパッケージを読み込みます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span> <span class="co"># データ操作</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span> <span class="co"># 作表</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span> <span class="co"># 作表拡張</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="データフレームの結合" class="level2 page-columns page-full" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="データフレームの結合">
+<span class="header-section-number">9.1</span> データフレームの結合</h2>
+<p>次に、よく使うのだけれど、結構ややこしいデータフレームの<strong>結合</strong>(merge)について説明します。 データフレームの結合には、基本関数の<code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>や<code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code>を使うこともできますが、<code>tidyverse</code>の<code>dplyr</code>パッケージのJOIN関数を使うと、より簡単に結合できます。</p>
+<p>日本の自動車メーカーの会計情報を使います。 まずは<code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>関数を使って、<code>name</code>，<code>year</code>，<code>sale</code>という3つの変数をもつデータフレームを作成します。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>本によっては、<code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>関数の代わりに<code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code>関数を使ってデータフレームを作成するようにしているものもあります。 <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code>関数は、<code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>関数の代わりに使うことができ、作成されるデータフレームには<code>tibble</code>というクラスが付与されます。 <code>tibble</code>クラスのデータフレームは、<code>data.frame</code>クラスのデータフレームと比べて、便利な特徴が与えられていますが、ここでは基本関数<code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>を使ってデータフレームを作成します。</p>
+</div></div><div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="co"># データフレームを作成</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"トヨタ"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"日産"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"ホンダ"</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="co"># 企業名</span></span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022"</span>, <span class="st">"2023"</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>, <span class="co"># 年度</span></span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">31379507</span>,<span class="fl">37154298</span>,<span class="fl">8424585</span>,<span class="fl">10596695</span>,<span class="fl">14552696</span>,<span class="fl">16907725</span><span class="op">)</span>  <span class="co"># 売上高</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df_car</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="データを縦に結合する" class="level2 page-columns page-full" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="データを縦に結合する">
+<span class="header-section-number">9.2</span> データを縦に結合する</h2>
+<p>データを縦に結合する，ということは，データフレームの行を追加することです。具体的には観測値を追加することになり，変数の数は変わりません。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>2つのデータフレームを結合して行だけが増える結合を<strong>縦結合</strong>、 列が増える結合を<strong>横結合</strong>と呼びます。</p>
+</div></div><p>ここでは，作成した<code>df_car</code>に、各社2024年の売上高のデータが入ったデータフレーム<code>df_car_2024</code>を追加したいとします。 2024年度の業績予想データが入ったデータフレームを作成します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_2024</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"トヨタ"</span>, <span class="st">"日産"</span>, <span class="st">"ホンダ"</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">2024</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">38000000</span>, <span class="fl">12400000</span>, <span class="fl">18200000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df_car_2024</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">38000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">12400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">18200000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/rbind.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>データフレームの縦結合</figcaption></figure>
+</div>
+<!--
+このように**追加されるデータフレームが元のデータフレームの変数の数と名前が一致している場合**、簡単にデータを縦に結合することができます。
+-->
+<p>2つのデータフレームを縦に結合するには、基本関数の<code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code>を使うか、<code>dplyr</code>パッケージの<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code>関数を使います。</p>
+<section id="rbind関数の場合" class="level3" data-number="9.2.1"><h3 data-number="9.2.1" class="anchored" data-anchor-id="rbind関数の場合">
+<span class="header-section-number">9.2.1</span> <code>rbind()</code>関数の場合</h3>
+<p><code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code>関数を使う場合は、以下のようにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_add</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">df_car</span>, <span class="va">df_car_2024</span><span class="op">)</span></span>
+<span><span class="va">df_car_add</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">9</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">トヨタ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">38000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">日産</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">12400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">18200000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>データフレームに下から新たなデータが加わっていることが分かります。 たとえ，変数の順番が異なっていたとしても，変数名が一致していれば，簡単にデータを縦に結合することができます。 <code>sale</code>と<code>year</code>の変数の順番を入れ替えてみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"トヨタ"</span>, <span class="st">"日産"</span>, <span class="st">"ホンダ"</span><span class="op">)</span>,</span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">38000000</span>, <span class="fl">12400000</span>, <span class="fl">18200000</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">2024</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="va">df_car_add2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">df_car</span>, <span class="va">df_car_2</span><span class="op">)</span></span>
+<span><span class="va">df_car_add2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">9</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">トヨタ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">38000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">日産</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">12400000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">18200000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>上手くいきました。 しかし変数の数や名前が一致しないと， <code>match.names(clabs, names(xi)) でエラー:  名前が以前の名前と一致しません</code>というエラーがでて結合できません。 したがって<code><a href="https://rdrr.io/r/base/cbind.html">rbind()</a></code>関数は変数名と変数の数が一致するデータフレーム同士の縦結合であれば、適切な処理が行われるため、<code><a href="https://rdrr.io/r/base/names.html">names()</a></code>関数や<code><a href="https://dplyr.tidyverse.org/reference/rename.html">dplyr::rename()</a></code>関数を使って，変数名が一致するように変更しておきましょう。</p>
+</section><section id="bind_rows関数の場合" class="level3" data-number="9.2.2"><h3 data-number="9.2.2" class="anchored" data-anchor-id="bind_rows関数の場合">
+<span class="header-section-number">9.2.2</span> <code>bind_rows()</code>関数の場合</h3>
+<p><code>dplyr</code>パッケージの<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code>関数は、2つのデータフレームの変数名を参照して縦結合をしてくれます。 <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code>を使う場合は、以下のようにします。</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">df_car_2024</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="データを横に結合する" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="データを横に結合する">
+<span class="header-section-number">9.3</span> データを横に結合する</h2>
+<p>データを横に結合する，とは，データフレームの列を追加することです。具体的には変数を追加することになり，観測値の数は変わりません。 ただ縦の結合とは異なり，横の結合は少し複雑になります。</p>
+<p>データを横に結合する方法の1つは，基本関数の<code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>を使うことです。 データフレーム<code>df_car</code>に，各社の(親会社株主に帰属する)当期純利益<code>ni</code>もデータフレームに追加したいとします。 <code>ni</code>を変数とするデータフレームを作成します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_ni</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"トヨタ"</span>,<span class="fl">3</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"日産"</span>,<span class="fl">3</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"ホンダ"</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022"</span>, <span class="st">"2023"</span>, <span class="st">"2024"</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>, <span class="co"># 時点</span></span>
+<span>    ni <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2850110</span>, <span class="fl">2451318</span>, <span class="fl">2580000</span>,</span>
+<span>           <span class="fl">215533</span>, <span class="fl">221900</span>, <span class="fl">315000</span>,</span>
+<span>           <span class="fl">707067</span>, <span class="fl">651416</span>, <span class="fl">800000</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df_car_ni</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ni</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2850110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">2451318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">2580000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">215533</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">221900</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">315000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">707067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">651416</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">800000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>これを<code>df_car_add</code>に右から結合します。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/cbind.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>cbindによる横結合</figcaption></figure>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_cbind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">df_car_add</span>, <span class="va">df_car_ni</span><span class="op">)</span></span>
+<span><span class="va">df_cbind</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+sale
+</th>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+ni
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+31379507
+</td>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+2850110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+37154298
+</td>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+2451318
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+8424585
+</td>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+2580000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+10596695
+</td>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+215533
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+14552696
+</td>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+221900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+16907725
+</td>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+315000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+38000000
+</td>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+707067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+12400000
+</td>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+651416
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+18200000
+</td>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2024
+</td>
+<td style="text-align:right;">
+800000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code>df_car</code>の右側に<code>df_car_ni</code>が結合されていることが分かります。 しかし、この結合に問題があることは一目瞭然です。 重複した変数があるうえに、<code>name</code>や<code>year</code>の順番がバラバラです。 つまり行が観測値を表しておらず、整然データではなくなりました。</p>
+<p>この問題を解決するためには、<code>name</code>と<code>year</code>の2つの変数をキーとして、データを結合する必要があります。 このような結合を<strong>マージ</strong>と呼びます。以下では、マージの方法を説明します。</p>
+<section id="join関数を使う" class="level3" data-number="9.3.1"><h3 data-number="9.3.1" class="anchored" data-anchor-id="join関数を使う">
+<span class="header-section-number">9.3.1</span> JOIN関数を使う</h3>
+<p>データフレームの結合は基本関数でもできますが、<code>tidyverse</code>の<code>dplyr</code>パッケージのJOIN関数が便利です。</p>
+</section><section id="join関数" class="level3" data-number="9.3.2"><h3 data-number="9.3.2" class="anchored" data-anchor-id="join関数">
+<span class="header-section-number">9.3.2</span> JOIN関数</h3>
+<p><code>dplyr</code>パッケージのJOIN関数には、以下の4つがあります。</p>
+<ul>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> : 内部結合</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> : 左外部結合</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> : 右外部結合</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code> : 完全外部結合</li>
+</ul>
+<p>それぞれの結合の結果をベン図で表すと以下のようになります。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/join.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>結合</figcaption></figure>
+</div>
+<p>結合のイメージ図は以下の通りです(この図は、Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemundによる”R for Data Science”の図を引用しています)。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/R4D_join.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>結合結果</figcaption></figure>
+</div>
+<p>内部結合は、2つのデータフレームの共通の変数の値が一致する行のみを抽出するため、結合後のデータフレームが非常に小さくなりがちであるため、ほとんど使用しません。 最も利用する可能性が高いのは、結合元のデータフレームのすべての行を残す<strong>左外部結合</strong>です。 これは<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">dplyr::left_join()</a></code>で実行できます。</p>
+<section id="左外部結合" class="level4" data-number="9.3.2.1"><h4 data-number="9.3.2.1" class="anchored" data-anchor-id="左外部結合">
+<span class="header-section-number">9.3.2.1</span> 左外部結合</h4>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/left_join_function.png" class="img-fluid figure-img"></p>
+<figcaption>左外部結合</figcaption></figure>
+</div>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>の引数は、以下の通りです。</p>
+<ul>
+<li>
+<code>x</code> : 結合元のデータフレーム</li>
+<li>
+<code>y</code> : 結合するデータフレーム</li>
+<li>
+<code>by</code> : 結合する変数</li>
+</ul>
+<p><code>df_car</code>と<code>df_car_ni</code>を<code>name</code>と<code>year</code>の2つの変数をキーとして左外部結合します。 ここで重要なことは，<strong>キーとなる変数で観測値がユニークになっている</strong>，ということです。 ここの例だと，<code>name</code>がトヨタ，<code>year</code>が2023，という観測値(つまり行)は1つだけになっている，ということです。</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+重要
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>JOIN関数で2つのデータフレームを結合するときは，1つ以上のキーとなる変数が，結合元のデータフレームと結合するデータフレームの両方に存在し，またキーの値により行が一意に決まる，つまり観測値がユニークになっていることが重要です。</p>
+</div>
+</div>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/left_join.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>左外部結合</figcaption></figure>
+</div>
+<p><code>dplyr</code>パッケージの<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>関数次のようにします。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/left_join_style.png" class="img-fluid figure-img"></p>
+<figcaption>左外部結合の書き方</figcaption></figure>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># nameとyearで左外部結合</span></span>
+<span><span class="va">df_car_left</span> <span class="op">&lt;-</span> <span class="va">df_car_add</span> <span class="op">|&gt;</span> <span class="co"># 結合先</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_car_ni</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span> <span class="co"># 結合元</span></span>
+<span><span class="co"># 表にする</span></span>
+<span><span class="va">df_car_left</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/column_spec.html">column_spec</a></span><span class="op">(</span><span class="fl">4</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ni</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">2850110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">2451318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">215533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">221900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">707067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">651416</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">38000000</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">2580000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">12400000</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">315000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2024</td>
+<td style="text-align: right;">18200000</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">800000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>この結果をみると、うえで行った<code><a href="https://rdrr.io/r/base/cbind.html">cbind()</a></code>関数とは異なり、結合のキーに指定した<code>name</code>と<code>year</code>の順番が揃っていることが分かります。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/left_join_result.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>左外部結合の結果</figcaption></figure>
+</div>
+<p>ここまでで，変数の数と名前が一致するデータフレーム同士の縦結合と，キーとなる変数で観測値がユニークになっているデータフレーム同士の横結合を説明しました。</p>
+<p>次は，観測値が異なるデータフレームの結合や，キーにより観測値がユニークにならないデータフレームの結合について説明します。</p>
+</section></section></section><section id="異なるサイズのデータフレームの結合" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="異なるサイズのデータフレームの結合">
+<span class="header-section-number">9.4</span> 異なるサイズのデータフレームの結合</h2>
+<p><code>df_car_add</code>と<code>df_car_ni</code>は、同じサイズのデータフレームでしたが、異なるサイズのデータフレームを結合することもできます。 たとえば、元の<code>df_car</code>に、マツダの2022年と2023年の売上高を追加してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_mazda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"マツダ"</span>, <span class="st">"マツダ"</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2022</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3120349</span>, <span class="fl">3826752</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df_car_mazda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">df_car</span>,<span class="va">df_car_mazda</span><span class="op">)</span></span>
+<span><span class="va">df_car_mazda</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:right;">
+sale
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+31379507
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+トヨタ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+37154298
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+8424585
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+日産
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+10596695
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+14552696
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ホンダ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+16907725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+マツダ
+</td>
+<td style="text-align:left;">
+2022
+</td>
+<td style="text-align:right;">
+3120349
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+マツダ
+</td>
+<td style="text-align:left;">
+2023
+</td>
+<td style="text-align:right;">
+3826752
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>これに<code>df_car_ni</code>を左外部結合するとどうなるか確認してみましょう</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/left_join2.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>マツダのデータ</figcaption></figure>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_mazda_left</span> <span class="op">&lt;-</span> <span class="va">df_car_mazda</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_car_ni</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df_car_mazda_left</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">8</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ni</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+<td style="text-align: right;">2850110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+<td style="text-align: right;">2451318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+<td style="text-align: right;">215533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+<td style="text-align: right;">221900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+<td style="text-align: right;">707067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+<td style="text-align: right;">651416</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">マツダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2022</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">3120349</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">マツダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">3826752</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>左外部結合は，結合元のデータフレームのすべての行を残すため，結合後のデータフレームの行数は結合元のデータフレームの行数と同じになります。 したがって，<code>df_car_mazda</code>の行数は8行のままで，<code>ni</code>という変数が追加されていますが，マツダの2022年と2023年のデータには<code>NA</code>が入っています。 結合するデーレフレーム<code>df_car_ni</code>に入っていた2024年のデータは、結合先の<code>df_car_mazda</code>には存在しないためです。 基本的に主となるデータフレームのデータを維持したいことがおおいため，左外部結合を使うことが多いです。</p>
+</section><section id="観測値がユニークでない場合" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="観測値がユニークでない場合">
+<span class="header-section-number">9.5</span> 観測値がユニークでない場合</h2>
+<p>キー変数で行がユニークにならないとき，1対多や多対1，多対多の関係があり，結合後のデータフレームの行数が増えることになります。 どのような挙動になるのかを理解して，データフレームの結合を行いましょう。 理想的には，1対1対応となるように，データを整理してから結合するのが望ましいです。</p>
+<ul>
+<li>1対多の結合 : 結合するデータフレームがユニークでない</li>
+<li>多対1の場合 : 結合先のデータフレームがユニークでない</li>
+<li>多対多の場合 : どちらのデーレフレームもユニークでない</li>
+</ul>
+<p>それぞれのケースに対して，<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>関数を適用した結果がどうなるのかを理解しておきましょう。</p>
+<section id="多対1の結合" class="level3" data-number="9.5.1"><h3 data-number="9.5.1" class="anchored" data-anchor-id="多対1の結合">
+<span class="header-section-number">9.5.1</span> 多対1の結合</h3>
+<p>以下の例だと，結合元のデータフレーム<code>df_car</code>には，ホンダの2023年のデータが2つあります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_duplicate</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="co"># データフレームを作成</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"トヨタ"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"日産"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"ホンダ"</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022"</span>, <span class="st">"2023"</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fl">2023</span><span class="op">)</span>, <span class="co"># 時点</span></span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">31379507</span>,<span class="fl">37154298</span>,<span class="fl">8424585</span>,<span class="fl">10596695</span>,<span class="fl">14552696</span>,<span class="fl">16907725</span>,<span class="fl">18706224</span><span class="op">)</span> <span class="co"># 気温</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df_car_duplicate</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">7</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">16907725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">18706224</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>このデータフレームには，ホンダの2023年のデータが2つあります。 たとえば，IFRS採用直後だと日本基準とIFRSのデータが記載されていることがあり，このように企業名と年度だけでは観測値がユニークにならないことがあります。</p>
+<p>このデータフレームに<code>df_car_ni</code>を左外部結合するとどうなるか確認してみましょう</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_car_duplicate_left</span> <span class="op">&lt;-</span> <span class="va">df_car_duplicate</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_car_ni</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df_car_duplicate_left</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ni</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">31379507</td>
+<td style="text-align: right;">2850110</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">37154298</td>
+<td style="text-align: right;">2451318</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">8424585</td>
+<td style="text-align: right;">215533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">10596695</td>
+<td style="text-align: right;">221900</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14552696</td>
+<td style="text-align: right;">707067</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">16907725</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">651416</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">18706224</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">651416</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>結合先のデータフレームがキーにでユニークになっていないので，エラーになるかと思いきや，エラーにならずに結合され，ホンダの2023年の2つの観測値に同じ当期純利益の数値が入っています。</p>
+<p>多対1の場合は，結合先のデータフレームのキーが重複している行に，結合元のデータを割り当て，重複分だけ結合後のデータフレームの行数が増えてしまいます。</p>
+</section><section id="対多の結合" class="level3" data-number="9.5.2"><h3 data-number="9.5.2" class="anchored" data-anchor-id="対多の結合">
+<span class="header-section-number">9.5.2</span> 1対多の結合</h3>
+<p>逆のケースもやってみましょう。 結合元のデータフレームはユニークだが，結合するデータフレームがユニークではない場合です。 先ほどの例とは逆に，<code>df_car_ni</code>に<code>df_car_duplicate</code>を左外部結合するとどうなるか確認してみましょう</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># 左外部結合</span></span>
+<span><span class="va">df_car_ni_duplicate_left</span> <span class="op">&lt;-</span> <span class="va">df_car_ni</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df_car_duplicate</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"year"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># 結合後のデータフレーム</span></span>
+<span><span class="va">df_car_ni_duplicate_left</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">6</span>,<span class="fl">10</span><span class="op">)</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'lightcyan'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/row_spec.html">row_spec</a></span><span class="op">(</span><span class="fl">8</span><span class="op">:</span><span class="fl">9</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, background <span class="op">=</span> <span class="st">'mistyrose'</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ni</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2850110</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">2451318</td>
+<td style="text-align: right;">37154298</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">トヨタ</td>
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">2580000</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">215533</td>
+<td style="text-align: right;">8424585</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">221900</td>
+<td style="text-align: right;">10596695</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">日産</td>
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">315000</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">707067</td>
+<td style="text-align: right;">14552696</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">651416</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">16907725</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: mistyrose !important;">2023</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">651416</td>
+<td style="text-align: right; font-weight: bold; background-color: mistyrose !important;">18706224</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">ホンダ</td>
+<td style="text-align: left; font-weight: bold; background-color: lightcyan !important;">2024</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">800000</td>
+<td style="text-align: right; font-weight: bold; background-color: lightcyan !important;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>結合元の<code>df_car_ni</code>は2024年のデータがありますが，結合する<code>df_car_duplicate</code>には2024年のデータがないため，左外部結合したデータフレームの2024年の<code>sale</code>は欠損値<code>NA</code>になっています(青色の行)。</p>
+<p>また注目すべきは，結合元のホンダの2023年の<code>ni</code>は1つだけだったのにたいして，結合後には2つになっており，そこに<code>sale</code>が左から結合されています(オレンジの行)。</p>
+<p>つまり、結合先のデータフレームがユニークでない場合、結合元のデータが重複して<code>ni</code>の値に入っています。</p>
+</section><section id="多対多の結合" class="level3" data-number="9.5.3"><h3 data-number="9.5.3" class="anchored" data-anchor-id="多対多の結合">
+<span class="header-section-number">9.5.3</span> 多対多の結合</h3>
+<p>結合先も結合元もユニークでない場合、データフレームを結合しようとすると、Warningがでます。 JOIN関数の引数に<code>relationship = "many-to-many"</code>を設定することで、警告をけすことができます。</p>
+<p>以下では、シンプルなデータフレームを用いて、多対多の結合の例を示します。</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span> <span class="co"># ユニーク</span></span>
+<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"second"</span>, <span class="st">"third"</span><span class="op">)</span><span class="op">)</span> <span class="co"># ユニークでない　</span></span>
+<span><span class="va">df3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="co"># ユニークでない</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/many_to_many_df.png" class="img-fluid figure-img"></p>
+<figcaption>練習用データフレーム</figcaption></figure>
+</div>
+<p><code>df1</code>に<code>df2</code>を左外部結合すると</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df2</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># x列がキー</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"cl"</span>,<span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># センタリング</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">x</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">y</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">first</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">second</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">third</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>結合キーとなる<code>x</code>に対して、結合先の<code>df1</code>の<code>1</code>は1つですが、<code>df2</code>の1は2つあるため、1対多の結合となり、結合後は<code>x</code>の<code>1</code>が2行に増え、<code>df2</code>の<code>first</code>と<code>second</code>の値が入っていることが分かります。</p>
+<p>図で書くとこうなってます。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/many-to-many_01.png" class="img-fluid figure-img"></p>
+<figcaption>1対多</figcaption></figure>
+</div>
+<p>次に，<code>df3</code>に<code>df2</code>を左外部結合すると</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df3</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(x)`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(df3, df2): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 1 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:right;">
+x
+</th>
+<th style="text-align:left;">
+y
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><code>warnings</code>がでます。 このようにレアケースとして多対多関係が予想される場合，<code>relationship = "many-to-many"</code>を設定して警告をけしましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df2</span>, by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, relationship <span class="op">=</span> <span class="st">"many-to-many"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:right;">
+x
+</th>
+<th style="text-align:left;">
+y
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+first
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+second
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/many-to-many_02.png" class="img-fluid figure-img"></p>
+<figcaption>多対多</figcaption></figure>
+</div>
+<p>このように，結合するデータフレームのキーとなる変数で観測値がユニークでない場合は，<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">dplyr::left_join()</a></code>関数は，自動的にデータを補完して結合してしまうため，それを理解して使う必要があります。</p>
+</section></section><section id="join関数のオプション" class="level2" data-number="9.6"><h2 data-number="9.6" class="anchored" data-anchor-id="join関数のオプション">
+<span class="header-section-number">9.6</span> JOIN関数のオプション</h2>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>の引数には，以下のものが用意されています。</p>
+<ul>
+<li><p><code>by</code> : 結合する変数を指定する。</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> : 複数のキーを指定する。変数名を指定する場合は，<code>join_by(a == b, c == d)</code>のようにする。</p></li>
+<li><p><code>copy</code> : 特殊なときにしか使わないのでここでは無視</p></li>
+<li><p><code>suffix</code> : 同じ変数名があるときに，結合後の変数名に付ける接尾辞を指定する。デフォルトだと<code>x</code>がつく。</p></li>
+<li><p><code>keep</code> : 結合キーの保持を決める。デフォルトは<code>null</code>で，結合先のキー変数のみが残る。<code>true</code>だと両データフレームのキー変数が保持される。</p></li>
+<li><p><code>na_matches</code> : <code>NA</code>と<code>NaN</code>などの扱い。デフォルトは同じように処理する。</p></li>
+<li><p><code>multiple</code> : 結合先の行が結合元に複数マッチする場合の処理を指定する。 結合先の各行に対して，デフォルトの<code>all</code>は、結合元で検出された全てのマッチを返します。これはSQLと同じ動作です。</p></li>
+<li><p><code>unmatched</code> : 結合先の行が結合元にマッチしない場合の処理を指定する。デフォルトは<code>all</code>で，結合元の行を残す。</p></li>
+<li>
+<p><code>relationship</code> : 結合先と結合元のキーの対応関係を指定</p>
+<ul>
+<li>
+<code>NULL</code> : デフォルトで，</li>
+<li>
+<code>one-to-one</code> : 結合先と結合元のキーの対応関係が1対1のときに使う。</li>
+<li>
+<code>one-to-many</code> : 結合元の各行が結合先の最大1行と対応</li>
+<li>
+<code>many-to-one</code> : 結合先の各行が結合元の最大1行と対応</li>
+<li>
+<code>many-to-many</code> : 多対多関係が想定されているときに使うらしい。</li>
+</ul>
+</li>
+</ul>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "コピーしました");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "コピーしました");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./part02.html" class="pagination-link  aria-label=">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第2部 前処理と記述統計量</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./chap09_handling.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>データハンドリング</span>">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2024, Soichi Matsuura</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>

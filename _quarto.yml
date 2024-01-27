@@ -1,0 +1,59 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "R for Empirical Accounting Research"
+  author: "Soichi Matsuura"
+  date: "1/1/2024"
+  chapters:
+    - index.qmd
+    - part: part01.qmd
+      chapters:
+        - chap02_prepare.qmd
+        - chap03_code.qmd
+        - chap04_R.qmd
+        - chap04_dataframe.qmd
+        - chap05_packages.qmd
+        - chap06_function.qmd
+        - chap07_pipe.qmd
+        - chap08_tidydata.qmd
+    - part: part02.qmd
+      chapters:
+        - chap09_merge.qmd
+        - chap09_handling.qmd
+        # - chap10_stats.qmd
+    - part: part03.qmd
+      chapters:
+        - chap11_visualization.qmd
+        - chap12_ggpubr.qmd
+        - chap13_gg_function.qmd
+        - chap14_ggplot_ghibli.qmd
+  page-navigation: true
+  back-to-top-navigation: true
+  page-footer: "Copyright 2024, Soichi Matsuura"
+
+filters:
+    - webr
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cerulean
+    toc: true
+    html-math-method: katex
+    code-copy: true
+    code-overflow: wrap
+    code-link: true
+    link-external-icon: true
+    df-print: kable
+    grid:
+      sidebar-width: 200px
+      body-width: 1200px
+    cover-image: "img/matssemi.png"
+  pdf:
+    documentclass: scrreprt
+
+lang: "ja"
+dev: "ragg_png"

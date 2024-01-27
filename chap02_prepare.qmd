@@ -1,0 +1,214 @@
+---
+title: "準備"
+---
+
+
+::: {.callout-important}
+## 覚えておくべき内容
+
+1. Rをインストール
+2. RstudioとVS Codeをインストール
+3. RstudioのProject機能を使う / VS Codeでフォルダを使う
+4. 等幅フォントを使う
+:::
+
+:::{layout-ncol=2}
+
+[![R](img/Rlogo.png)](https://cran.r-project.org/)
+
+[![RStudio](img/Rstudio_sticker.png){width=70%}](https://posit.co/download/rstudio-desktop/)
+:::
+
+## Rの準備
+
+### Rのインストール
+
+Rは、[The Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/)からダウンロードできます。
+Rをインストールする際のベストプラクティスについては様々なウェブサイトで紹介されているので、そちらを参照してください。
+オススメとして、高知工科大学の矢内勇生先生のウェブサイト[こちら](https://yukiyanai.github.io/jp/resources/)の「RとRstudioのインストール方法の解説」でPDFにまとめられている資料があります。
+
+松浦のプレゼミで使うのは、以下のアプリケーションです。
+
+- [R](https://cran.r-project.org/)
+- [Rstudio](https://posit.co/download/rstudio-desktop/)
+- [Quarto](https://quarto.org/)
+- [VS Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code)
+
+インストールが上手くいかない、インストールが面倒・困難である、何もインストールしたくない、という方は、
+
+- [Posit Cloud](https://posit.cloud/)
+- [Google Colaboratory](https://colab.research.google.com/notebooks/intro.ipynb?hl=ja)
+
+のどちらかを使ってください。
+アカウントを作成すると、ブラウザ上でRを実行することができます。Google ColaboratoryはPythonの実行環境ですが、一手間かければRも実行できます。以下のサイトを参考にしてください。
+
+[Rによる統計入門](https://htsuda.net/stats/colab.html)
+
+### テキストエディタ
+
+R言語でプログラムを書くには、R専用のIDE(Integrated Development Environment)である**Rstudio**を使うのが一般的ですが、より汎用的な**テキストエディタ**を使うという選択肢もあります。
+テキストエディタとは文字通り、文字を編集するためのソフトウェアです。
+有名なものとしては、
+
+- [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code) (Microsoft)
+- [Sublime Text](https://www.sublimetext.com/) (Sublime HQ)
+- Vim (Bram Moolenaar) 上級者向け
+- Emacs (GNU) 上級者向け
+
+などがあり、松浦は**Visual Studio Code**(以下、VS Code)を使ってます。
+
+[![VS Code](img/VScode.png){width=70%}](https://azure.microsoft.com/ja-jp/products/visual-studio-code)
+
+とはいうものの、やはり最初はRstudioを使う方が設定などが簡単なので、以下ではRstudioの設定を紹介します。
+
+
+## Rstudioの準備
+
+Rtsudioを起動すると、以下のような画像が表示されます。
+
+![Rtsudio](img/Rstudio_Mac_shoki.png)
+
+次の画像で赤丸で囲まれているマークをクリックすると、コード画面が表示されます。
+
+![Rstudio](img/rstudio_mac_shoki.jpg)
+
+Rstudioは4つの画面で構成されています。
+
+1. スクリプトエディタ
+2. コンソール
+3. 環境
+4. プロットなど
+
+![Rstudio](img/rstudio_mac_kihon.jpg)
+
+
+上のメニューバーから「Tools」→「Global Options」を選択すると、以下のような画面が表示されます。
+
+![Rstudio](img/rstudio_mac_setting.jpg)
+
+「General」の「Save workspace to .RData on exit」を「Never」に変更しておいてください。
+
+また、Rstudioの画面を見やすくするため、先のOptionsの画面の左側メニューの「Pane Layout」を選び、以下のように設定しておくとよいでしょう。
+
+![Rstudio](img/rstduio_mac_pane.jpg)
+
+設定の「Appearance」で画面の見た目やフォントなどを変更することで、自分の好みの設定にすることができます。
+松浦は、テーマに`monokai`、フォントに`Fira Font`を使用してます。
+`Fira Font`はリガチャに対応したモノスペースフォントなので、Rstudioのコードエディタで`<-`などが綺麗に表示されます。
+
+![Rstudio](img/Rstudio_matsuura.png)
+
+### Rstudioのプロジェクト機能
+
+Rstudioには**プロジェクト**と呼ばれる機能があり、プロジェクトを作成しておくと、ファイル管理や作業履歴の管理がしやすくなります。
+
+プロジェクトを作成するには、Rstudioの画面上部の「File」→「New Project」を選択するか、以下の図にあるとおり、右上の「Project」をクリックします。
+
+![Rstudio TOP](img/Rstudio_top.png)
+
+すると、以下のようなウインド出てきます。
+
+![Rstudio Project](img/Rstudio_project1.png)
+
+「New Project...」を選択すると、次のウインドが表示されます。
+
+![Rstudio Project](img/Rstudio_project2.png)
+
+「New Directory」を選択して、プロジェクトを保存するディレクトリを選択します。
+
+![Rstudio Project](img/Rstudio_project3.png)
+
+ここでは、新しいプロジェクトを作るので、「New Project」を選択すると、次の「Create New Project」のウインドが表示されます。
+
+::: {.column-margin}
+後で解説する**Quarto**を使って論文やウェブサイトを作成するときは、「Quarto Website」や「Quarto Book」を選択します。
+:::
+
+
+![Rstudio Project](img/Rstudio_project4.png)
+
+**Directory name:**のところに、Rで生成されるファイルなどを保存するフォルダー名を入力します。
+半角英数の名前にするほうが、エラー回避になります。
+
+**Create project as subdirectory of::**
+のところに、プロジェクトを保存する場所(これをディレクトリといいます)を選択します。好きな場所を指定することができますが、やはり日本語名のフォルダなどは避けた方がよいでしょう。
+
+![Rstudio Project](img/Rstudio_project5.png)
+
+最後に「Create Project」をクリックすると、プロジェクトが作成されます。
+
+![Rstudio Project](img/Rstudio_project6.png)
+
+プロジェクトが作成されると、プロジェクト名のフォルダーが作成され、その中に`.Rproj`という拡張子のファイルが作成されます。
+これで、プロジェクトの作成は完了です。
+今後、作成した`.Rproj`ファイルをダブルクリックするか、Rstudioの画面上部の「File」→「Open Project」を選択して、`.Rproj`ファイルを選択するだけで、プロジェクトが開き、作業ディレクトリの場所が設定されます。
+
+## VS Codeの準備
+
+### VS Codeのインストール
+
+Visual Studio Code(以下、VS Code)をインストールするには、Microsoftの[公式サイト](https://azure.microsoft.com/ja-jp/products/visual-studio-code)からダウンロードできます。
+
+![VS Code](img/vscode01.png)
+
+ウェブサイトの「**Visual Studio Code をダウンロードする**」をクリックすると、アクセスしているコンピューターのOSに合わせたインストーラーをダウンロードできるサイトに移動します。
+
+![VS Code Download](img/vscode02.png)
+
+
+
+MacOSの場合、Intel Mac用とApple Silicon用(M1とかM2)とどちらでも動作するユニバーサル版の3つを選択できます。
+
+WindowsPCの場合は、32bit版と64bit版、そしてSurface Proなどに搭載されているArmチップ用の3つを選択できます。
+
+### VS Codeの設定
+
+VS Codeを起動すると、以下のような画面が表示されます。
+
+![VS Code top](img/vscode03.jpg)
+
+左側のメニューから「拡張機能」を選択すると、以下のような画面が表示されます。
+
+![VS Code Extension](img/vscode04.png)
+
+この画面上部の検索窓に文字を入力して、Enterキーを押すと、拡張パッケージが検索されます。
+
+![VS Code Extention Search](img/vscode04.jpg)
+
+オススメ拡張パッケージは以下の通りです。
+
+- `Japanese Language Pack for Visual Studio Code` : 日本語化
+- `R`: R言語の実行環境
+- `Quarto` : VS CodeでQuartoファイルを作成・実行する
+- `indent-rainbow` : インデントを虹色にする
+- `vscode-icons` : ファイルのアイコンを変更する
+- `Rainbow CSV` : CSVファイルを読みやすくする
+- `Color Highlight` : カラーコードを色で表示する
+
+## フォント
+
+プログラミングをするときには、ソースコードを書くエディタで使うフォント選びも重要です。
+適切なフォントを選んでおくことで，コードの読みやすさが改善，あるいはエラーの発見がしやすくなります。
+
+フォントには大きく2種類あって，**等幅フォント**(mono font)と**可変幅フォント**(proportional font)があります。
+等幅フォントは，全ての文字が同じ幅で表示されるフォントで，プログラミングには適しています。
+通常，みなさんがMS Wordなどで文章を書くときに使っているMSゴシックとかヒラギノフォントは可変幅フォントです。
+
+### 等幅フォント
+
+等幅フォントの中でも，**リガチャ**(ligature)に対応したフォントを使うと，コードの見た目が改善されます。
+リガチャに対応したフォントは，複数の文字を1つの文字のように表示することができます。
+リガチャに対応した無料フォントでオススメなものが，
+
+- [Fira Font](https://github.com/tonsky/FiraCode)
+
+リガチャは勝手に複数の文字を１つの文字にしてしまうので，一見何の文字か分からないことがあります。
+そこでリガチャを使うかどうかは好みの問題です。
+
+リガチャ非対応の等幅フォントでオススメなものが，
+
+- [Myrica](https://myrica.estable.jp/)
+
+
+です。この資料のソースコードにはMyricaM Mというフォントを使っています。
+松浦が自分の研究でデータ分析のソースコードを書くときは，`Fira Font`を使っています。

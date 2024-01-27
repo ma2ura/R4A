@@ -1,0 +1,2092 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.529">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>基本統計量</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="chap10_stats_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chap10_stats_files/libs/quarto-html/quarto.js"></script>
+<script src="chap10_stats_files/libs/quarto-html/popper.min.js"></script>
+<script src="chap10_stats_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chap10_stats_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chap10_stats_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chap10_stats_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chap10_stats_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chap10_stats_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chap10_stats_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="chap10_stats_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="chap10_stats_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">基本統計量</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>この章で使うパッケージとデータを読み込んでおきます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://so-ichi.com/presemi_part_two.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 44527 Columns: 12
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (3): 会社コード, 企業名, 決算期
+dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種コード, 売上高, 親会社株主に帰属する当期純利益, 資産合計, 株主資本...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>ここからはこのデータを使って、データの特徴を表す統計量について学びます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">会社コード</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">企業名</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">決算期</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">決算種別</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">連結基準</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">決算月数</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">上場コード</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">日経業種コード</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">売上高</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">親会社株主に帰属する当期純利益</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">資産合計</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">株主資本</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2006/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">152899</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">65049</td>
+<td style="text-align: right;">14852</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2007/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">157088</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">66459</td>
+<td style="text-align: right;">16339</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2008/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">147767</td>
+<td style="text-align: right;">1497</td>
+<td style="text-align: right;">57373</td>
+<td style="text-align: right;">16873</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2009/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">147554</td>
+<td style="text-align: right;">1587</td>
+<td style="text-align: right;">61184</td>
+<td style="text-align: right;">17839</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2010/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">145778</td>
+<td style="text-align: right;">1086</td>
+<td style="text-align: right;">64301</td>
+<td style="text-align: right;">18390</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2011/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">162731</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">76925</td>
+<td style="text-align: right;">17785</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2012/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">181885</td>
+<td style="text-align: right;">423</td>
+<td style="text-align: right;">84937</td>
+<td style="text-align: right;">17683</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2013/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">178046</td>
+<td style="text-align: right;">1269</td>
+<td style="text-align: right;">83245</td>
+<td style="text-align: right;">18512</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2014/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">202387</td>
+<td style="text-align: right;">2968</td>
+<td style="text-align: right;">84319</td>
+<td style="text-align: right;">20954</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0000001</td>
+<td style="text-align: left;">極洋</td>
+<td style="text-align: left;">2015/03</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">235341</td>
+<td style="text-align: right;">218350</td>
+<td style="text-align: right;">2433</td>
+<td style="text-align: right;">88937</td>
+<td style="text-align: right;">22202</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>膨大なデータを眺めていても、そのデータから意味のある情報を見つけることはかなり難しいため、 そのデータを特徴付ける数値を計算することで、データの特徴を把握することができます。 このような数値を<strong>基本統計量</strong>(descriptive statistics)と呼びます。</p>
+<p>基本統計量には、データの中心的な傾向を表す<strong>代表値</strong>(representative value)と、データのばらつきを表す<strong>散らばり</strong>(dispersion)があります。 では、前の章と同じように、企業の財務データを使って、基本統計量を計算してみましょう。</p>
+<section id="代表値" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="代表値">代表値</h3>
+<p><strong>代表値</strong>(representative value)とは、データの中心的な傾向を表す数値です。 重要な代表値として、次のものがあります。</p>
+<ul>
+<li><strong>平均値</strong>(mean) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>中央値</strong>(median) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>最頻値</strong>(mode) : 離散値で計算可能</li>
+<li><strong>最大値</strong>(maximum) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>最小値</strong>(minimum) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>範囲</strong>(range) : 連続変数・離散変数ともに計算可能</li>
+</ul>
+<p>最も用いられるであろう代表値である平均値は，通常<strong>算術平均</strong>(arithmetic mean)を意味しますが，他にも<strong>相乗平均</strong>(geometric mean)や<strong>調和平均</strong>(harmonic mean)があります。 <span class="math inline">\(n\)</span>個のデータからなる<strong>離散的な</strong>変数<span class="math inline">\(x\)</span>に対するそれぞれの定義は以下の通りです。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>連続変数に対する平均値は，<strong>積分</strong>を使って定義されますが，ここではやりません。</p>
+</div></div><p><span class="math display">\[
+\begin{aligned}
+\text{算術平均} &amp;= \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{1}{n} \sum_{i=1}^n x_i \\
+\text{相乗平均} &amp;= \sqrt[n]{x_1 \times x_2 \times \cdots \times x_n} = \left( \prod_{i=1}^n x_i \right)^{1/n} \\
+\text{調和平均} &amp;= \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \cdots + \frac{1}{x_n}} = \frac{n}{\sum_{i=1}^n \frac{1}{x_i}}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><code>mean()</code> : 算術平均・相加平均を計算する</li>
+<li><code>median()</code> : 中央値を計算する</li>
+<li>最頻値を計算する関数はありません。</li>
+<li><code>max()</code> : 最大値を返す</li>
+<li><code>min()</code> : 最小値を返す</li>
+<li><code>range()</code> : 最小値と最大値を返す</li>
+</ul>
+<p>たとえば，売上高の平均値，中央値を確認してみましょう。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>売上高は<strong>連続変数</strong>(continuous variable)であるため，最頻値は区間に対して与えられます。 度数分布表を作成し，最も度数が多い区間を最頻値とします。 ヒストグラムでは最も高い棒の区間が最頻値となります。</p>
+</div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_sale <span class="ot">&lt;-</span> <span class="fu">mean</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 平均値</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>median_sale <span class="ot">&lt;-</span> <span class="fu">median</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 中央値</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(mean_sale, median_sale))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 242055.8  37220.0</code></pre>
+</div>
+</div>
+<p>中央値が<code>37220.0</code>，平均値が<code>242055.8</code>となりました。 中央値や平均値がデータの分布のどこに位置するのかを確認するため， 度数分布表を作成してみましょう。 度数分布表を作成するためには，度数を計算するための区間幅を指定する必要があります。 ここでは<code>cut()</code>関数を使って，データを30区分に分割し，区間を作成し，その区間ごとにデータ数を<code>table()</code>関数で確認してみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>売上高区間 <span class="ot">&lt;-</span> df<span class="sc">$</span>売上高 <span class="sc">|&gt;</span> <span class="fu">cut</span>(<span class="dv">30</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>売上高区間) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Var1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(-3.14e+04,1.05e+06]</td>
+<td style="text-align: right;">42434</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.05e+06,2.09e+06]</td>
+<td style="text-align: right;">1159</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.09e+06,3.14e+06]</td>
+<td style="text-align: right;">351</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(3.14e+06,4.18e+06]</td>
+<td style="text-align: right;">195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(4.18e+06,5.23e+06]</td>
+<td style="text-align: right;">98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(5.23e+06,6.28e+06]</td>
+<td style="text-align: right;">72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(6.28e+06,7.32e+06]</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(7.32e+06,8.37e+06]</td>
+<td style="text-align: right;">41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(8.37e+06,9.41e+06]</td>
+<td style="text-align: right;">37</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(9.41e+06,1.05e+07]</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(1.05e+07,1.15e+07]</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.15e+07,1.26e+07]</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(1.26e+07,1.36e+07]</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.36e+07,1.46e+07]</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(1.46e+07,1.57e+07]</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.57e+07,1.67e+07]</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(1.67e+07,1.78e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.78e+07,1.88e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(1.88e+07,1.99e+07]</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(1.99e+07,2.09e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.09e+07,2.2e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(2.2e+07,2.3e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.3e+07,2.41e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(2.41e+07,2.51e+07]</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.51e+07,2.61e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(2.61e+07,2.72e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.72e+07,2.82e+07]</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(2.82e+07,2.93e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(2.93e+07,3.03e+07]</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(3.03e+07,3.14e+07]</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>この度数分布表を元にした，横軸に区間，縦軸に度数としたグラフを<strong>ヒストグラム</strong>(histogram)といいます。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>データの可視化(visualization)については，後の章で詳しく説明するので，ここでは<code>ggplot()</code>関数などの使い方は説明しません。</p>
+</div></div><div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(売上高) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span> <span class="co"># ヒストグラム</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mean_sale, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co"># 平均値</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_sale, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span><span class="co"># 中央値</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap10_stats_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>企業の売上高のヒストグラムを見ると，極めて大きな売上高をもつ企業が存在するため，分布の裾が右に長く伸びていて，分布の形状がよく分かりません。 売上高の最小値と最大値の差である範囲を<code>range()</code>関数で確認してみると，</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(df<span class="sc">$</span>売上高)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]        1 31379507</code></pre>
+</div>
+</div>
+<p>最小値が<code>1</code>, 最大値が<code>31379507</code>となり，最大は31兆3795億7百万円となっています。</p>
+<p>左の塊の分布を確認するため，横軸の範囲を限定してみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(売上高) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>( <span class="co"># x軸の設定</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300000</span>), <span class="co"># 軸の範囲</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">label_number</span>() <span class="co"># 軸ラベルにコンマ</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mean_sale, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_sale, <span class="at">color =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap10_stats_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>巨額の売上高を計上している会社が存在するため，中央値と比べて平均値が右に偏っています。 このようなデータの場合，この売上高の分布を代表する値として，平均値は適切であるとはいえません。</p>
+<p>売上高の自然対数をとると，分布がいい感じになることが多いです。 やってみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>対数売上高 <span class="ot">&lt;-</span> <span class="fu">log</span>(df<span class="sc">$</span>売上高<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mean_sale <span class="ot">&lt;-</span> <span class="fu">mean</span>(対数売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 平均値</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>median_sale <span class="ot">&lt;-</span> <span class="fu">median</span>(対数売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 中央値</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(対数売上高) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> <span class="co"># ヒストグラム</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mean_sale, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co"># 平均値</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median_sale, <span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span> <span class="co">#  中央値</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"対数売上高"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"度数"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap10_stats_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- データには「**カテゴリ変数**」(category variable)と「**量的変数**」(quantitative variable)あるいは「**連続変数**」(continuous variable)があり，それぞれに対して適切なグラフの種類があります。
+-->
+</section>
+<section id="散らばり" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="散らばり">散らばり</h3>
+<p><strong>散らばり</strong>(dispersion)とは、データのばらつきを表す数値です。 データの散らばりの程度を表す代表的な統計量として、次のものがあります。</p>
+<ul>
+<li><strong>分散</strong>(variance) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>標準偏差</strong>(standard deviation) : 連続変数・離散変数ともに計算可能</li>
+<li><strong>四分位点</strong>(quartile) : 連続変数・離散変数ともに計算可能</li>
+</ul>
+<p>散らばりの尺度として最も良く用いられる分散と標準偏差の定義は以下の通りです。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{分散} &amp;= \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2 \\
+\text{標準偏差} &amp;= \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}
+\end{aligned}
+\]</span></p>
+<p>定義から分かるように，分散は個々のデータ<span class="math inline">\(x_i\)</span>から平均値<span class="math inline">\(\bar{x}\)</span>を引いて2乗したものの平均値です。つまり平均値からみてデータがどれだけ離れているのか，を表しています。 また，標準偏差は分散の平方根になっています。 分散は2乗しているため，単位が変わってしまいます(距離なら面積になってしまう)。 そこで，平方根をとることで元の単位に戻しています。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>二乗しているのは，データが平均値よりも大きい場合と小さい場合があり，普通に足すと正と負で打ち消し合ってしまうため，二乗することで正の値になるようにしています。 数学B？あたりで勉強したであろうユークリッド距離の定義と同じです。</p>
+<p>絶対値でもよさそうに思いますが，絶対値は微分できないので，扱いが難しくなるためあまり使いません。</p>
+</div></div><p>これらの統計量を計算する関数は次のとおりです。</p>
+<ul>
+<li><code>var()</code> : 分散を計算する</li>
+<li><code>sd()</code> : 標準偏差を計算する</li>
+<li><code>IQR()</code> : Q1とQ3の差である四分位範囲を計算する</li>
+</ul>
+<p>では，売上高の分散，標準偏差，四分位点を計算してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>var_sale <span class="ot">&lt;-</span> <span class="fu">var</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 分散</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sd_sale <span class="ot">&lt;-</span> <span class="fu">sd</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 標準偏差</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>IQR_sale <span class="ot">&lt;-</span> <span class="fu">IQR</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 四分位点</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(var_sale, sd_sale, IQR_sale))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 935268981969.3       967093.1       114277.5</code></pre>
+</div>
+</div>
+<p>分散が非常に大きく，データの散らばり具合が大きいことが分かります。</p>
+</section>
+<section id="記述統計量のまとめ" class="level3">
+<h3 class="anchored" data-anchor-id="記述統計量のまとめ">記述統計量のまとめ</h3>
+<p>論文やレポートには，データの特徴を捉えるため，記述統計量の表を載せることが多いです。 そのとき，平均値，中央値，分散，標準偏差，第1四分位(Q1)，第3四分位(Q3)，最小値，最大値が載った表を作成することが望ましいです。 Rでは，記述統計量の表を作成するもっとも簡単な方法は，基本関数である<code>summary()</code>を使うことです。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>売上高)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+       1    12566    37220   242056   126843 31379507 </code></pre>
+</div>
+</div>
+<p>ただ<code>summary()</code>関数は，分散と標準偏差を返してくれないので，自分で欲しい記述統計量を計算して表にするか，特別のパッケージを使う必要があります。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_stat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  平均 <span class="ot">=</span> <span class="fu">mean</span>(df<span class="sc">$</span>売上高),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q1 =</span> <span class="fu">quantile</span>(df<span class="sc">$</span>売上高, <span class="fl">0.25</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  中央値 <span class="ot">=</span> <span class="fu">median</span>(df<span class="sc">$</span>売上高),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Q3 =</span> <span class="fu">quantile</span>(df<span class="sc">$</span>売上高, <span class="fl">0.75</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  分散 <span class="ot">=</span> <span class="fu">var</span>(df<span class="sc">$</span>売上高),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  標準偏差 <span class="ot">=</span> <span class="fu">sd</span>(df<span class="sc">$</span>売上高),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  最小値 <span class="ot">=</span> <span class="fu">min</span>(df<span class="sc">$</span>売上高),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  最大値 <span class="ot">=</span> <span class="fu">max</span>(df<span class="sc">$</span>売上高)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>df_stat <span class="sc">|&gt;</span> <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">平均</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Q1</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">中央値</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Q3</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">分散</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">標準偏差</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">最小値</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">最大値</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">25%</td>
+<td style="text-align: center;">242055.8</td>
+<td style="text-align: center;">12565.5</td>
+<td style="text-align: center;">37220</td>
+<td style="text-align: center;">126843</td>
+<td style="text-align: center;">935268981969</td>
+<td style="text-align: center;">967093.1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">31379507</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><code>gtsummary</code>パッケージを使うと，<code>summary()</code>関数と同じような表を作成することができます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df_skim <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">select</span>(売上高) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">skim_without_charts</span>()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df_skim <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>skim_type, <span class="sc">-</span>n_missing, <span class="sc">-</span>complete_rate) <span class="sc">|&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"変数名"</span>,<span class="st">"平均値"</span>,<span class="st">"標準偏差"</span>,<span class="st">"最小値"</span>,<span class="st">"Q1"</span>,<span class="st">"中央値"</span>,<span class="st">"Q3"</span>,<span class="st">"最大値"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">変数名</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">平均値</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">標準偏差</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">最小値</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">中央値</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">最大値</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">売上高</td>
+<td style="text-align: right;">242055.8</td>
+<td style="text-align: right;">967093.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12565.5</td>
+<td style="text-align: right;">37220</td>
+<td style="text-align: right;">126843</td>
+<td style="text-align: right;">31379507</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="カテゴリー変数と量的変数" class="level3">
+<h3 class="anchored" data-anchor-id="カテゴリー変数と量的変数">カテゴリー変数と量的変数</h3>
+<p>ここまでの分析では，数値データに対する記述統計量について説明しました。 売上高や利益といった変数は<strong>量的変数</strong>(quantitative variable)とは、観測値が数値で表される変数で，足したり引いたり、平均や分散を計算することに意味があります。</p>
+<p>しかし，データに含まれる数値データには，<strong>カテゴリー変数</strong>(category variable)という観測値が属するカテゴリーを表す変数があったりします。 たとえば、日経産業中分類を表す<code>日経業種コード</code>は35が「水産」、37が「鉱業」，41が「建設」を表しています。 もちろん，これらの数値は足したり引いたりすることに意味はありません。</p>
+<p>したがって、手元にあるデータベースの各変数がカテゴリー変数か量的変数かを把握することは極めて重要です。 Rでは自動で両者を区別したりはしてくれないので、データを読み込んだ後に変数の種類を確認し、自分で指定します。</p>
+<p><code>df</code>に含まれる<code>日経業種コード</code>の記述統計量を見てみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>日経業種コード)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 101001  121206  241406  193635  263621  271704 </code></pre>
+</div>
+</div>
+<p>何か表示されますが，この数値に意味はありません。 日経業種コードは6ケタの数値ですが，最初の1ケタは大分類で1なら製造業，2なら非製造業を表します。 次の2ケタは中分類，次の3ケタは小分類を表します。 つまり，<code>1 + 32 + 344</code>のような構造になっています。</p>
+<p>財務分析では，産業中分類をよく使うので，ここでは中分類を抽出し，カテゴリーを表す因子型に変換してみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>中分類 <span class="ot">&lt;-</span> <span class="fu">substr</span>(df<span class="sc">$</span>日経業種コード, <span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>() <span class="co">#2〜3ケタ目を抽出</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(中分類) <span class="co"># factorになってます。</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(中分類)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  01   03   05   07   09   11   13   15   17   19   21   23   25   27   29   31 
+1636  677  323 2888  740  147  322  775  660 1618 3199 3717   68 1204  177  776 
+  33   35   37   41   43   45   52   53   55   57   59   61   63   65   67   69 
+1456  159  106 2044 4484 2780  675 1396  483  474  186   66  547  487  209  151 
+  71 
+9897 </code></pre>
+</div>
+</div>
+<p>Rでは因子型に対して，<code>summary()</code>関数を使うと，カテゴリーごとの個数が表示されます。</p>
+<!--
+### 練習用データの読み込み {.unnumbered}
+
+ここでは、教科書とは違う、企業の財務データを使いながら、データの可視化を学びます。
+財務データが収録された`csv`ファイルを，tidyverseの`read_csv()`関数を使って読み込みます。
+`read_csv()`関数の引数として，ファイルの場所とファイル名を直接パスあるいは相対パスを指定します。
+
+
+::: {.cell}
+
+```{.r .cell-code}
+df <- read_csv("data/RD_2022.csv")
+```
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Rows: 57823 Columns: 23
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (3): 会社コード, 企業名, 決算期
+dbl (20): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種コード, 現金預金, 資産合計, 資本金, 資本剰余金, 利益剰余金, 自...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+
+:::
+
+```{.r .cell-code}
+glimpse(df) # データの概要
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+Rows: 57,823
+Columns: 23
+$ 会社コード                     <chr> "0000001", "0000001", "0000001", "00000…
+$ 企業名                         <chr> "極洋", "極洋", "極洋", "極洋", "極洋",…
+$ 決算期                         <chr> "1999/03", "2000/03", "2001/03", "2002/…
+$ 決算種別                       <dbl> 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,…
+$ 連結基準                       <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ 決算月数                       <dbl> 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,…
+$ 上場コード                     <dbl> 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,…
+$ 日経業種コード                 <dbl> 235341, 235341, 235341, 235341, 235341,…
+$ 現金預金                       <dbl> 6307, 4951, 3818, 4185, 4015, 3456, 277…
+$ 資産合計                       <dbl> 62109, 60885, 60599, 57069, 55373, 5856…
+$ 資本金                         <dbl> 5664, 5664, 5664, 5664, 5664, 5664, 566…
+$ 資本剰余金                     <dbl> NA, NA, NA, NA, 742, 742, 742, 743, 749…
+$ 利益剰余金                     <dbl> 2739, 4238, 4812, 5485, 6254, 6378, 727…
+$ 自己株式                       <dbl> NA, NA, -79, -154, -387, -464, -368, -2…
+$ 売上高                         <dbl> 171944, 171031, 166644, 158006, 162773,…
+$ 経常利益                       <dbl> 1600, 2299, 1947, 2333, 3314, 2895, 335…
+$ 法人税等                       <dbl> 620, 606, 908, 856, 1234, 1302, 1422, 1…
+$ 法人税等調整額                 <dbl> NA, -178, -114, 44, -272, -234, 136, -3…
+$ 親会社株主に帰属する当期純利益 <dbl> -251, 327, 927, 1026, 1122, 1248, 1388,…
+$ 研究開発費IFRS                 <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ 研究開発費                     <dbl> 210, 201, 190, 179, 197, 212, 201, 193,…
+$ `開発費・試験研究費`           <dbl> 210, 105, 119, 153, 176, 156, 122, 148,…
+$ 現金及び現金同等物の期末残高   <dbl> NA, 4865, 3729, 4097, 3923, 3359, 2725,…
+```
+
+
+:::
+:::
+
+
+`23`個の変数があり、データの個数は`57,823`となっています。
+以下ではこのデータを使って、データの可視化を学びます。
+
+### 基本的な統計量の確認
+
+はじめに`summary()`で基本的な統計量を確認します。
+
+
+::: {.cell}
+
+```{.r .cell-code}
+summary(df)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  会社コード           企業名             決算期             決算種別 
+ Length:57823       Length:57823       Length:57823       Min.   :10  
+ Class :character   Class :character   Class :character   1st Qu.:10  
+ Mode  :character   Mode  :character   Mode  :character   Median :10  
+                                                          Mean   :10  
+                                                          3rd Qu.:10  
+                                                          Max.   :10  
+                                                                      
+    連結基準        決算月数       上場コード    日経業種コード  
+ Min.   :1.000   Min.   : 1.00   Min.   :11.00   Min.   :101001  
+ 1st Qu.:1.000   1st Qu.:12.00   1st Qu.:11.00   1st Qu.:121204  
+ Median :1.000   Median :12.00   Median :11.00   Median :241403  
+ Mean   :1.062   Mean   :11.98   Mean   :11.46   Mean   :190751  
+ 3rd Qu.:1.000   3rd Qu.:12.00   3rd Qu.:12.00   3rd Qu.:257561  
+ Max.   :3.000   Max.   :17.00   Max.   :13.00   Max.   :271704  
+                                                                 
+    現金預金           資産合計             資本金          資本剰余金     
+ Min.   :       4   Min.   :       70   Min.   :      1   Min.   :-161917  
+ 1st Qu.:    2023   1st Qu.:    14062   1st Qu.:   1198   1st Qu.:    965  
+ Median :    5370   Median :    39028   Median :   3363   Median :   2995  
+ Mean   :   38172   Mean   :   363536   Mean   :  16481   Mean   :  20259  
+ 3rd Qu.:   16467   3rd Qu.:   125705   3rd Qu.:  10090   3rd Qu.:   9927  
+ Max.   :68502665   Max.   :303846980   Max.   :3500000   Max.   :4503856  
+ NA's   :193        NA's   :44          NA's   :198       NA's   :7714     
+   利益剰余金          自己株式            売上高            経常利益      
+ Min.   : -972773   Min.   :-3306037   Min.   :       1   Min.   :-869562  
+ 1st Qu.:    2250   1st Qu.:   -1368   1st Qu.:   13366   1st Qu.:    425  
+ Median :    9163   Median :    -279   Median :   38209   Median :   1626  
+ Mean   :   75680   Mean   :   -5144   Mean   :  237440   Mean   :  14070  
+ 3rd Qu.:   34436   3rd Qu.:     -39   3rd Qu.:  127091   3rd Qu.:   6126  
+ Max.   :26453126   Max.   :      -1   Max.   :31379507   Max.   :5670456  
+ NA's   :299        NA's   :10800      NA's   :27         NA's   :21       
+    法人税等       法人税等調整額       親会社株主に帰属する当期純利益
+ Min.   : -21709   Min.   :-1139009.0   Min.   :-1708029              
+ 1st Qu.:    159   1st Qu.:    -134.5   1st Qu.:     163              
+ Median :    586   Median :      -7.0   Median :     823              
+ Mean   :   4827   Mean   :    -114.7   Mean   :    7707              
+ 3rd Qu.:   2170   3rd Qu.:      91.0   3rd Qu.:    3372              
+ Max.   :1190782   Max.   : 1097414.0   Max.   : 4987962              
+ NA's   :391       NA's   :3736         NA's   :29                    
+ 研究開発費IFRS     研究開発費      開発費・試験研究費
+ Min.   :    48   Min.   :      1   Min.   :     1    
+ 1st Qu.:  2440   1st Qu.:    131   1st Qu.:   169    
+ Median : 24628   Median :    547   Median :   651    
+ Mean   : 91248   Mean   :   8441   Mean   :  7528    
+ 3rd Qu.:108096   3rd Qu.:   2330   3rd Qu.:  2710    
+ Max.   :806905   Max.   :1124262   Max.   :662610    
+ NA's   :57583    NA's   :21525     NA's   :38296     
+ 現金及び現金同等物の期末残高
+ Min.   :    -292            
+ 1st Qu.:    1913            
+ Median :    5328            
+ Mean   :   39185            
+ 3rd Qu.:   16954            
+ Max.   :68419223            
+ NA's   :1591                
+```
+
+
+:::
+:::
+
+ -->
+</section>
+<section id="財務分析の練習" class="level2">
+<h2 class="anchored" data-anchor-id="財務分析の練習">財務分析の練習</h2>
+<p>財務分析の練習のため，最初にダウンロードした<code>df</code>を使います。 まずは，データの概要を確認します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 57,823
+Columns: 23
+$ 会社コード                     &lt;chr&gt; "0000001", "0000001", "0000001", "00000…
+$ 企業名                         &lt;chr&gt; "極洋", "極洋", "極洋", "極洋", "極洋",…
+$ 決算期                         &lt;chr&gt; "1999/03", "2000/03", "2001/03", "2002/…
+$ 決算種別                       &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,…
+$ 連結基準                       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ 決算月数                       &lt;dbl&gt; 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,…
+$ 上場コード                     &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,…
+$ 日経業種コード                 &lt;dbl&gt; 235341, 235341, 235341, 235341, 235341,…
+$ 現金預金                       &lt;dbl&gt; 6307, 4951, 3818, 4185, 4015, 3456, 277…
+$ 資産合計                       &lt;dbl&gt; 62109, 60885, 60599, 57069, 55373, 5856…
+$ 資本金                         &lt;dbl&gt; 5664, 5664, 5664, 5664, 5664, 5664, 566…
+$ 資本剰余金                     &lt;dbl&gt; NA, NA, NA, NA, 742, 742, 742, 743, 749…
+$ 利益剰余金                     &lt;dbl&gt; 2739, 4238, 4812, 5485, 6254, 6378, 727…
+$ 自己株式                       &lt;dbl&gt; NA, NA, -79, -154, -387, -464, -368, -2…
+$ 売上高                         &lt;dbl&gt; 171944, 171031, 166644, 158006, 162773,…
+$ 経常利益                       &lt;dbl&gt; 1600, 2299, 1947, 2333, 3314, 2895, 335…
+$ 法人税等                       &lt;dbl&gt; 620, 606, 908, 856, 1234, 1302, 1422, 1…
+$ 法人税等調整額                 &lt;dbl&gt; NA, -178, -114, 44, -272, -234, 136, -3…
+$ 親会社株主に帰属する当期純利益 &lt;dbl&gt; -251, 327, 927, 1026, 1122, 1248, 1388,…
+$ 研究開発費IFRS                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ 研究開発費                     &lt;dbl&gt; 210, 201, 190, 179, 197, 212, 201, 193,…
+$ `開発費・試験研究費`           &lt;dbl&gt; 210, 105, 119, 153, 176, 156, 122, 148,…
+$ 現金及び現金同等物の期末残高   &lt;dbl&gt; NA, 4865, 3729, 4097, 3923, 3359, 2725,…</code></pre>
+</div>
+</div>
+<p>44527個のデータと12の変数から構成されています。</p>
+<p>の型を確認すると、大部分の財務データは数値<code>&lt;dbl&gt;</code>ですが、</p>
+<ul>
+<li>会社コード</li>
+<li>企業名</li>
+<li>決算期</li>
+</ul>
+<p>の3つは文字列<code>&lt;chr&gt;</code>となっています。 また、数値<code>&lt;dbl&gt;</code>となっているけれど実際はカテゴリー変数であるものとして、</p>
+<ul>
+<li>決算種別 : <code>10 = 本決算</code></li>
+<li>連結基準 : <code>1 = 日本基準</code>, <code>2 = 米国基準</code>, <code>3 = IFRS</code>, <code>0 = 単独</code></li>
+<li>上場コード : <code>11 = 東証1部</code>, <code>12 = 東証2部</code>, <code>13 = 東証マザーズ</code>,</li>
+<li>日経業種コード : 後で説明あり</li>
+</ul>
+<p>があります。 文字列となっている変数以外の量的変数について、<code>summary()</code>関数は最小値、第1四分位、中央値、平均値、第3四分位、最大値、欠損値の数、といった項目の計算を行います。 数値データとなっているカテゴリー変数である決算種別，連結基準，上場コード，日経業種コードの統計量も計算されていますが，もちろん意味はありません。 Rにカテゴリー変数であることを明示するためにファクター型に変換する必要があります。</p>
+<p>とりあえず、数値データのうち、カテゴリー変数ではないものについて、統計量を計算してみます。 主要な統計量を返す関数には以下のものがあります。</p>
+<ul>
+<li><code>mean()</code> : 算術平均を計算する</li>
+<li><code>median()</code> : 中央値を計算する</li>
+<li><code>sd()</code> : (不偏)標準偏差を計算する</li>
+<li><code>var()</code> : (不偏)分散を計算する</li>
+<li><code>min()</code> : 最小値を計算する</li>
+<li><code>max()</code> : 最大値を計算する</li>
+</ul>
+<p>では、売上高の平均を計算してみましょう。 データフレーム<code>df</code>の売上高にアクセスするには、<code>df$売上高</code>のように、<code>$</code>を使って変数名を指定します。 Excelでいうと，<code>df</code>がシート名，<code>売上高</code>が列名に相当します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>売上高)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p><code>NA</code>が帰ってきましたね。 実は、この<code>mean()</code>関数は、引数となるベクトル変数の中に欠損値<code>NA</code>があると、<code>NA</code>を返します。 欠損値を意味する<code>NA</code>は，その観測値が存在しないことを表します。 このような場合、<code>NA</code>を除外して平均を計算する必要があるので、<code>na.rm = TRUE</code>という引数を追加します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 237440.1</code></pre>
+</div>
+</div>
+<p>これで、売上高の平均が237440.1121となりました。</p>
+<p>同じように、</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 中央値</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 38209</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(df<span class="sc">$</span>売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 標準偏差</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 938244.4</code></pre>
+</div>
+</div>
+<p>とすることで、中央値と標準偏差が求められます。</p>
+<section id="カテゴリ変数の内容確認" class="level3">
+<h3 class="anchored" data-anchor-id="カテゴリ変数の内容確認">カテゴリ変数の内容確認</h3>
+<p>カテゴリー変数について見ていきましょう。 ここでは日経業種コードを例にとります。 日経業種コードは6ケタの数字ですが、最初の1ケタが大分類、次の2ケタ目が中分類、最後の3ケタ目が小分類を表します。つまり<code>1 + 32 + 344</code>のような構造になっています。 実証会計研究では、産業中分類をよく使うので、ここでは中分類を抽出してみましょう。 またしても<code>substr()</code>関数を使って、2〜3ケタ目を抽出し、<code>中分類</code>という変数に格納します。 ついでに，<code>決算期</code>のデータが<code>YYYY/MM</code>という形式になっているので，最初の4桁を抽出して，<code>年度</code>という変数に格納します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    中分類 <span class="ot">=</span> <span class="fu">substr</span>(日経業種コード, <span class="dv">2</span>, <span class="dv">3</span>), <span class="co">#2〜3ケタ目を抽出</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    年度 <span class="ot">=</span> <span class="fu">substr</span>(決算期, <span class="dv">1</span>, <span class="dv">4</span>) <span class="co"># 最初の4桁を抽出</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>この中分類の内容を確認するには、<code>table()</code>関数を使います。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>中分類) <span class="co"># 中分類の表</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   01    03    05    07    09    11    13    15    17    19    21    23    25 
+ 2215   934   432  3915   947   178   459  1066   906  2174  4338  5016    96 
+   27    29    31    33    35    37    41    43    45    52    53    55    57 
+ 1651   253  1035  1936   203   131  2715  5926  3501   832  1674   670   640 
+   59    61    63    65    67    69    71 
+  261    96   746   625   285   214 11753 </code></pre>
+</div>
+</div>
+<p>このように、中分類ごとの企業数が計算されました。 このカテゴリー変数の型を<code>class()</code>関数で確認します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df<span class="sc">$</span>中分類) <span class="co"># 中分類の型</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+<p><code>character</code>つまり文字列となっています。これをファクター型に変えて、カテゴリー変数であることを明示します。<code>as.factor()</code>関数を使うと、ファクター型に変換できますが，産業コードだけだとどの産業なのか分かりづらいままです。 そこで、<code>factor()</code>関数を使って、カテゴリー変数の内容を指定します。 ついでに，上場コードや連結基準もファクター型に変換しておきます。</p>
+<p>まずどんな中分類があるのかを確認します。 ある変数にどんなカテゴリーがあるのかを確認するには、<code>unique()</code>関数を使います。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>chu_level <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(df<span class="sc">$</span>中分類)) <span class="co"># 中分類のカテゴリーを抽出</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="因子型の指定" class="level3">
+<h3 class="anchored" data-anchor-id="因子型の指定">因子型の指定</h3>
+<p>この中分類コードに対応する産業名称を指定するには，<code>factor()</code>関数の引数として，<code>levels =</code>と<code>labels =</code>を指定します。 以下では，<code>mutate()</code>と組み合わせて，<code>中分類</code>をファクター型に変換します。</p>
+<p>産業名称をベクトルとして収納しておきます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>chu_name <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"食品"</span>,<span class="st">"繊維"</span>,<span class="st">"パルプ・紙"</span>,<span class="st">"化学工業"</span>,<span class="st">"医薬品"</span>,<span class="st">"石油"</span>,<span class="st">"ゴム"</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"窯業"</span>,<span class="st">"鉄鉱業"</span>,<span class="st">"非金属及び金属製品"</span>,<span class="st">"機械"</span>,<span class="st">"電気機器"</span>,<span class="st">"造船"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"自動車・自動車部品"</span>,<span class="st">"その他輸送用機器"</span>,<span class="st">"精密機器"</span>,<span class="st">"その他製造業"</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"水産"</span>,<span class="st">"鉱業"</span>,<span class="st">"建設"</span>,<span class="st">"商社"</span>,<span class="st">"小売業"</span>,<span class="st">"その他金融業"</span>,<span class="st">"不動産"</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"鉄道・バス"</span>,<span class="st">"陸運"</span>,<span class="st">"海運"</span>,<span class="st">"空輸"</span>,<span class="st">"倉庫・運輸関連"</span>,<span class="st">"通信"</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"電力"</span>,<span class="st">"ガス"</span>,<span class="st">"サービス業"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(中分類) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    中分類 <span class="ot">=</span> <span class="fu">factor</span>(中分類, <span class="co"># 中分類をファクター型に変換</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> chu_level, <span class="co"># カテゴリーの種類</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> chu_name), <span class="co"># カテゴリーの名称</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    上場コード <span class="ot">=</span> <span class="fu">factor</span>(上場コード,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>), <span class="co"># カテゴリーの種類</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1部"</span>,<span class="st">"2部"</span>,<span class="st">"マザーズ"</span>)), <span class="co"># カテゴリーの名称</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    連結基準 <span class="ot">=</span> <span class="fu">factor</span>(連結基準,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">0</span>),</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"日本基準"</span>,<span class="st">"米国基準"</span>,<span class="st">"IFRS"</span>,<span class="st">"単独"</span>))</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>カテゴリー変数がファクター型に変換されたので，再度<code>summary()</code>関数を使って，概要統計量を確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  会社コード           企業名             決算期             決算種別 
+ Length:57823       Length:57823       Length:57823       Min.   :10  
+ Class :character   Class :character   Class :character   1st Qu.:10  
+ Mode  :character   Mode  :character   Mode  :character   Median :10  
+                                                          Mean   :10  
+                                                          3rd Qu.:10  
+                                                          Max.   :10  
+                                                                      
+     連結基準        決算月数        上場コード    日経業種コード  
+ 日本基準:55727   Min.   : 1.00   1部     :33171   Min.   :101001  
+ 米国基準:  581   1st Qu.:12.00   2部     :22529   1st Qu.:121204  
+ IFRS    : 1515   Median :12.00   マザーズ: 2123   Median :241403  
+ 単独    :    0   Mean   :11.98                    Mean   :190751  
+                  3rd Qu.:12.00                    3rd Qu.:257561  
+                  Max.   :17.00                    Max.   :271704  
+                                                                   
+    現金預金           資産合計             資本金          資本剰余金     
+ Min.   :       4   Min.   :       70   Min.   :      1   Min.   :-161917  
+ 1st Qu.:    2023   1st Qu.:    14062   1st Qu.:   1198   1st Qu.:    965  
+ Median :    5370   Median :    39028   Median :   3363   Median :   2995  
+ Mean   :   38172   Mean   :   363536   Mean   :  16481   Mean   :  20259  
+ 3rd Qu.:   16467   3rd Qu.:   125705   3rd Qu.:  10090   3rd Qu.:   9927  
+ Max.   :68502665   Max.   :303846980   Max.   :3500000   Max.   :4503856  
+ NA's   :193        NA's   :44          NA's   :198       NA's   :7714     
+   利益剰余金          自己株式            売上高            経常利益      
+ Min.   : -972773   Min.   :-3306037   Min.   :       1   Min.   :-869562  
+ 1st Qu.:    2250   1st Qu.:   -1368   1st Qu.:   13366   1st Qu.:    425  
+ Median :    9163   Median :    -279   Median :   38209   Median :   1626  
+ Mean   :   75680   Mean   :   -5144   Mean   :  237440   Mean   :  14070  
+ 3rd Qu.:   34436   3rd Qu.:     -39   3rd Qu.:  127091   3rd Qu.:   6126  
+ Max.   :26453126   Max.   :      -1   Max.   :31379507   Max.   :5670456  
+ NA's   :299        NA's   :10800      NA's   :27         NA's   :21       
+    法人税等       法人税等調整額       親会社株主に帰属する当期純利益
+ Min.   : -21709   Min.   :-1139009.0   Min.   :-1708029              
+ 1st Qu.:    159   1st Qu.:    -134.5   1st Qu.:     163              
+ Median :    586   Median :      -7.0   Median :     823              
+ Mean   :   4827   Mean   :    -114.7   Mean   :    7707              
+ 3rd Qu.:   2170   3rd Qu.:      91.0   3rd Qu.:    3372              
+ Max.   :1190782   Max.   : 1097414.0   Max.   : 4987962              
+ NA's   :391       NA's   :3736         NA's   :29                    
+ 研究開発費IFRS     研究開発費      開発費・試験研究費
+ Min.   :    48   Min.   :      1   Min.   :     1    
+ 1st Qu.:  2440   1st Qu.:    131   1st Qu.:   169    
+ Median : 24628   Median :    547   Median :   651    
+ Mean   : 91248   Mean   :   8441   Mean   :  7528    
+ 3rd Qu.:108096   3rd Qu.:   2330   3rd Qu.:  2710    
+ Max.   :806905   Max.   :1124262   Max.   :662610    
+ NA's   :57583    NA's   :21525     NA's   :38296     
+ 現金及び現金同等物の期末残高        中分類          年度          
+ Min.   :    -292             サービス業:11753   Length:57823      
+ 1st Qu.:    1913             商社      : 5926   Class :character  
+ Median :    5328             電気機器  : 5016   Mode  :character  
+ Mean   :   39185             機械      : 4338                     
+ 3rd Qu.:   16954             化学工業  : 3915                     
+ Max.   :68419223             小売業    : 3501                     
+ NA's   :1591                 (Other)   :23374                     </code></pre>
+</div>
+</div>
+<p>カテゴリー変数はカテゴリーの種類と個数が表示されています。</p>
+</section>
+<section id="つのカテゴリー変数の関係を確かめる" class="level3">
+<h3 class="anchored" data-anchor-id="つのカテゴリー変数の関係を確かめる">2つのカテゴリー変数の関係を確かめる</h3>
+<p>2つの変数から表を作成する方法について学びます。 典型的な表として，2変数のクロス集計表があります。 例えば，連結基準，つまり企業が採用している会計基準の種類と，上場コード，つまり企業が上場している市場の種類，の2変数について，それぞれのカテゴリーごとの企業数を計算することができます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>連結基準, df<span class="sc">$</span>上場コード) <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1部</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2部</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">マザーズ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">日本基準</td>
+<td style="text-align: right;">31290</td>
+<td style="text-align: right;">22432</td>
+<td style="text-align: right;">2005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">米国基準</td>
+<td style="text-align: right;">580</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IFRS</td>
+<td style="text-align: right;">1301</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">117</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">単独</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>圧倒的に，日本基準で上場している企業が多いことがわかります。 2020年度のデータだけを抽出して，同じようにクロス集計表を作成してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(年度 <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(連結基準, 上場コード)) <span class="sc">|&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">1部</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">2部</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">マザーズ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">日本基準</td>
+<td style="text-align: right;">1474</td>
+<td style="text-align: right;">1177</td>
+<td style="text-align: right;">259</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">米国基準</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IFRS</td>
+<td style="text-align: right;">194</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">単独</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>東証1部に上場している企業に注目すると，日本基準採用企業が1474社，米国基準採用企業が11社，IFRS採用企業が194社となっていることがわかりました。</p>
+<p>このように，<code>table()</code>関数の引数として2つのカテゴリー変数を指定すると，そこから<span class="math inline">\(2 \times 2\)</span>のグループに属する企業数を計算し，表を作成してくれます。</p>
+<p>ここで急に登場した<code>with()</code>関数ですが，<code>with()</code>関数は主として次の2つの引数をとります。</p>
+<ol type="1">
+<li>データ</li>
+<li>式</li>
+</ol>
+<p>例えば，先の表を作る場合を考えてみましょう。 普通に書くと</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>連結基準, df<span class="sc">$</span>上場コード)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>とかきましたが，何度も<code>df$</code>を書くことが面倒なので，<code>with()</code>関数を使って</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">table</span>(連結基準, 上場コード))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>と，第1引数に<code>df</code>を指定すれば，第2引数の式の中で<code>df$</code>を書く必要がなくなります。したがって，パイプ演算子を使って，</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(連結基準, 上場コード))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>と処理をつなげることができます。 便利ですね。</p>
+</section>
+<section id="カテゴリー別に量的変数の値を調べる" class="level3">
+<h3 class="anchored" data-anchor-id="カテゴリー別に量的変数の値を調べる">カテゴリー別に量的変数の値を調べる</h3>
+<p>次は，量的変数をカテゴリーごとに分析したいときがあります。 たとえば，産業別や年度別に売上高の平均値を知りたい，ということが何度もあります。 任意のグループごとに処理を繰り返したいときは，<code>dplyr</code>パッケージの<code>group_by()</code>関数を使います。 <code>group_by()</code>関数は，第1引数にグループ化したい変数を指定します。</p>
+<p>そして<code>group_by()</code>関数と同時に使うことで，グループごとの統計量を計算するために便利なのが<code>dplyr</code>パッケージの<code>summarize()</code>関数です。 <code>summarize()</code>関数は，次のような引数をとり，各種統計量を計算してくれます。</p>
+<ul>
+<li><code>mean =</code> : 平均</li>
+<li><code>median =</code> : 中央値</li>
+<li><code>sd =</code> : 標準偏差</li>
+<li><code>var =</code> : 分散</li>
+<li><code>n()</code> : グループごとの観測値の個数</li>
+</ul>
+<p>例えば，上場場所ごとに売上高の平均値を計算するには，次のようにします。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(上場コード) <span class="sc">%&gt;%</span> <span class="co"># 上場場ごとに</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    企業数 <span class="ot">=</span> <span class="fu">n</span>(), <span class="co">#</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    平均売上高 <span class="ot">=</span> <span class="fu">mean</span>(売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 平均</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># グループ化解除</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="co"># 表を作成</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">上場コード</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">企業数</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">平均売上高</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1部</td>
+<td style="text-align: right;">33171</td>
+<td style="text-align: right;">393156.220</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2部</td>
+<td style="text-align: right;">22529</td>
+<td style="text-align: right;">29884.533</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">マザーズ</td>
+<td style="text-align: right;">2123</td>
+<td style="text-align: right;">5459.012</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>結果を見れば分かるとおり，<code>group_by()</code>で上場場所ごとにグループ化し，<code>summarize()</code>で企業数と平均売上高を計算しているので，上場場所，企業数，平均売上高の3変数が3つの観測値をもつ<span class="math inline">\(3 \times 3\)</span>の表が作成されています。 <code>group_by()</code>と<code>summarize()</code>を組み合わせると，結果としてグループ数に応じた統計量を計算した結果となり，元のデータよりも小さなデータフレームとなって返ってきます。</p>
+<p>ついでに，産業別の売上高合計，利益平均値，利益中央値，利益の標準偏差を計算してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(中分類) <span class="sc">%&gt;%</span> <span class="co"># 産業中分類ごとに</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    企業数 <span class="ot">=</span> <span class="fu">n</span>(), <span class="co"># n()で要素数</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    売上合計 <span class="ot">=</span> <span class="fu">sum</span>(売上高, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># 合計</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    利益平均値 <span class="ot">=</span> <span class="fu">mean</span>(親会社株主に帰属する当期純利益, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># 平均</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    利益中央値 <span class="ot">=</span> <span class="fu">median</span>(親会社株主に帰属する当期純利益, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># 中央値</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    利益標準偏差 <span class="ot">=</span> <span class="fu">sd</span>(親会社株主に帰属する当期純利益, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># 標準偏差</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(売上合計)) <span class="sc">%&gt;%</span> <span class="co"># 売上合計で降順に並び替え</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># グループ化解除</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">booktabs =</span> <span class="cn">TRUE</span>) <span class="co"># 表を作成</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">中分類</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">企業数</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">売上合計</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">利益平均値</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">利益中央値</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">利益標準偏差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">電気機器</td>
+<td style="text-align: right;">5016</td>
+<td style="text-align: right;">1941560030</td>
+<td style="text-align: right;">10167.927</td>
+<td style="text-align: right;">1084.0</td>
+<td style="text-align: right;">62674.007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">商社</td>
+<td style="text-align: right;">5926</td>
+<td style="text-align: right;">1909721701</td>
+<td style="text-align: right;">6754.815</td>
+<td style="text-align: right;">738.0</td>
+<td style="text-align: right;">43249.527</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">自動車・自動車部品</td>
+<td style="text-align: right;">1651</td>
+<td style="text-align: right;">1688864541</td>
+<td style="text-align: right;">39250.629</td>
+<td style="text-align: right;">1851.0</td>
+<td style="text-align: right;">210604.044</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">小売業</td>
+<td style="text-align: right;">3501</td>
+<td style="text-align: right;">793035711</td>
+<td style="text-align: right;">4590.688</td>
+<td style="text-align: right;">880.0</td>
+<td style="text-align: right;">14968.112</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">化学工業</td>
+<td style="text-align: right;">3915</td>
+<td style="text-align: right;">736860746</td>
+<td style="text-align: right;">7564.608</td>
+<td style="text-align: right;">1445.0</td>
+<td style="text-align: right;">23530.649</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">サービス業</td>
+<td style="text-align: right;">11753</td>
+<td style="text-align: right;">694250494</td>
+<td style="text-align: right;">2578.502</td>
+<td style="text-align: right;">361.0</td>
+<td style="text-align: right;">17729.118</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">通信</td>
+<td style="text-align: right;">625</td>
+<td style="text-align: right;">647052927</td>
+<td style="text-align: right;">67415.843</td>
+<td style="text-align: right;">3040.0</td>
+<td style="text-align: right;">284105.640</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">機械</td>
+<td style="text-align: right;">4338</td>
+<td style="text-align: right;">616584704</td>
+<td style="text-align: right;">5310.454</td>
+<td style="text-align: right;">1007.0</td>
+<td style="text-align: right;">20211.162</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">建設</td>
+<td style="text-align: right;">2715</td>
+<td style="text-align: right;">597371111</td>
+<td style="text-align: right;">4868.903</td>
+<td style="text-align: right;">1073.5</td>
+<td style="text-align: right;">22122.402</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">食品</td>
+<td style="text-align: right;">2215</td>
+<td style="text-align: right;">553185961</td>
+<td style="text-align: right;">8370.878</td>
+<td style="text-align: right;">1211.0</td>
+<td style="text-align: right;">32427.752</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">電力</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">435223159</td>
+<td style="text-align: right;">24108.284</td>
+<td style="text-align: right;">21988.0</td>
+<td style="text-align: right;">127809.199</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">非金属及び金属製品</td>
+<td style="text-align: right;">2174</td>
+<td style="text-align: right;">333425028</td>
+<td style="text-align: right;">3537.316</td>
+<td style="text-align: right;">704.0</td>
+<td style="text-align: right;">15694.021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">鉄道・バス</td>
+<td style="text-align: right;">670</td>
+<td style="text-align: right;">309477897</td>
+<td style="text-align: right;">16710.421</td>
+<td style="text-align: right;">3660.0</td>
+<td style="text-align: right;">61053.123</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">鉄鉱業</td>
+<td style="text-align: right;">906</td>
+<td style="text-align: right;">306858163</td>
+<td style="text-align: right;">8887.185</td>
+<td style="text-align: right;">903.0</td>
+<td style="text-align: right;">47067.285</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">石油</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">247483911</td>
+<td style="text-align: right;">14830.657</td>
+<td style="text-align: right;">1510.5</td>
+<td style="text-align: right;">81496.356</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">医薬品</td>
+<td style="text-align: right;">947</td>
+<td style="text-align: right;">199368660</td>
+<td style="text-align: right;">20915.376</td>
+<td style="text-align: right;">4157.0</td>
+<td style="text-align: right;">48451.048</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">その他製造業</td>
+<td style="text-align: right;">1936</td>
+<td style="text-align: right;">189462230</td>
+<td style="text-align: right;">2630.949</td>
+<td style="text-align: right;">595.0</td>
+<td style="text-align: right;">8999.953</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">不動産</td>
+<td style="text-align: right;">1674</td>
+<td style="text-align: right;">181588397</td>
+<td style="text-align: right;">5826.409</td>
+<td style="text-align: right;">1192.0</td>
+<td style="text-align: right;">20315.917</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">窯業</td>
+<td style="text-align: right;">1066</td>
+<td style="text-align: right;">145506672</td>
+<td style="text-align: right;">4485.089</td>
+<td style="text-align: right;">909.5</td>
+<td style="text-align: right;">13623.277</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">その他金融業</td>
+<td style="text-align: right;">832</td>
+<td style="text-align: right;">142861287</td>
+<td style="text-align: right;">9388.689</td>
+<td style="text-align: right;">1657.5</td>
+<td style="text-align: right;">47428.745</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ゴム</td>
+<td style="text-align: right;">459</td>
+<td style="text-align: right;">133429682</td>
+<td style="text-align: right;">12362.357</td>
+<td style="text-align: right;">1381.0</td>
+<td style="text-align: right;">43652.986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">精密機器</td>
+<td style="text-align: right;">1035</td>
+<td style="text-align: right;">132220025</td>
+<td style="text-align: right;">6338.030</td>
+<td style="text-align: right;">1015.0</td>
+<td style="text-align: right;">17597.021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">陸運</td>
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">118243116</td>
+<td style="text-align: right;">4662.080</td>
+<td style="text-align: right;">1285.5</td>
+<td style="text-align: right;">9675.867</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">繊維</td>
+<td style="text-align: right;">934</td>
+<td style="text-align: right;">115700455</td>
+<td style="text-align: right;">2405.079</td>
+<td style="text-align: right;">542.0</td>
+<td style="text-align: right;">10837.288</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">海運</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">104869365</td>
+<td style="text-align: right;">15152.031</td>
+<td style="text-align: right;">1012.0</td>
+<td style="text-align: right;">93497.186</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">パルプ・紙</td>
+<td style="text-align: right;">432</td>
+<td style="text-align: right;">100989604</td>
+<td style="text-align: right;">3345.630</td>
+<td style="text-align: right;">693.5</td>
+<td style="text-align: right;">9869.195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ガス</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">89266508</td>
+<td style="text-align: right;">16210.327</td>
+<td style="text-align: right;">3620.0</td>
+<td style="text-align: right;">26366.794</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">空輸</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">70396355</td>
+<td style="text-align: right;">13813.062</td>
+<td style="text-align: right;">1053.0</td>
+<td style="text-align: right;">105853.201</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">造船</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">50404788</td>
+<td style="text-align: right;">4001.927</td>
+<td style="text-align: right;">968.5</td>
+<td style="text-align: right;">18613.163</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">倉庫・運輸関連</td>
+<td style="text-align: right;">746</td>
+<td style="text-align: right;">48088368</td>
+<td style="text-align: right;">1876.247</td>
+<td style="text-align: right;">622.0</td>
+<td style="text-align: right;">3991.522</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">水産</td>
+<td style="text-align: right;">203</td>
+<td style="text-align: right;">35003357</td>
+<td style="text-align: right;">2327.473</td>
+<td style="text-align: right;">1122.0</td>
+<td style="text-align: right;">4202.917</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">その他輸送用機器</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">27993041</td>
+<td style="text-align: right;">4227.802</td>
+<td style="text-align: right;">1102.0</td>
+<td style="text-align: right;">12600.550</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">鉱業</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">26740727</td>
+<td style="text-align: right;">15827.588</td>
+<td style="text-align: right;">2096.0</td>
+<td style="text-align: right;">46860.380</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>次のグラフ作成のためのデータを作成するため，年度別ごとに，ROEの平均値を計算し，その結果を<code>df_year</code>という変数に代入します。 ROEは，ある年度の<code>親会社に帰属する当期純利益</code>を期首株主資本で割った値です。 株主資本は，資本金と資本剰余金，利益剰余金，自己株式の合計で計算しますが，欠損値になっている会社もあるので，<code>replace_na()</code>関数を使って欠損値にはゼロを代入します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(資本剰余金 <span class="ot">=</span> <span class="dv">0</span>, 利益剰余金 <span class="ot">=</span> <span class="dv">0</span>, 自己株式 <span class="ot">=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span> <span class="co"># 欠損値をゼロに置き換え</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(企業名) <span class="sc">%&gt;%</span> <span class="co"># 会社ごとに</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="co"># 新変数作成</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    株主資本 <span class="ot">=</span> 資本金 <span class="sc">+</span> 資本剰余金 <span class="sc">+</span> 利益剰余金 <span class="sc">+</span> 自己株式, <span class="co"># 株主資本を計算</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(株主資本 <span class="sc">&gt;</span><span class="dv">0</span> ) <span class="sc">%&gt;%</span> <span class="co"># 株主資本がマイナスの企業を除外</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ROE =</span> 親会社株主に帰属する当期純利益 <span class="sc">/</span> <span class="fu">lag</span>(株主資本) <span class="co"># ROEを計算</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co"># グループ化解除</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>df_year <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(年度) <span class="sc">%&gt;%</span> <span class="co"># 年ごとに</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>( <span class="co"># 統計量を計算</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>    平均<span class="at">ROE =</span> <span class="fu">mean</span>(ROE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co"># グループ化解除</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これで，年度ごと，上場場所ごとに，平均ROEを計算したデータフレーム<code>df_year</code>ができました。</p>
+<p>ここで注意しなければならない点として，<code>group_by(企業名)</code>とした上で，<code>lag()</code>関数を使っている点です。 <code>lag()</code>関数は，引数として指定した変数の値の1つ前の値に変換します。 したがって，<code>group_by()</code>を使わないと次のような結果になります。</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">企業名</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">年度</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">親会社株主に帰属する当期純利益</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">株主資本</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ROE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: right;">8941</td>
+<td style="text-align: right;">129587</td>
+<td style="text-align: right;">0.0723101</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">8636</td>
+<td style="text-align: right;">135597</td>
+<td style="text-align: right;">0.0666425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">9327</td>
+<td style="text-align: right;">142166</td>
+<td style="text-align: right;">0.0687847</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">1999</td>
+<td style="text-align: right;">7327</td>
+<td style="text-align: right;">156543</td>
+<td style="text-align: right;">0.0515383</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">2000</td>
+<td style="text-align: right;">10822</td>
+<td style="text-align: right;">175112</td>
+<td style="text-align: right;">0.0691312</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">2001</td>
+<td style="text-align: right;">11136</td>
+<td style="text-align: right;">177671</td>
+<td style="text-align: right;">0.0635936</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>ここで問題になっているのが，日清製粉グループ本社の1999年のROEが計算されている点である。 ROEは分子に親会社株主に帰属する当期純利益，分母に<strong>期首</strong>株主資本，つまりは前期末の株主資本を使います。 したがって，1999年のROEを計算するためには，1998年の株主資本を使う必要がありますが，データは1999年からしか存在しないので欠損値にならないといけないのに，計算されてしまっています。 つまり，一つ上のニップンの2022年の株主資本のデータを使っているのです。 そこで，<code>group_by()</code>により企業ごとにグループ化して，<code>lag()</code>関数を使って，一つ前の観測値を使うようにし，1999年のROEは欠損値になるようにします。</p>
+<div class="cell">
+<div class="cell-output-display">
+<table data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">企業名</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">年度</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">株主資本</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">ROE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: right;">129587</td>
+<td style="text-align: right;">0.0723101</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">135597</td>
+<td style="text-align: right;">0.0666425</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ニップン</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">142166</td>
+<td style="text-align: right;">0.0687847</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">1999</td>
+<td style="text-align: right;">156543</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">2000</td>
+<td style="text-align: right;">175112</td>
+<td style="text-align: right;">0.0691312</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日清製粉グループ本社</td>
+<td style="text-align: left;">2001</td>
+<td style="text-align: right;">177671</td>
+<td style="text-align: right;">0.0635936</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

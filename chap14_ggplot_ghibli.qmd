@@ -1,0 +1,106 @@
+---
+title: "ggplotとジブリ"
+---
+
+
+## 宮崎駿カラー
+
+ggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発された`ghibli`パッケージを使ってみます。
+
+カラーパレットの名前もジブリらしく、
+
+- `PonyoLight` : 『崖の上のポニョ』
+- `TotoroLight` : 『となりのトトロ』
+- `KikiLight` : 『魔女の宅急便』
+- `LaputaLight` : 『天空の城ラピュタ』
+
+などがあります。
+色の濃度として、
+
+- `Light` : 明るい
+- `Medium` : 中間
+- `Dark` : 濃い
+
+がそれぞれのカラーパレットにあります。
+
+## 使用方法
+
+パッケージを読み込みます。
+
+```{r}
+# install.packages('ghibli') # first time only
+library(ghibli)
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+knitr::opts_chunk$set(dev = "ragg_png")
+```
+
+カラーパレットを確認します。
+3行9列のグラフを作成しています。
+```{r colorpallet}
+par(mfrow=c(9,3))
+for(i in names(ghibli_palettes)) print(ghibli_palette(i))
+```
+
+グラフを作成してみます。
+ラピュタなら`LaputaLight`を使います。
+```{r jitter}
+#| message: false
+data("mtcars") # 車のデータ
+dfm <- mtcars
+
+ggplot(dfm) + 
+  aes(x = wt, y = mpg, color = factor(vs)) + 
+  geom_jitter(size = 2) + 
+  theme_minimal() +
+  # ghibli stuff
+  scale_colour_ghibli_d("LaputaMedium", direction = -1)
+```
+
+トトロなら`TotoroLight`を使います。
+```{r}
+dfm |>
+  group_by(carb) |>
+  summarise(mmpg = mean(mpg)) |>
+  ggplot() + 
+  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + 
+  geom_col() + theme_minimal() + 
+  # ghibli stuff
+  scale_fill_ghibli_d("TotoroLight", direction = -1)
+```
+
+魔女の宅急便なら、`KikiLight`を使います。
+```{r}
+g <- dfm |>
+  group_by(carb, vs) |>
+  summarise(mmpg = mean(mpg)) |>
+  ungroup() |>
+  ggplot() + 
+  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + 
+  geom_col() + 
+  theme_minimal() + 
+  xlab("産業") + ylab("回数") + 
+  scale_fill_ghibli_d("KikiLight", direction = -1)
+print(g)
+```
+
+## ggroughパッケージ
+
+`ggrough`パッケージを使うと、手書き風のグラフを作成することができます。
+`ggplot2`のグラフを手書き風に変換することができます。
+
+```{r}
+#| fig-width: 8
+# devtools::install_github("xvrdm/ggrough")
+library(ggrough)
+options <- list(
+  Background = list(roughness = 1),
+  GeomCol = list(
+    fill_style = "zigzag", 
+    angle_noise = 0.2, 
+    fill_weight = 2
+    )
+  )
+get_rough_chart(g, options)
+```
