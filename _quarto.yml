@@ -6,6 +6,7 @@ book:
   title: "R for Empirical Accounting Research"
   author: "Soichi Matsuura"
   date: "1/1/2024"
+  favicon: img/favicon.ico
   chapters:
     - index.qmd
     - part: part01.qmd
