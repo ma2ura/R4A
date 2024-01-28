@@ -19,6 +19,7 @@ book:
         - chap06_function.qmd
         - chap07_pipe.qmd
         - chap08_tidydata.qmd
+        - chap08_needs.qmd
     - part: part02.qmd
       chapters:
         - chap09_merge.qmd

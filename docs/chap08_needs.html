@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Empirical Accounting Research - 1&nbsp; 準備</title>
+<title>R for Empirical Accounting Research - 9&nbsp; 日経NEEDSデータの処理</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chap03_code.html" rel="next">
-<link href="./part01.html" rel="prev">
+<link href="./part02.html" rel="next">
+<link href="./chap08_tidydata.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap02_prepare.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -124,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link active">
+  <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></span></a>
   </div>
 </li>
@@ -172,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
+  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
   </div>
 </li>
@@ -246,33 +246,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul>
-  <li><a href="#rの準備" id="toc-rの準備" class="nav-link active" data-scroll-target="#rの準備"><span class="header-section-number">1.1</span> Rの準備</a>
+  <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">9.1</span> はじめに</a></li>
+  <li><a href="#日経needsへのアクセス方法" id="toc-日経needsへのアクセス方法" class="nav-link" data-scroll-target="#日経needsへのアクセス方法"><span class="header-section-number">9.2</span> 日経NEEDSへのアクセス方法</a></li>
+  <li><a href="#日経needsの使い方" id="toc-日経needsの使い方" class="nav-link" data-scroll-target="#日経needsの使い方"><span class="header-section-number">9.3</span> 日経NEEDSの使い方</a>
   <ul class="collapse">
-  <li><a href="#rのインストール" id="toc-rのインストール" class="nav-link" data-scroll-target="#rのインストール"><span class="header-section-number">1.1.1</span> Rのインストール</a></li>
-  <li><a href="#テキストエディタ" id="toc-テキストエディタ" class="nav-link" data-scroll-target="#テキストエディタ"><span class="header-section-number">1.1.2</span> テキストエディタ</a></li>
+  <li><a href="#企業タグ" id="toc-企業タグ" class="nav-link" data-scroll-target="#企業タグ"><span class="header-section-number">9.3.1</span> 企業タグ</a></li>
+  <li><a href="#項目選択" id="toc-項目選択" class="nav-link" data-scroll-target="#項目選択"><span class="header-section-number">9.3.2</span> 項目選択</a></li>
   </ul></li>
-  <li><a href="#rstudioの準備" id="toc-rstudioの準備" class="nav-link" data-scroll-target="#rstudioの準備"><span class="header-section-number">1.2</span> Rstudioの準備</a>
+  <li><a href="#出力設定" id="toc-出力設定" class="nav-link" data-scroll-target="#出力設定"><span class="header-section-number">9.4</span> 出力設定</a>
   <ul class="collapse">
-  <li><a href="#rstudioのプロジェクト機能" id="toc-rstudioのプロジェクト機能" class="nav-link" data-scroll-target="#rstudioのプロジェクト機能"><span class="header-section-number">1.2.1</span> Rstudioのプロジェクト機能</a></li>
+  <li><a href="#期間暦年" id="toc-期間暦年" class="nav-link" data-scroll-target="#期間暦年"><span class="header-section-number">9.4.1</span> 期間（暦年）</a></li>
+  <li><a href="#連単基準" id="toc-連単基準" class="nav-link" data-scroll-target="#連単基準"><span class="header-section-number">9.4.2</span> 連単基準</a></li>
+  <li><a href="#レイアウト" id="toc-レイアウト" class="nav-link" data-scroll-target="#レイアウト"><span class="header-section-number">9.4.3</span> レイアウト</a></li>
   </ul></li>
-  <li><a href="#vs-codeの準備" id="toc-vs-codeの準備" class="nav-link" data-scroll-target="#vs-codeの準備"><span class="header-section-number">1.3</span> VS Codeの準備</a>
-  <ul class="collapse">
-  <li><a href="#vs-codeのインストール" id="toc-vs-codeのインストール" class="nav-link" data-scroll-target="#vs-codeのインストール"><span class="header-section-number">1.3.1</span> VS Codeのインストール</a></li>
-  <li><a href="#vs-codeの設定" id="toc-vs-codeの設定" class="nav-link" data-scroll-target="#vs-codeの設定"><span class="header-section-number">1.3.2</span> VS Codeの設定</a></li>
-  </ul></li>
-  <li><a href="#フォント" id="toc-フォント" class="nav-link" data-scroll-target="#フォント"><span class="header-section-number">1.4</span> フォント</a>
-  <ul class="collapse">
-  <li><a href="#等幅フォント" id="toc-等幅フォント" class="nav-link" data-scroll-target="#等幅フォント"><span class="header-section-number">1.4.1</span> 等幅フォント</a></li>
-  </ul></li>
+  <li><a href="#企業と項目の保存" id="toc-企業と項目の保存" class="nav-link" data-scroll-target="#企業と項目の保存"><span class="header-section-number">9.5</span> 企業と項目の保存</a></li>
+  <li><a href="#データの入手" id="toc-データの入手" class="nav-link" data-scroll-target="#データの入手"><span class="header-section-number">9.6</span> データの入手</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap02_prepare.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></h1>
 </div>
 
 
@@ -300,260 +297,168 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Rをインストール</li>
-<li>RstudioとVS Codeをインストール</li>
-<li>RstudioのProject機能を使う / VS Codeでフォルダを使う</li>
-<li>等幅フォントを使う</li>
+<li>学外からはVPN接続でアクセスしよう</li>
+<li>日経NEEDS社会科学情報検索システムを使い倒そう</li>
+<li>選択した企業と項目は保存しておこう</li>
+<li><strong>ダウンロードしたcsvファイルをMS Excelで開かないようにしよう。</strong></li>
 </ol>
+<p>MS Excelなどの表計算アプリケーションは、csvファイルを勝手に書き換えたりするので、csvファイルを開くときは、必ずVS Codeなどのテキストエディタで開くようにしましょう。</p>
 </div>
 </div>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;display: flex;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://cran.r-project.org/"><img src="img/Rlogo.png" class="img-fluid figure-img" alt="R"></a></p>
-<figcaption>R</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;display: flex;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://posit.co/download/rstudio-desktop/"><img src="img/Rstudio_sticker.png" class="img-fluid figure-img" style="width:70.0%" alt="RStudio"></a></p>
-<figcaption>RStudio</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<section id="rの準備" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="rの準備"><span class="header-section-number">1.1</span> Rの準備</h2>
-<section id="rのインストール" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="rのインストール"><span class="header-section-number">1.1.1</span> Rのインストール</h3>
-<p>Rは、<a href="https://cran.r-project.org/">The Comprehensive R Archive Network (CRAN)</a>からダウンロードできます。 Rをインストールする際のベストプラクティスについては様々なウェブサイトで紹介されているので、そちらを参照してください。 オススメとして、高知工科大学の矢内勇生先生のウェブサイト<a href="https://yukiyanai.github.io/jp/resources/">こちら</a>の「RとRstudioのインストール方法の解説」でPDFにまとめられている資料があります。</p>
-<p>松浦のプレゼミで使うのは、以下のアプリケーションです。</p>
+<section id="はじめに" class="level2 page-columns page-full" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="はじめに"><span class="header-section-number">9.1</span> はじめに</h2>
+<p>ここまで第1部で学習した知識を使って，実際の分析に利用する日経MMが提供しているデータベース<strong>日経NEEDS</strong>データを処理してみましょう。 立命館大学が契約している日経NEEDSデータベースからは、</p>
 <ul>
-<li><a href="https://cran.r-project.org/">R</a></li>
-<li><a href="https://posit.co/download/rstudio-desktop/">Rstudio</a></li>
-<li><a href="https://quarto.org/">Quarto</a></li>
-<li><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">VS Code</a></li>
+<li>会計データ</li>
+<li>株価データ</li>
+<li>為替データ</li>
+<li>物価指数等のマクロデータ</li>
+<li>POSデータ (2024年4月から利用可能)</li>
 </ul>
-<p>インストールが上手くいかない、インストールが面倒・困難である、何もインストールしたくない、という方は、</p>
-<ul>
-<li><a href="https://posit.cloud/">Posit Cloud</a></li>
-<li><a href="https://colab.research.google.com/notebooks/intro.ipynb?hl=ja">Google Colaboratory</a></li>
-</ul>
-<p>のどちらかを使ってください。 アカウントを作成すると、ブラウザ上でRを実行することができます。Google ColaboratoryはPythonの実行環境ですが、一手間かければRも実行できます。以下のサイトを参考にしてください。</p>
-<p><a href="https://htsuda.net/stats/colab.html">Rによる統計入門</a></p>
-</section>
-<section id="テキストエディタ" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="テキストエディタ"><span class="header-section-number">1.1.2</span> テキストエディタ</h3>
-<p>R言語でプログラムを書くには、R専用のIDE(Integrated Development Environment)である<strong>Rstudio</strong>を使うのが一般的ですが、より汎用的な<strong>テキストエディタ</strong>を使うという選択肢もあります。 テキストエディタとは文字通り、文字を編集するためのソフトウェアです。 有名なものとしては、</p>
-<ul>
-<li><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">Visual Studio Code</a> (Microsoft)</li>
-<li><a href="https://www.sublimetext.com/">Sublime Text</a> (Sublime HQ)</li>
-<li>Vim (Bram Moolenaar) 上級者向け</li>
-<li>Emacs (GNU) 上級者向け</li>
-</ul>
-<p>などがあり、松浦は<strong>Visual Studio Code</strong>(以下、VS Code)を使ってます。</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code"><img src="img/VScode.png" class="img-fluid figure-img" style="width:70.0%" alt="VS Code"></a></p>
-<figcaption>VS Code</figcaption>
-</figure>
-</div>
-<p>とはいうものの、やはり最初はRstudioを使う方が設定などが簡単なので、以下ではRstudioの設定を紹介します。</p>
-</section>
-</section>
-<section id="rstudioの準備" class="level2 page-columns page-full" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="rstudioの準備"><span class="header-section-number">1.2</span> Rstudioの準備</h2>
-<p>Rtsudioを起動すると、以下のような画像が表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_Mac_shoki.png" class="img-fluid figure-img"></p>
-<figcaption>Rtsudio</figcaption>
-</figure>
-</div>
-<p>次の画像で赤丸で囲まれているマークをクリックすると、コード画面が表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/rstudio_mac_shoki.jpg" class="img-fluid figure-img"></p>
-<figcaption>Rstudio</figcaption>
-</figure>
-</div>
-<p>Rstudioは4つの画面で構成されています。</p>
-<ol type="1">
-<li>スクリプトエディタ</li>
-<li>コンソール</li>
-<li>環境</li>
-<li>プロットなど</li>
-</ol>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/rstudio_mac_kihon.jpg" class="img-fluid figure-img"></p>
-<figcaption>Rstudio</figcaption>
-</figure>
-</div>
-<p>上のメニューバーから「Tools」→「Global Options」を選択すると、以下のような画面が表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/rstudio_mac_setting.jpg" class="img-fluid figure-img"></p>
-<figcaption>Rstudio</figcaption>
-</figure>
-</div>
-<p>「General」の「Save workspace to .RData on exit」を「Never」に変更しておいてください。</p>
-<p>また、Rstudioの画面を見やすくするため、先のOptionsの画面の左側メニューの「Pane Layout」を選び、以下のように設定しておくとよいでしょう。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/rstduio_mac_pane.jpg" class="img-fluid figure-img"></p>
-<figcaption>Rstudio</figcaption>
-</figure>
-</div>
-<p>設定の「Appearance」で画面の見た目やフォントなどを変更することで、自分の好みの設定にすることができます。 松浦は、テーマに<code>monokai</code>、フォントに<code>Fira Font</code>を使用してます。 <code>Fira Font</code>はリガチャに対応したモノスペースフォントなので、Rstudioのコードエディタで<code>&lt;-</code>などが綺麗に表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_matsuura.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio</figcaption>
-</figure>
-</div>
-<section id="rstudioのプロジェクト機能" class="level3 page-columns page-full" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="rstudioのプロジェクト機能"><span class="header-section-number">1.2.1</span> Rstudioのプロジェクト機能</h3>
-<p>Rstudioには<strong>プロジェクト</strong>と呼ばれる機能があり、プロジェクトを作成しておくと、ファイル管理や作業履歴の管理がしやすくなります。</p>
-<p>プロジェクトを作成するには、Rstudioの画面上部の「File」→「New Project」を選択するか、以下の図にあるとおり、右上の「Project」をクリックします。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_top.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio TOP</figcaption>
-</figure>
-</div>
-<p>すると、以下のようなウインド出てきます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project1.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p>「New Project…」を選択すると、次のウインドが表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project2.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p>「New Directory」を選択して、プロジェクトを保存するディレクトリを選択します。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project3.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p>ここでは、新しいプロジェクトを作るので、「New Project」を選択すると、次の「Create New Project」のウインドが表示されます。</p>
+<p>を入手することができます。 これらのデータベースから、大規模なデータを入手し、経済や経営に関するデータ分析を行うことができます。 ここでは、日経NEEDSを使って、会計データを入手する方法を説明します。</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>後で解説する<strong>Quarto</strong>を使って論文やウェブサイトを作成するときは、「Quarto Website」や「Quarto Book」を選択します。</p>
-</div></div><div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project4.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p><strong>Directory name:</strong>のところに、Rで生成されるファイルなどを保存するフォルダー名を入力します。 半角英数の名前にするほうが、エラー回避になります。</p>
-<p><strong>Create project as subdirectory of::</strong> のところに、プロジェクトを保存する場所(これをディレクトリといいます)を選択します。好きな場所を指定することができますが、やはり日本語名のフォルダなどは避けた方がよいでしょう。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project5.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p>最後に「Create Project」をクリックすると、プロジェクトが作成されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/Rstudio_project6.png" class="img-fluid figure-img"></p>
-<figcaption>Rstudio Project</figcaption>
-</figure>
-</div>
-<p>プロジェクトが作成されると、プロジェクト名のフォルダーが作成され、その中に<code>.Rproj</code>という拡張子のファイルが作成されます。 これで、プロジェクトの作成は完了です。 今後、作成した<code>.Rproj</code>ファイルをダブルクリックするか、Rstudioの画面上部の「File」→「Open Project」を選択して、<code>.Rproj</code>ファイルを選択するだけで、プロジェクトが開き、作業ディレクトリの場所が設定されます。</p>
-</section>
-</section>
-<section id="vs-codeの準備" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="vs-codeの準備"><span class="header-section-number">1.3</span> VS Codeの準備</h2>
-<section id="vs-codeのインストール" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="vs-codeのインストール"><span class="header-section-number">1.3.1</span> VS Codeのインストール</h3>
-<p>Visual Studio Code(以下、VS Code)をインストールするには、Microsoftの<a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code">公式サイト</a>からダウンロードできます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vscode01.png" class="img-fluid figure-img"></p>
-<figcaption>VS Code</figcaption>
-</figure>
-</div>
-<p>ウェブサイトの「<strong>Visual Studio Code をダウンロードする</strong>」をクリックすると、アクセスしているコンピューターのOSに合わせたインストーラーをダウンロードできるサイトに移動します。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vscode02.png" class="img-fluid figure-img"></p>
-<figcaption>VS Code Download</figcaption>
-</figure>
-</div>
-<p>MacOSの場合、Intel Mac用とApple Silicon用(M1とかM2)とどちらでも動作するユニバーサル版の3つを選択できます。</p>
-<p>WindowsPCの場合は、32bit版と64bit版、そしてSurface Proなどに搭載されているArmチップ用の3つを選択できます。</p>
-</section>
-<section id="vs-codeの設定" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="vs-codeの設定"><span class="header-section-number">1.3.2</span> VS Codeの設定</h3>
-<p>VS Codeを起動すると、以下のような画面が表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vscode03.jpg" class="img-fluid figure-img"></p>
-<figcaption>VS Code top</figcaption>
-</figure>
-</div>
-<p>左側のメニューから「拡張機能」を選択すると、以下のような画面が表示されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vscode04.png" class="img-fluid figure-img"></p>
-<figcaption>VS Code Extension</figcaption>
-</figure>
-</div>
-<p>この画面上部の検索窓に文字を入力して、Enterキーを押すと、拡張パッケージが検索されます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/vscode04.jpg" class="img-fluid figure-img"></p>
-<figcaption>VS Code Extention Search</figcaption>
-</figure>
-</div>
-<p>オススメ拡張パッケージは以下の通りです。</p>
+<p>立命館大学が契約している日経NEEDSはアクセス数に制限のない『社会科学情報検索システム」というものであり，Financial Questとは別物です。FQとは違い，社会科学情報検索システムはMacからでも利用できる半面，自動化ができないので，ちょっと面倒です。</p>
+</div></div></section>
+<section id="日経needsへのアクセス方法" class="level2 page-columns page-full" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="日経needsへのアクセス方法"><span class="header-section-number">9.2</span> 日経NEEDSへのアクセス方法</h2>
+<p>立命館大学図書館のウェブサイトに行きます。</p>
+<p><a href="https://www.ritsumei.ac.jp/lib/" target="_blank">立命館大学図書館ウェブサイト</a></p>
+<p>トップページに行くと、サイトの上部に「データベース」という項目があります。</p>
+<p><img src="img/rits_library_top.png" class="img-fluid" alt="データベース"><link href="image.css" rel="stylesheet"></p>
+<p>ここをクリックすると、データベースの検索窓が出るので、ここに<strong>NEEDS</strong>と入力して、検索をクリックします。</p>
+<p><img src="img/rits_library_database.png" class="img-fluid" alt="データベースの検索"><link href="image.css" rel="stylesheet"></p>
+<p>すると、検索結果に「日経NEEDS」が出てくるので、それをクリックします。ここで注意しなければならないのは、日経NEEDSを利用することができるのは、</p>
 <ul>
-<li><code>Japanese Language Pack for Visual Studio Code</code> : 日本語化</li>
-<li><code>R</code>: R言語の実行環境</li>
-<li><code>Quarto</code> : VS CodeでQuartoファイルを作成・実行する</li>
-<li><code>indent-rainbow</code> : インデントを虹色にする</li>
-<li><code>vscode-icons</code> : ファイルのアイコンを変更する</li>
-<li><code>Rainbow CSV</code> : CSVファイルを読みやすくする</li>
-<li><code>Color Highlight</code> : カラーコードを色で表示する</li>
+<li>大学ネットワークに接続しているか、</li>
+<li>VPN接続しているか、</li>
 </ul>
+<p>のどちらかの状態だけです。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>VPN(Virtual Private Network)とは、インターネットを利用して、遠隔地にあるネットワークと安全に通信するための仕組みです。立命館大学では、学外から学内のネットワークに接続する際にVPNを利用することで、安全に通信することができます。 くわしくは、<a href="https://it.support.ritsumei.ac.jp/hc/ja/articles/900006789143-VPN-%E5%AD%A6%E5%A4%96%E3%81%8B%E3%82%89%E3%81%AE%E5%AD%A6%E5%86%85%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E6%8E%A5%E7%B6%9A-%E3%81%AE%E5%88%A9%E7%94%A8%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">VPNの利用について</a>を参照してください。</p>
+</div></div><p>大学のネットワークに接続していない場合は、VPN接続をしてください。 大学ネットワークかVPNに接続した状態で、日経NEEDSをクリックすると、日経NEEDSのトップページが表示されます。</p>
+</section>
+<section id="日経needsの使い方" class="level2 page-columns page-full" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="日経needsの使い方"><span class="header-section-number">9.3</span> 日経NEEDSの使い方</h2>
+<p>これが日経NEEDS社会科学情報検索システムのトップページです。 右上にオンラインマニュアルや項目定義書もあるので、分からないことがあれば参照してください。</p>
+<p>今回は、<strong>会計データ</strong>を入手するため「<strong>一般企業財務</strong>」をクリックします。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_top.png" class="img-fluid figure-img"></p>
+<figcaption>日経NEEDSのトップページ</figcaption>
+</figure>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>もし株価データが欲しいなら、「株式」、為替データなどマクロデータが欲しいなら「マクロ経済」をクリックします。</p>
+</div></div><p>日経NEEDS社会科学情報検索システムの「一般企業財務」のトップページは以下のように、上下2つのパートで構成されています。</p>
+<p><img src="img/nikkei_needs_ippan_above.png" class="img-fluid" alt="一般企業財務の上パート"> <img src="img/nikkei_needs_ippan_below.png" class="img-fluid" alt="一般企業財務の下パート"></p>
+<p>上のパートは、企業や財務項目を選択する場所です。 左上のタグに「企業」と「項目」があり、「企業」タグでサンプルとしたい企業を選択し、「項目」タグで入手したい財務項目を選択します。</p>
+<section id="企業タグ" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="企業タグ"><span class="header-section-number">9.3.1</span> 企業タグ</h3>
+<p>企業タグでは、分析対象となる企業を選択します。 左側の項目で、</p>
+<ul>
+<li>業種</li>
+<li>上場</li>
+<li>本社所在地</li>
+<li>規模（資本金）</li>
+<li>規模（従業員数）</li>
+<li>規模（売上高）</li>
+</ul>
+<p>を指定すると、対象となる企業リストが右側に表示されます。 たとえば、</p>
+<ul>
+<li>業種は、製造業</li>
+<li>上場は、東証プライム、東証スタンダード、東証グロース</li>
+</ul>
+<p>を指定すると、2024年1月28日現在では、1438件の企業がヒットします。 そして右側に出てきた企業名を選択し、「出力一覧に追加」をクリックします。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_firm.png" class="img-fluid figure-img"></p>
+<figcaption>企業タグ</figcaption>
+</figure>
+</div>
+<p>企業の抽出が終わったら、つぎは「項目」タグを押して、入手したい財務項目を選択します。</p>
+</section>
+<section id="項目選択" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="項目選択"><span class="header-section-number">9.3.2</span> 項目選択</h3>
+<p>下のパートは、選択した企業や財務項目に対して、データ入手期間や、入手するデータの種類を選択する場所です。</p>
+<p>「項目一覧」から入手したい財務項目が記載されている財務諸表や区分を選択します。 たとえば、「貸借対照表（資産）」を選択すると、右側に「貸借対照表（資産）」の区分から入手可能な項目のリストが表示されます。 その中で必要な項目を選択し、「出力一覧に追加」をクリックすると、選択した項目が下の「出力一覧」に表示されます。</p>
+<p>データを取得する際に、必ず入手しておいた方がよい項目は、</p>
+<ul>
+<li><code>R001</code> 決算月数</li>
+<li><code>R018</code> 上場場部：コード</li>
+<li><code>R022</code> 日経業種：コード</li>
+</ul>
+<p>の3つです。 変則決算で決算月数が12でない企業-年度(firm-year)はサンプルから除外することが多いため、決算月数は必要です。 あとは上場場を変更した企業も把握したいことが多いため、上場場部コードも必要です。 あとは、年度と産業で固定効果を入れた回帰モデルを構築することが多いため、日経業種コードも必要です。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_item_choice.png" class="img-fluid figure-img"></p>
+<figcaption>項目選択</figcaption>
+</figure>
+</div>
 </section>
 </section>
-<section id="フォント" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="フォント"><span class="header-section-number">1.4</span> フォント</h2>
-<p>プログラミングをするときには、ソースコードを書くエディタで使うフォント選びも重要です。 適切なフォントを選んでおくことで，コードの読みやすさが改善，あるいはエラーの発見がしやすくなります。</p>
-<p>フォントには大きく2種類あって，<strong>等幅フォント</strong>(mono font)と<strong>可変幅フォント</strong>(proportional font)があります。 等幅フォントは，全ての文字が同じ幅で表示されるフォントで，プログラミングには適しています。 通常，みなさんがMS Wordなどで文章を書くときに使っているMSゴシックとかヒラギノフォントは可変幅フォントです。</p>
-<section id="等幅フォント" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="等幅フォント"><span class="header-section-number">1.4.1</span> 等幅フォント</h3>
-<p>等幅フォントの中でも，<strong>リガチャ</strong>(ligature)に対応したフォントを使うと，コードの見た目が改善されます。 リガチャに対応したフォントは，複数の文字を1つの文字のように表示することができます。 リガチャに対応した無料フォントでオススメなものが，</p>
+<section id="出力設定" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="出力設定"><span class="header-section-number">9.4</span> 出力設定</h2>
+<p>上のパートで企業と項目を選択したら、次の下パートの「出力設定」で、データの入手期間や、データの種類を選択します。 左側の項目で、サンプルの期間や、決算の種類、レイアウトを選択します。</p>
+<section id="期間暦年" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="期間暦年"><span class="header-section-number">9.4.1</span> 期間（暦年）</h3>
+<p>ここでは、データの入手期間を指定します。 開始期間と終了期間を指定することができます。 <strong>開始期間だけを指定して、終了期間を指定しない</strong>と、開始期間から最新の期間までのデータを取得するため、特にこだわりが無ければ、開始期間だけを指定しておきましょう。</p>
+</section>
+<section id="連単基準" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="連単基準"><span class="header-section-number">9.4.2</span> 連単基準</h3>
+<p>連単基準では、次の項目が選択できます。</p>
 <ul>
-<li><a href="https://github.com/tonsky/FiraCode">Fira Font</a></li>
+<li><em>連結（本）</em>：本決算の連結財務諸表を取得</li>
+<li><em>単独（本）</em>：本決算の個別財務諸表を取得</li>
+<li>単独（本・中間）：本決算と中間決算の個別財務諸表を取得</li>
+<li>単独（本、年度換算）：本決算の個別財務諸表を取得し、年度換算を行う</li>
+<li><strong>連結優先（本）</strong>：一決算期に複数の基準のレコードがある場合、以下の優先順位に基づいて1レコードを表示出力
+<ol type="1">
+<li>連結（国際会計基準）</li>
+<li>連結（米国会計基準）</li>
+<li>連結（日本基準）</li>
+<li>単独</li>
+</ol></li>
+<li>連単両方（本）：本決算の連結と個別財務諸表を取得</li>
 </ul>
-<p>リガチャは勝手に複数の文字を１つの文字にしてしまうので，一見何の文字か分からないことがあります。 そこでリガチャを使うかどうかは好みの問題です。</p>
-<p>リガチャ非対応の等幅フォントでオススメなものが，</p>
-<ul>
-<li><a href="https://myrica.estable.jp/">Myrica</a></li>
-</ul>
-<p>です。この資料のソースコードにはMyricaM Mというフォントを使っています。 松浦が自分の研究でデータ分析のソースコードを書くときは，<code>Fira Font</code>を使っています。</p>
+<p>よく使うのは、<strong>連結（本）</strong>と<strong>連結優先（本）</strong>です。 IFRS採用企業や米国基準採用企業の項目を取得したい場合は、<strong>連結優先（本）</strong>を選択しておくと、日本基準とデータが重複しないので、便利です。</p>
+<p>「ダウンロード設定」の項目ではヘッダーに含める変数を選択します。 ここで、<strong>項目の「勘定グループ名」のチェックは外しておきましょう。</strong> 無駄に変数名が長くなることを防げます。 あとはそのままで大丈夫です。</p>
+</section>
+<section id="レイアウト" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="レイアウト"><span class="header-section-number">9.4.3</span> レイアウト</h3>
+<p>レイアウトでは、データの並び順を指定します。 特に重要ではないので、そのままで大丈夫です。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_output_setting.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>出力設定</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="企業と項目の保存" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="企業と項目の保存"><span class="header-section-number">9.5</span> 企業と項目の保存</h2>
+<p>日経NEEDS Financial Questとは違い、日経NEEDS社会科学情報検索システムでは、作業を自動化することができないため、上で行ったような選択の結果、抽出されている企業と項目を保存しておくことをおすすめします。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_save.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>企業と項目の保存</figcaption>
+</figure>
+</div>
+</section>
+<section id="データの入手" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="データの入手"><span class="header-section-number">9.6</span> データの入手</h2>
+<p>今までの作業で、企業と項目の選択が終わり、データの入手期間や連結単体の選択が終わったら、あとはデータをcsvファイルとしてダウンロードするだけです。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/nikkei_needs_downloads.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>データの入手</figcaption>
+</figure>
+</div>
+<p>最後に、大事なことなのでもう一度いいます。 <strong>ダウンロードしたcsvファイルをMS Excelで開かないようにしよう。</strong></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -956,13 +861,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./part01.html" class="pagination-link  aria-label=" 第1部="" r言語の基礎"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第1部 R言語の基礎</span>
+      <a href="./chap08_tidydata.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap03_code.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>コード作成の作法</span>">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">コード作成の作法</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./part02.html" class="pagination-link" aria-label="第2部 前処理と記述統計量">
+        <span class="nav-page-text">第2部 前処理と記述統計量</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

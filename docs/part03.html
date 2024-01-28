@@ -32,6 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./chap11_visualization.html" rel="next">
 <link href="./chap09_handling.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -169,6 +170,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -183,13 +190,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
@@ -206,19 +213,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
   </div>
 </li>
       </ul>
@@ -229,7 +242,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#第1部の目次" id="toc-第1部の目次" class="nav-link active" data-scroll-target="#第1部の目次">第1部の目次</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -254,25 +273,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Rが得意とするデータの可視化について学習します。 主に、ggplot2パッケージを使ったデータの可視化の方法を学び，次にどんなデータをどのように可視化するのかについて考えます。</p>
-<p><a href="https://so-ichi.com/presemi_part_two.csv">https://so-ichi.com/presemi_part_two.csv</a></p>
-<p>&lt;!–</p>
-<p>このデータには、以下の変数が含まれています。</p>
+<section id="第1部の目次" class="level2">
+<h2 class="anchored" data-anchor-id="第1部の目次">第1部の目次</h2>
 <ul>
-<li>日経会社コード : 会社固有コード</li>
-<li>企業名称 : 企業の名称</li>
-<li>決算期 : 決算年月 <code>YYYY/MM</code></li>
-<li>決算種別 : 10が本決算、20が中間決算</li>
-<li>連結基準 : 1が連結、2が非連結</li>
-<li>決算月数 : 決算期の月数</li>
-<li>上場場部：コード : 11が東証1部、12が東証2部、13がマザーズ</li>
-<li>日経業種：コード : 日経業種のコード6ケタ</li>
-<li>売上高</li>
-<li>親会社株主に帰属する当期純利益</li>
-<li>資産合計</li>
-<li>株主資本</li>
+<li><a href="chap11_visualizetion.html">第11章 ggplot2の基礎</a></li>
+<li><a href="chap12_ggpubr.html">第12章 ggpubrの基礎</a></li>
+<li><a href="chap13_gg_function.html">第13章 ggplotを関数</a></li>
+<li><a href="chap14_ggplot_ghibli.html">第14章 ジブリ</a></li>
 </ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -675,12 +686,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./chap09_handling.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap11_visualization.html" class="pagination-link" aria-label="<span class='chapter-number'>11</span>&nbsp; <span class='chapter-title'>ggplot2で可視化</span>">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chap11_visualization.html" class="pagination-link" aria-label="<span class='chapter-number'>12</span>&nbsp; <span class='chapter-title'>ggplot2で可視化</span>">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

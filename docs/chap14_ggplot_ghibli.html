@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.529">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>R for Empirical Accounting Research - 14&nbsp; ggplotとジブリ</title>
+<title>R for Empirical Accounting Research - 15&nbsp; ggplotとジブリ</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./chap13_gg_function.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -104,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap14_ggplot_ghibli.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap14_ggplot_ghibli.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -188,6 +189,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -202,13 +209,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
@@ -225,25 +232,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
   </div>
 </li>
       </ul>
@@ -256,15 +263,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-<li><a href="#%E5%AE%AE%E5%B4%8E%E9%A7%BF%E3%82%AB%E3%83%A9%E3%83%BC" id="toc-宮崎駿カラー" class="nav-link active" data-scroll-target="#%E5%AE%AE%E5%B4%8E%E9%A7%BF%E3%82%AB%E3%83%A9%E3%83%BC"><span class="header-section-number">14.1</span> 宮崎駿カラー</a></li>
-  <li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" id="toc-使用方法" class="nav-link" data-scroll-target="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="header-section-number">14.2</span> 使用方法</a></li>
-  <li><a href="#ggrough%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-ggroughパッケージ" class="nav-link" data-scroll-target="#ggrough%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">14.3</span> ggroughパッケージ</a></li>
+<li><a href="#%E5%AE%AE%E5%B4%8E%E9%A7%BF%E3%82%AB%E3%83%A9%E3%83%BC" id="toc-宮崎駿カラー" class="nav-link active" data-scroll-target="#%E5%AE%AE%E5%B4%8E%E9%A7%BF%E3%82%AB%E3%83%A9%E3%83%BC"><span class="header-section-number">15.1</span> 宮崎駿カラー</a></li>
+  <li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" id="toc-使用方法" class="nav-link" data-scroll-target="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="header-section-number">15.2</span> 使用方法</a></li>
+  <li><a href="#ggrough%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-ggroughパッケージ" class="nav-link" data-scroll-target="#ggrough%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">15.3</span> ggroughパッケージ</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap14_ggplot_ghibli.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap14_ggplot_ghibli.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span>
+<span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span>
 </h1>
 </div>
 
@@ -279,8 +286,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="宮崎駿カラー" class="level2" data-number="14.1"><h2 data-number="14.1" class="anchored" data-anchor-id="宮崎駿カラー">
-<span class="header-section-number">14.1</span> 宮崎駿カラー</h2>
+</header><section id="宮崎駿カラー" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="宮崎駿カラー">
+<span class="header-section-number">15.1</span> 宮崎駿カラー</h2>
 <p>ggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発された<code>ghibli</code>パッケージを使ってみます。</p>
 <p>カラーパレットの名前もジブリらしく、</p>
 <ul>
@@ -303,8 +310,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <code>Dark</code> : 濃い</li>
 </ul>
 <p>がそれぞれのカラーパレットにあります。</p>
-</section><section id="使用方法" class="level2" data-number="14.2"><h2 data-number="14.2" class="anchored" data-anchor-id="使用方法">
-<span class="header-section-number">14.2</span> 使用方法</h2>
+</section><section id="使用方法" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="使用方法">
+<span class="header-section-number">15.2</span> 使用方法</h2>
 <p>パッケージを読み込みます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages('ghibli') # first time only</span></span>
@@ -398,8 +405,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-</section><section id="ggroughパッケージ" class="level2" data-number="14.3"><h2 data-number="14.3" class="anchored" data-anchor-id="ggroughパッケージ">
-<span class="header-section-number">14.3</span> ggroughパッケージ</h2>
+</section><section id="ggroughパッケージ" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="ggroughパッケージ">
+<span class="header-section-number">15.3</span> ggroughパッケージ</h2>
 <p><code>ggrough</code>パッケージを使うと、手書き風のグラフを作成することができます。 <code>ggplot2</code>のグラフを手書き風に変換することができます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># devtools::install_github("xvrdm/ggrough")</span></span>
@@ -818,7 +825,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./chap13_gg_function.html" class="pagination-link  aria-label=">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

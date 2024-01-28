@@ -735,34 +735,110 @@
   {
     "objectID": "chap14_ggplot_ghibli.html#宮崎駿カラー",
     "href": "chap14_ggplot_ghibli.html#宮崎駿カラー",
-    "title": "\n14  ggplotとジブリ\n",
-    "section": "\n14.1 宮崎駿カラー",
-    "text": "14.1 宮崎駿カラー\nggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発されたghibliパッケージを使ってみます。\nカラーパレットの名前もジブリらしく、\n\n\nPonyoLight : 『崖の上のポニョ』\n\nTotoroLight : 『となりのトトロ』\n\nKikiLight : 『魔女の宅急便』\n\nLaputaLight : 『天空の城ラピュタ』\n\nなどがあります。 色の濃度として、\n\n\nLight : 明るい\n\nMedium : 中間\n\nDark : 濃い\n\nがそれぞれのカラーパレットにあります。",
+    "title": "\n15  ggplotとジブリ\n",
+    "section": "\n15.1 宮崎駿カラー",
+    "text": "15.1 宮崎駿カラー\nggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発されたghibliパッケージを使ってみます。\nカラーパレットの名前もジブリらしく、\n\n\nPonyoLight : 『崖の上のポニョ』\n\nTotoroLight : 『となりのトトロ』\n\nKikiLight : 『魔女の宅急便』\n\nLaputaLight : 『天空の城ラピュタ』\n\nなどがあります。 色の濃度として、\n\n\nLight : 明るい\n\nMedium : 中間\n\nDark : 濃い\n\nがそれぞれのカラーパレットにあります。",
     "crumbs": [
       "第3部 データの可視化",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ggplotとジブリ</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
     ]
   },
   {
     "objectID": "chap14_ggplot_ghibli.html#使用方法",
     "href": "chap14_ggplot_ghibli.html#使用方法",
-    "title": "\n14  ggplotとジブリ\n",
-    "section": "\n14.2 使用方法",
-    "text": "14.2 使用方法\nパッケージを読み込みます。\n\n# install.packages('ghibli') # first time only\nlibrary(ghibli)\nlibrary(dplyr)\n\n\n 次のパッケージを付け加えます: 'dplyr' \n\n\n 以下のオブジェクトは 'package:stats' からマスクされています:\n\n    filter, lag\n\n\n 以下のオブジェクトは 'package:base' からマスクされています:\n\n    intersect, setdiff, setequal, union\n\nlibrary(ggplot2)\nlibrary(patchwork)\nknitr::opts_chunk$set(dev = \"ragg_png\")\n\nカラーパレットを確認します。 3行9列のグラフを作成しています。\n\npar(mfrow=c(9,3))\nfor(i in names(ghibli_palettes)) print(ghibli_palette(i))\n\n\n\n\n\n\n\nグラフを作成してみます。 ラピュタならLaputaLightを使います。\n\ndata(\"mtcars\") # 車のデータ\ndfm &lt;- mtcars\n\nggplot(dfm) + \n  aes(x = wt, y = mpg, color = factor(vs)) + \n  geom_jitter(size = 2) + \n  theme_minimal() +\n  # ghibli stuff\n  scale_colour_ghibli_d(\"LaputaMedium\", direction = -1)\n\n\n\n\n\n\n\nトトロならTotoroLightを使います。\n\ndfm |&gt;\n  group_by(carb) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + theme_minimal() + \n  # ghibli stuff\n  scale_fill_ghibli_d(\"TotoroLight\", direction = -1)\n\n\n\n\n\n\n\n魔女の宅急便なら、KikiLightを使います。\n\ng &lt;- dfm |&gt;\n  group_by(carb, vs) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ungroup() |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + \n  theme_minimal() + \n  xlab(\"産業\") + ylab(\"回数\") + \n  scale_fill_ghibli_d(\"KikiLight\", direction = -1)\n\n`summarise()` has grouped output by 'carb'. You can override using the\n`.groups` argument.\n\nprint(g)",
+    "title": "\n15  ggplotとジブリ\n",
+    "section": "\n15.2 使用方法",
+    "text": "15.2 使用方法\nパッケージを読み込みます。\n\n# install.packages('ghibli') # first time only\nlibrary(ghibli)\nlibrary(dplyr)\n\n\n 次のパッケージを付け加えます: 'dplyr' \n\n\n 以下のオブジェクトは 'package:stats' からマスクされています:\n\n    filter, lag\n\n\n 以下のオブジェクトは 'package:base' からマスクされています:\n\n    intersect, setdiff, setequal, union\n\nlibrary(ggplot2)\nlibrary(patchwork)\nknitr::opts_chunk$set(dev = \"ragg_png\")\n\nカラーパレットを確認します。 3行9列のグラフを作成しています。\n\npar(mfrow=c(9,3))\nfor(i in names(ghibli_palettes)) print(ghibli_palette(i))\n\n\n\n\n\n\n\nグラフを作成してみます。 ラピュタならLaputaLightを使います。\n\ndata(\"mtcars\") # 車のデータ\ndfm &lt;- mtcars\n\nggplot(dfm) + \n  aes(x = wt, y = mpg, color = factor(vs)) + \n  geom_jitter(size = 2) + \n  theme_minimal() +\n  # ghibli stuff\n  scale_colour_ghibli_d(\"LaputaMedium\", direction = -1)\n\n\n\n\n\n\n\nトトロならTotoroLightを使います。\n\ndfm |&gt;\n  group_by(carb) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + theme_minimal() + \n  # ghibli stuff\n  scale_fill_ghibli_d(\"TotoroLight\", direction = -1)\n\n\n\n\n\n\n\n魔女の宅急便なら、KikiLightを使います。\n\ng &lt;- dfm |&gt;\n  group_by(carb, vs) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ungroup() |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + \n  theme_minimal() + \n  xlab(\"産業\") + ylab(\"回数\") + \n  scale_fill_ghibli_d(\"KikiLight\", direction = -1)\n\n`summarise()` has grouped output by 'carb'. You can override using the\n`.groups` argument.\n\nprint(g)",
     "crumbs": [
       "第3部 データの可視化",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ggplotとジブリ</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
     ]
   },
   {
     "objectID": "chap14_ggplot_ghibli.html#ggroughパッケージ",
     "href": "chap14_ggplot_ghibli.html#ggroughパッケージ",
-    "title": "\n14  ggplotとジブリ\n",
-    "section": "\n14.3 ggroughパッケージ",
-    "text": "14.3 ggroughパッケージ\nggroughパッケージを使うと、手書き風のグラフを作成することができます。 ggplot2のグラフを手書き風に変換することができます。\n\n# devtools::install_github(\"xvrdm/ggrough\")\nlibrary(ggrough)\noptions &lt;- list(\n  Background = list(roughness = 1),\n  GeomCol = list(\n    fill_style = \"zigzag\", \n    angle_noise = 0.2, \n    fill_weight = 2\n    )\n  )\nget_rough_chart(g, options)",
+    "title": "\n15  ggplotとジブリ\n",
+    "section": "\n15.3 ggroughパッケージ",
+    "text": "15.3 ggroughパッケージ\nggroughパッケージを使うと、手書き風のグラフを作成することができます。 ggplot2のグラフを手書き風に変換することができます。\n\n# devtools::install_github(\"xvrdm/ggrough\")\nlibrary(ggrough)\noptions &lt;- list(\n  Background = list(roughness = 1),\n  GeomCol = list(\n    fill_style = \"zigzag\", \n    angle_noise = 0.2, \n    fill_weight = 2\n    )\n  )\nget_rough_chart(g, options)",
     "crumbs": [
       "第3部 データの可視化",
-      "<span class='chapter-number'>14</span>  <span class='chapter-title'>ggplotとジブリ</span>"
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#はじめに",
+    "href": "chap08_needs.html#はじめに",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.1 はじめに",
+    "text": "9.1 はじめに\nここまで第1部で学習した知識を使って，実際の分析に利用する日経MMが提供しているデータベース日経NEEDSデータを処理してみましょう。 立命館大学が契約している日経NEEDSデータベースからは、\n\n会計データ\n株価データ\n為替データ\n物価指数等のマクロデータ\nPOSデータ (2024年4月から利用可能)\n\nを入手することができます。 これらのデータベースから、大規模なデータを入手し、経済や経営に関するデータ分析を行うことができます。 ここでは、日経NEEDSを使って、会計データを入手する方法を説明します。\n\n\n立命館大学が契約している日経NEEDSはアクセス数に制限のない『社会科学情報検索システム」というものであり，Financial Questとは別物です。FQとは違い，社会科学情報検索システムはMacからでも利用できる半面，自動化ができないので，ちょっと面倒です。",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#日経needsへのアクセス方法",
+    "href": "chap08_needs.html#日経needsへのアクセス方法",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.2 日経NEEDSへのアクセス方法",
+    "text": "9.2 日経NEEDSへのアクセス方法\n立命館大学図書館のウェブサイトに行きます。\n立命館大学図書館ウェブサイト\nトップページに行くと、サイトの上部に「データベース」という項目があります。\n\nここをクリックすると、データベースの検索窓が出るので、ここにNEEDSと入力して、検索をクリックします。\n\nすると、検索結果に「日経NEEDS」が出てくるので、それをクリックします。ここで注意しなければならないのは、日経NEEDSを利用することができるのは、\n\n大学ネットワークに接続しているか、\nVPN接続しているか、\n\nのどちらかの状態だけです。\n\n\nVPN(Virtual Private Network)とは、インターネットを利用して、遠隔地にあるネットワークと安全に通信するための仕組みです。立命館大学では、学外から学内のネットワークに接続する際にVPNを利用することで、安全に通信することができます。 くわしくは、VPNの利用についてを参照してください。\n大学のネットワークに接続していない場合は、VPN接続をしてください。 大学ネットワークかVPNに接続した状態で、日経NEEDSをクリックすると、日経NEEDSのトップページが表示されます。",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#日経needsの使い方",
+    "href": "chap08_needs.html#日経needsの使い方",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.3 日経NEEDSの使い方",
+    "text": "9.3 日経NEEDSの使い方\nこれが日経NEEDS社会科学情報検索システムのトップページです。 右上にオンラインマニュアルや項目定義書もあるので、分からないことがあれば参照してください。\n今回は、会計データを入手するため「一般企業財務」をクリックします。\n\n\n\n日経NEEDSのトップページ\n\n\n\n\nもし株価データが欲しいなら、「株式」、為替データなどマクロデータが欲しいなら「マクロ経済」をクリックします。\n日経NEEDS社会科学情報検索システムの「一般企業財務」のトップページは以下のように、上下2つのパートで構成されています。\n \n上のパートは、企業や財務項目を選択する場所です。 左上のタグに「企業」と「項目」があり、「企業」タグでサンプルとしたい企業を選択し、「項目」タグで入手したい財務項目を選択します。\n\n9.3.1 企業タグ\n企業タグでは、分析対象となる企業を選択します。 左側の項目で、\n\n業種\n上場\n本社所在地\n規模（資本金）\n規模（従業員数）\n規模（売上高）\n\nを指定すると、対象となる企業リストが右側に表示されます。 たとえば、\n\n業種は、製造業\n上場は、東証プライム、東証スタンダード、東証グロース\n\nを指定すると、2024年1月28日現在では、1438件の企業がヒットします。 そして右側に出てきた企業名を選択し、「出力一覧に追加」をクリックします。\n\n\n\n企業タグ\n\n\n企業の抽出が終わったら、つぎは「項目」タグを押して、入手したい財務項目を選択します。\n\n\n9.3.2 項目選択\n下のパートは、選択した企業や財務項目に対して、データ入手期間や、入手するデータの種類を選択する場所です。\n「項目一覧」から入手したい財務項目が記載されている財務諸表や区分を選択します。 たとえば、「貸借対照表（資産）」を選択すると、右側に「貸借対照表（資産）」の区分から入手可能な項目のリストが表示されます。 その中で必要な項目を選択し、「出力一覧に追加」をクリックすると、選択した項目が下の「出力一覧」に表示されます。\nデータを取得する際に、必ず入手しておいた方がよい項目は、\n\nR001 決算月数\nR018 上場場部：コード\nR022 日経業種：コード\n\nの3つです。 変則決算で決算月数が12でない企業-年度(firm-year)はサンプルから除外することが多いため、決算月数は必要です。 あとは上場場を変更した企業も把握したいことが多いため、上場場部コードも必要です。 あとは、年度と産業で固定効果を入れた回帰モデルを構築することが多いため、日経業種コードも必要です。\n\n\n\n項目選択",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#出力設定",
+    "href": "chap08_needs.html#出力設定",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.4 出力設定",
+    "text": "9.4 出力設定\n上のパートで企業と項目を選択したら、次の下パートの「出力設定」で、データの入手期間や、データの種類を選択します。 左側の項目で、サンプルの期間や、決算の種類、レイアウトを選択します。\n\n9.4.1 期間（暦年）\nここでは、データの入手期間を指定します。 開始期間と終了期間を指定することができます。 開始期間だけを指定して、終了期間を指定しないと、開始期間から最新の期間までのデータを取得するため、特にこだわりが無ければ、開始期間だけを指定しておきましょう。\n\n\n9.4.2 連単基準\n連単基準では、次の項目が選択できます。\n\n連結（本）：本決算の連結財務諸表を取得\n単独（本）：本決算の個別財務諸表を取得\n単独（本・中間）：本決算と中間決算の個別財務諸表を取得\n単独（本、年度換算）：本決算の個別財務諸表を取得し、年度換算を行う\n連結優先（本）：一決算期に複数の基準のレコードがある場合、以下の優先順位に基づいて1レコードを表示出力\n\n連結（国際会計基準）\n連結（米国会計基準）\n連結（日本基準）\n単独\n\n連単両方（本）：本決算の連結と個別財務諸表を取得\n\nよく使うのは、連結（本）と連結優先（本）です。 IFRS採用企業や米国基準採用企業の項目を取得したい場合は、連結優先（本）を選択しておくと、日本基準とデータが重複しないので、便利です。\n「ダウンロード設定」の項目ではヘッダーに含める変数を選択します。 ここで、項目の「勘定グループ名」のチェックは外しておきましょう。 無駄に変数名が長くなることを防げます。 あとはそのままで大丈夫です。\n\n\n9.4.3 レイアウト\nレイアウトでは、データの並び順を指定します。 特に重要ではないので、そのままで大丈夫です。\n\n\n\n出力設定",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#企業と項目の保存",
+    "href": "chap08_needs.html#企業と項目の保存",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.5 企業と項目の保存",
+    "text": "9.5 企業と項目の保存\n日経NEEDS Financial Questとは違い、日経NEEDS社会科学情報検索システムでは、作業を自動化することができないため、上で行ったような選択の結果、抽出されている企業と項目を保存しておくことをおすすめします。\n\n\n\n企業と項目の保存",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "chap08_needs.html#データの入手",
+    "href": "chap08_needs.html#データの入手",
+    "title": "9  日経NEEDSデータの処理",
+    "section": "9.6 データの入手",
+    "text": "9.6 データの入手\n今までの作業で、企業と項目の選択が終わり、データの入手期間や連結単体の選択が終わったら、あとはデータをcsvファイルとしてダウンロードするだけです。\n\n\n\nデータの入手\n\n\n最後に、大事なことなのでもう一度いいます。 ダウンロードしたcsvファイルをMS Excelで開かないようにしよう。",
+    "crumbs": [
+      "第1部 R言語の基礎",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>日経NEEDSデータの処理</span>"
+    ]
+  },
+  {
+    "objectID": "part03.html#第1部の目次",
+    "href": "part03.html#第1部の目次",
+    "title": "第3部 データの可視化",
+    "section": "第1部の目次",
+    "text": "第1部の目次\n\n第11章 ggplot2の基礎\n第12章 ggpubrの基礎\n第13章 ggplotを関数\n第14章 ジブリ",
+    "crumbs": [
+      "第3部 データの可視化"
     ]
   }
 ]
