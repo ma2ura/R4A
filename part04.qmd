@@ -1,0 +1,15 @@
+---
+title: "第4部 財務分析"
+---
+
+ここでは，「ビジネス会計検定1級」の試験内容に則して，財務分析について学習します。
+
+## 第1部の目次
+
+<!--
+- [第11章 ggplot2の基礎](chap11_visualizetion.html)
+- [第12章 ggpubrの基礎](chap12_ggpubr.html)
+- [第13章 ggplotを関数](chap13_gg_function.html)
+- [第14章 ジブリ](chap14_ggplot_ghibli.html)
+-->
+
