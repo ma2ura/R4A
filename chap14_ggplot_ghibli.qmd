@@ -2,49 +2,48 @@
 title: "ggplotとジブリ"
 ---
 
-
 ## 宮崎駿カラー
 
-ggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発された`ghibli`パッケージを使ってみます。
+この章では、ggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発された`ghibli`パッケージを使って、よさげなグラフを作成してみます。
 
-カラーパレットの名前もジブリらしく、
+`ghibli`パッケージで提供されるカラーパレットの名前もジブリらしく、
 
-- `PonyoLight` : 『崖の上のポニョ』
-- `TotoroLight` : 『となりのトトロ』
-- `KikiLight` : 『魔女の宅急便』
-- `LaputaLight` : 『天空の城ラピュタ』
+- `Ponyo` : 『崖の上のポニョ』
+- `Totoro` : 『となりのトトロ』
+- `Kiki` : 『魔女の宅急便』
+- `Laputa` : 『天空の城ラピュタ』
 
-などがあります。
-色の濃度として、
+などがあり、色の濃度として、
 
 - `Light` : 明るい
 - `Medium` : 中間
 - `Dark` : 濃い
 
-がそれぞれのカラーパレットにあります。
+が容易されています。
+たとえば`PonyoLight`という名前でカラーパレットを使います。
 
 ## 使用方法
 
-パッケージを読み込みます。
+必要なパッケージを読み込みます。
 
 ```{r}
+library(dplyr) # データハンドリング
+library(ggplot2) # ggplotグラフ
+library(patchwork) # グラフを並べる
 # install.packages('ghibli') # first time only
-library(ghibli)
-library(dplyr)
-library(ggplot2)
-library(patchwork)
+library(ghibli) # ジブリカラー
+# 文字化け対策
 knitr::opts_chunk$set(dev = "ragg_png")
 ```
 
-カラーパレットを確認します。
-3行9列のグラフを作成しています。
+カラーパレットを確認するため、以下のコードで3行9列のグラフを作成しています。
 ```{r colorpallet}
-par(mfrow=c(9,3))
+par(mfrow=c(9,3)) # 9行3列のグラフ
 for(i in names(ghibli_palettes)) print(ghibli_palette(i))
 ```
 
-グラフを作成してみます。
-ラピュタなら`LaputaLight`を使います。
+ではグラフを作成してみましょう。
+明るいラピュタなら`LaputaLight`を使います。
 ```{r jitter}
 #| message: false
 data("mtcars") # 車のデータ
@@ -89,18 +88,24 @@ print(g)
 
 `ggrough`パッケージを使うと、手書き風のグラフを作成することができます。
 `ggplot2`のグラフを手書き風に変換することができます。
+ただし、`ggrough`パッケージは、画像ファイルSVGを出力することになります。
 
 ```{r}
 #| fig-width: 8
+# fist-time only
 # devtools::install_github("xvrdm/ggrough")
-library(ggrough)
-options <- list(
-  Background = list(roughness = 1),
+library(ggrough) # 手書き風のグラフ
+library(ragg) # SVG to PNG
+options <- list( # 設定
+  Background = list(roughness = 8),
   GeomCol = list(
     fill_style = "zigzag", 
-    angle_noise = 0.2, 
+    angle_noise = 0.5, 
     fill_weight = 2
     )
   )
 get_rough_chart(g, options)
 ```
+
+このように、ジブリカラーで手書き風というエモいグラフが作成できます。
+当然ですが、使いどころを間違えないようにしましょう。

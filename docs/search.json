@@ -737,7 +737,7 @@
     "href": "chap14_ggplot_ghibli.html#宮崎駿カラー",
     "title": "\n15  ggplotとジブリ\n",
     "section": "\n15.1 宮崎駿カラー",
-    "text": "15.1 宮崎駿カラー\nggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発されたghibliパッケージを使ってみます。\nカラーパレットの名前もジブリらしく、\n\n\nPonyoLight : 『崖の上のポニョ』\n\nTotoroLight : 『となりのトトロ』\n\nKikiLight : 『魔女の宅急便』\n\nLaputaLight : 『天空の城ラピュタ』\n\nなどがあります。 色の濃度として、\n\n\nLight : 明るい\n\nMedium : 中間\n\nDark : 濃い\n\nがそれぞれのカラーパレットにあります。",
+    "text": "15.1 宮崎駿カラー\nこの章では、ggplot2で作成するグラフの色を宮崎駿監督の映画に出てくるような色にするために開発されたghibliパッケージを使って、よさげなグラフを作成してみます。\nghibliパッケージで提供されるカラーパレットの名前もジブリらしく、\n\n\nPonyo : 『崖の上のポニョ』\n\nTotoro : 『となりのトトロ』\n\nKiki : 『魔女の宅急便』\n\nLaputa : 『天空の城ラピュタ』\n\nなどがあり、色の濃度として、\n\n\nLight : 明るい\n\nMedium : 中間\n\nDark : 濃い\n\nが容易されています。 たとえばPonyoLightという名前でカラーパレットを使います。",
     "crumbs": [
       "第3部 データの可視化",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
@@ -748,7 +748,7 @@
     "href": "chap14_ggplot_ghibli.html#使用方法",
     "title": "\n15  ggplotとジブリ\n",
     "section": "\n15.2 使用方法",
-    "text": "15.2 使用方法\nパッケージを読み込みます。\n\n# install.packages('ghibli') # first time only\nlibrary(ghibli)\nlibrary(dplyr)\n\n\n 次のパッケージを付け加えます: 'dplyr' \n\n\n 以下のオブジェクトは 'package:stats' からマスクされています:\n\n    filter, lag\n\n\n 以下のオブジェクトは 'package:base' からマスクされています:\n\n    intersect, setdiff, setequal, union\n\nlibrary(ggplot2)\nlibrary(patchwork)\nknitr::opts_chunk$set(dev = \"ragg_png\")\n\nカラーパレットを確認します。 3行9列のグラフを作成しています。\n\npar(mfrow=c(9,3))\nfor(i in names(ghibli_palettes)) print(ghibli_palette(i))\n\n\n\n\n\n\n\nグラフを作成してみます。 ラピュタならLaputaLightを使います。\n\ndata(\"mtcars\") # 車のデータ\ndfm &lt;- mtcars\n\nggplot(dfm) + \n  aes(x = wt, y = mpg, color = factor(vs)) + \n  geom_jitter(size = 2) + \n  theme_minimal() +\n  # ghibli stuff\n  scale_colour_ghibli_d(\"LaputaMedium\", direction = -1)\n\n\n\n\n\n\n\nトトロならTotoroLightを使います。\n\ndfm |&gt;\n  group_by(carb) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + theme_minimal() + \n  # ghibli stuff\n  scale_fill_ghibli_d(\"TotoroLight\", direction = -1)\n\n\n\n\n\n\n\n魔女の宅急便なら、KikiLightを使います。\n\ng &lt;- dfm |&gt;\n  group_by(carb, vs) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ungroup() |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + \n  theme_minimal() + \n  xlab(\"産業\") + ylab(\"回数\") + \n  scale_fill_ghibli_d(\"KikiLight\", direction = -1)\n\n`summarise()` has grouped output by 'carb'. You can override using the\n`.groups` argument.\n\nprint(g)",
+    "text": "15.2 使用方法\n必要なパッケージを読み込みます。\n\nlibrary(dplyr) # データハンドリング\n\n\n 次のパッケージを付け加えます: 'dplyr' \n\n\n 以下のオブジェクトは 'package:stats' からマスクされています:\n\n    filter, lag\n\n\n 以下のオブジェクトは 'package:base' からマスクされています:\n\n    intersect, setdiff, setequal, union\n\nlibrary(ggplot2) # ggplotグラフ\nlibrary(patchwork) # グラフを並べる\n# install.packages('ghibli') # first time only\nlibrary(ghibli) # ジブリカラー\n# 文字化け対策\nknitr::opts_chunk$set(dev = \"ragg_png\")\n\nカラーパレットを確認するため、以下のコードで3行9列のグラフを作成しています。\n\npar(mfrow=c(9,3)) # 9行3列のグラフ\nfor(i in names(ghibli_palettes)) print(ghibli_palette(i))\n\n\n\n\n\n\n\nではグラフを作成してみましょう。 明るいラピュタならLaputaLightを使います。\n\ndata(\"mtcars\") # 車のデータ\ndfm &lt;- mtcars\n\nggplot(dfm) + \n  aes(x = wt, y = mpg, color = factor(vs)) + \n  geom_jitter(size = 2) + \n  theme_minimal() +\n  # ghibli stuff\n  scale_colour_ghibli_d(\"LaputaMedium\", direction = -1)\n\n\n\n\n\n\n\nトトロならTotoroLightを使います。\n\ndfm |&gt;\n  group_by(carb) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + theme_minimal() + \n  # ghibli stuff\n  scale_fill_ghibli_d(\"TotoroLight\", direction = -1)\n\n\n\n\n\n\n\n魔女の宅急便なら、KikiLightを使います。\n\ng &lt;- dfm |&gt;\n  group_by(carb, vs) |&gt;\n  summarise(mmpg = mean(mpg)) |&gt;\n  ungroup() |&gt;\n  ggplot() + \n  aes(x = factor(carb), y = mmpg, fill = factor(carb)) + \n  geom_col() + \n  theme_minimal() + \n  xlab(\"産業\") + ylab(\"回数\") + \n  scale_fill_ghibli_d(\"KikiLight\", direction = -1)\n\n`summarise()` has grouped output by 'carb'. You can override using the\n`.groups` argument.\n\nprint(g)",
     "crumbs": [
       "第3部 データの可視化",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
@@ -759,7 +759,7 @@
     "href": "chap14_ggplot_ghibli.html#ggroughパッケージ",
     "title": "\n15  ggplotとジブリ\n",
     "section": "\n15.3 ggroughパッケージ",
-    "text": "15.3 ggroughパッケージ\nggroughパッケージを使うと、手書き風のグラフを作成することができます。 ggplot2のグラフを手書き風に変換することができます。\n\n# devtools::install_github(\"xvrdm/ggrough\")\nlibrary(ggrough)\noptions &lt;- list(\n  Background = list(roughness = 1),\n  GeomCol = list(\n    fill_style = \"zigzag\", \n    angle_noise = 0.2, \n    fill_weight = 2\n    )\n  )\nget_rough_chart(g, options)",
+    "text": "15.3 ggroughパッケージ\nggroughパッケージを使うと、手書き風のグラフを作成することができます。 ggplot2のグラフを手書き風に変換することができます。 ただし、ggroughパッケージは、画像ファイルSVGを出力することになります。\n\n# fist-time only\n# devtools::install_github(\"xvrdm/ggrough\")\nlibrary(ggrough) # 手書き風のグラフ\nlibrary(ragg) # SVG to PNG\noptions &lt;- list( # 設定\n  Background = list(roughness = 8),\n  GeomCol = list(\n    fill_style = \"zigzag\", \n    angle_noise = 0.5, \n    fill_weight = 2\n    )\n  )\nget_rough_chart(g, options)\n\n\n\n\n\nこのように、ジブリカラーで手書き風というエモいグラフが作成できます。 当然ですが、使いどころを間違えないようにしましょう。",
     "crumbs": [
       "第3部 データの可視化",
       "<span class='chapter-number'>15</span>  <span class='chapter-title'>ggplotとジブリ</span>"
@@ -839,6 +839,49 @@
     "text": "第1部の目次\n\n第11章 ggplot2の基礎\n第12章 ggpubrの基礎\n第13章 ggplotを関数\n第14章 ジブリ",
     "crumbs": [
       "第3部 データの可視化"
+    ]
+  },
+  {
+    "objectID": "part04.html#第1部の目次",
+    "href": "part04.html#第1部の目次",
+    "title": "第4部 財務分析",
+    "section": "第1部の目次",
+    "text": "第1部の目次",
+    "crumbs": [
+      "第4部 財務分析"
+    ]
+  },
+  {
+    "objectID": "chap15_financialAnalysis.html#生産性の分析",
+    "href": "chap15_financialAnalysis.html#生産性の分析",
+    "title": "\n16  財務分析\n",
+    "section": "\n16.1 生産性の分析",
+    "text": "16.1 生産性の分析\n\n16.1.1 付加価値とその測定\n付加価値(added value)とは，企業が新たに生み出した価値であり，生産性(productivity)とは付加価値を生み出す能力をいいます。 付加価値は，企業の生産性を測る指標として用いられます。\n\n16.1.2 付加価値の測定\n付加価値の測定方法には大きく，控除法と加算法の2つがあります。\n控除法は，売上高から企業が消費した価値の額を引いたものです。 売上高は把握できますが，消費額は外部からは把握できないため，付加価値の測定が難しいです。\n\n\n\n\n\n\n控除法\n\n\n\n\n付加価値 = 売上高 - 前段階の企業が生産した価値の消費額\n\n\n\nそのため，よく利用されるのが加算法です。 企業がつくり出した付加価値は， 従業員に分配した人件費と，借主に支払った賃借料，国・地方自治体に支払った税金，債権者に支払った負債利子の合計に， 企業の当期純利益を加えたものとして，計算されます。\n\n税金は連結損益計算書の法人税等から法人税調整額を加減したものとして計算します。\n\n\n\n\n\n\n\n加算法\n\n\n\n\n付加価値 = 人件費 + 賃借料 + 税金 + 負債利子 + 当期純利益\n\n\n\nデータの入手可能性から，加算法がよく利用されますが，人件費の特定が困難です。 資格試験では従業員数や給与の情報が与えられるので，そこから計算しますが，ここでは連結損益計算書の販売費及び一般管理費の内訳項目である「人件費・福利厚生費」を人件費として扱います。 dplyrパッケージのmutate()関数で付加価値の変数added_valueを計算します。\n\ndf &lt;- df |&gt;\n  mutate(\n    added_value = salary + rent_fee + (corporate_tax + tax_adjustment) + interest_expense + net_income\n  )\nsummary(df$added_value)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-1966993     3406     8211    32806    23898  2321237 \n\n\n付加価値を計算することできたので，付加価値を使った財務分析を行ってみます。\n\n16.1.3 労働生産性の分析\n労働生産性(labor productivity)とは，一定期間における付加価値を(平均)従業員数で割ったものです。 つまり，従業員一人が1年間に生み出した付加価値の額を示しています。\n\n労働生産性_t = \\frac{付加価値_t}{平均従業員数_t}\n 分子が付加価値というフロー情報であることから，分母の従業員数も期首と期末の平均をとることで対応させています。 では，計算してみましょう。 期首と期末の値を使って平均値を計算するため，group_by()関数とlag()関数を使います。\n\ndf &lt;- df |&gt;\n  group_by(nikkei_code) |&gt; # 企業ごとに\n  mutate(\n    ave_employee = (lag(num_employee) + num_employee) / 2, # 平均従業員数\n    labor_prod = added_value / ave_employee # 労働生産性\n  )\n\n新しく作った変数の記述統計量を確認します。\n\nsummary(df$ave_employee)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n     12     794    1576    5596    4367  285347    2026 \n\n\n最も従業員が少ない会社で12名，最大で約28万名と，従業員数のばらつきが大きいことが分かります。\n\nsummary(df$labor_prod)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n-49.957   2.778   5.257   7.262   9.027 453.811    2026 \n\n\n中央値が5.257で平均値が7.262と中央値の\nヒストグラムも作成してみます。\n\nggplot(df) + aes(labor_prod) + geom_histogram()\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\nWarning: Removed 2026 rows containing non-finite values (`stat_bin()`).\n\n\n\n\n\n\n\n\n分布が右に偏っており，大きな値に異常値がありそうです。\n\n16.1.4 労働生産性の分解\n売上高を用いた分解：売上高を挟みこむことで，労働生産性を，一人当たり売上高と付加価値率に分解できる。\n\n労働生産性 = \\frac{付加価値額}{平均従業員数} = \\underbrace{\\frac{売上高}{平均従業員数}}_{1人当たり売上高} \\times \\underbrace{\\frac{付加価値額}{売上高}}_{付加価値率}\n\n有形固定資産を用いた分解：有形固定資産を挟み込むことで，労働生産性を労働装備率と設備生産性に分解できる。\n\n労働生産性 =\\frac{付加価値額}{平均従業員数} = \\underbrace{\\frac{平均有形固定資産}{平均従業員数}}_{労働装備率} \\times \\underbrace{\\frac{付加価値額}{平均有形固定資産}}_{設備生産性}",
+    "crumbs": [
+      "第4部 財務分析",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>財務分析</span>"
+    ]
+  },
+  {
+    "objectID": "chap15_financialAnalysis.html#付加価値の分配",
+    "href": "chap15_financialAnalysis.html#付加価値の分配",
+    "title": "\n16  財務分析\n",
+    "section": "\n16.2 3. 付加価値の分配",
+    "text": "16.2 3. 付加価値の分配\n付加価値の分配状況をみる。最も大きい分配先は人件費であり，付加価値に占める人件費の割合を労働分配率という。\n\n一人当たり人件費 = \\frac{人件費}{平均従業員数} = \\underbrace{\\frac{付加価値額}{平均従業員数}}_{労働生産性} \\times \\underbrace{\\frac{人件費}{付加価値額}}_{労働分配率}\n\n一人当たり人件費は，労働生産性と労働分配率に分類できる。\n\n16.2.1 定義を覚える。\n\n付加価値 = 人件費 + 賃借料 + 税金 + 負債利子 + 当期純利益\n労働生産性 = 付加価値額 \\div 平均従業員数\n付加価値率 = 付加価値額 \\div 売上高\n労働装備率 = 平均有形固定資産 \\div 平均従業員数\n設備生産性 = 付加価値額 \\div 平均有形固定資産\n労働分配率 = 人件費 \\div 付加価値額\n\n16.2.2 関係を覚える\n\n労働生産性 = 一人当たり売上高 \\times 付加価値率\n労働生産性 = 労働装備率 \\times 設備生産性\n一人当たり人件費 =労働生産性 \\times 労働分配率",
+    "crumbs": [
+      "第4部 財務分析",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>財務分析</span>"
+    ]
+  },
+  {
+    "objectID": "chap15_financialAnalysis.html#不確実性の分析",
+    "href": "chap15_financialAnalysis.html#不確実性の分析",
+    "title": "\n16  財務分析\n",
+    "section": "\n16.3 不確実性の分析",
+    "text": "16.3 不確実性の分析\n\n16.3.1 費用構造が利益変動に及ぼす影響\n損益分岐点(cost-volume-profit)とは，売上と費用が同額となる点をいい，そのときの売上高を損益分岐点売上高という。 損益分岐点を計算するために必要な要素は，\n\n収益\n変動費\n固定費\n\nの3つである。\n横軸を個数，縦軸を金額とするグラフを考える。 売上高Sは，生産個数Xと販売単価Pの積であるため，P \\times Xとなる。 変動費Vは，操業度や生産個数に応じて変化する費用であり，変動費率Rと生産個数Xの積R \\times Xで表す。 ここで，変動費率Rは，変動費Vを販売単価Pで除したものである。 固定費は，操業度にかかわらず一定の費用であり，Fで表す。 変動費と固定費の合計である総費用Cは次のように表すことができる。\n\nC = R \\times X + F\n\n損益分岐点は定義より，S = C つまり，P\\times X =  V \\times X + F の点となる。よって，\n\n\\begin{aligned}\nP\\times X &=  R \\times X + F\\\\\n(P - R) X &= F\\\\\nX &= \\frac{F}{P-R}\\\\\nX &= \\frac{F}{1- \\frac{V}{P}}\n\\end{aligned}\n\nとなり，損益分岐点売上高がF / (1-V) となることが分かる。ここで，1-Vを限界利益という。日本語でかくと，\n\n損益分岐点売上高= \\frac{固定費}{限界利益}\n\nしかし，この計算を行うためには，総費用を変動費と固定費に分ける必要があるが，これは極めて困難である。そこで，簡便的な分類方法がある。\n\n16.3.2 総費用法\nこれは売上高と総費用の2期間比較によって，変動費率を計算する方法である。\n\n変動費率= \\frac{総費用_{t} - 総費用_{t-1}}{売上高_{t} - 売上高_{t-1}}\n\nここで計算された変動費率を売上高にかけることで，変動費を計算する。\n\n変動費=変動費率 \\times 売上高\n\n\n16.3.3 最小二乗法\n回帰分析手法である最小二乗法を用いて変動費率を計算する方法である。これは比較的データが多く取得可能なときに利用可能だが，年次データともなると，過去5年程度のデータが必要となり，長期間になればなるほど，固定費が変動費となってしまうため，四半期データを用いるなど工夫が必要となる。\n総費用を売上高で回帰する。\n\nY = a + bX+\\varepsilon\n\n総費用Y と売上高X のデータを用いて，変動費率と解釈できる回帰パラメータb を推定する。最小二乗法の定義より，回帰係数b は以下のようになる。\n\nb = \\frac{\\mathrm{cov}(Y,X)}{\\mathrm{var}(Y)}=\\frac{(X_i - \\bar X)(Y_i - \\bar Y)}{(Y_i - \\bar Y)^2}\n\nつまり，売上高と総費用の平均を計算し，各データから平均値を差し引く。総費用の平均偏差の二乗を分母に，分子には売上高と総費用の平均偏差のかけ算を行うことで回帰係数が計算できる。たぶん，試験にはでないだろう。\n\n16.3.4 費目別法\n費用項目ごとに，何が固定費で何が変動費かを考えて分類する方法である。問題文で条件が指示されれば可能かもしれないが，現実には無理だとおもうので，試験には出ないような気がする。\n結論，総費用法をしっかり覚えておく。\n\n16.3.5 損益分岐点比率と営業レバレッジ\n実際の売上高と損益分岐点売上高との相対的な規模比較をするための尺度が，損益分岐点比率である。\n\n損益分岐点比率 = \\frac{損益分岐点売上高}{実際の売上高}\n\n実際の売上高と損益分岐点売上高との間の距離のような尺度として安全余裕度がある。\n\n安全余裕度 = 1 - 損益分岐点比率\n\n安全余裕度が高いほど，売上高が減少しても，まだ損益分岐点売上高まで差があることを意味している。損益分岐点を低くするためには，\n\n売上高の増加\n変動費率の引き下げ\n固定費の削減\n\nが必要となる。\n売上高の変化が利益の変化に与える影響の度合いを示す尺度に，営業レバレッジがある。\n\n営業レバレッジ = \\frac{営業利益変化率}{売上高変化率} = \\frac{1}{1-損益分岐点比率} = \\frac{1}{安全余裕度}\n\nとなる。この式の導出は，以下のページを参照すること。\n営業レバレッジ\nここは，時間がかかりそうなので，何度も問題を解いてパターンになれておくこと。",
+    "crumbs": [
+      "第4部 財務分析",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>財務分析</span>"
     ]
   }
 ]

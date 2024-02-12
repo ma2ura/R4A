@@ -31,6 +31,9 @@ book:
         - chap12_ggpubr.qmd
         - chap13_gg_function.qmd
         - chap14_ggplot_ghibli.qmd
+    - part: part04.qmd
+      chapters:
+        - chap15_financialAnalysis.qmd
   page-navigation: true
   back-to-top-navigation: true
   page-footer: "Copyright 2024, Soichi Matsuura"
