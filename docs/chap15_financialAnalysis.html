@@ -1193,36 +1193,44 @@ $ sales            &lt;dbl&gt; 145778, 162731, 181885, 178046, 202387, 218350, 2
 <span class="header-section-number">16.3</span> 不確実性の分析</h2>
 <section id="費用構造が利益変動に及ぼす影響" class="level3" data-number="16.3.1"><h3 data-number="16.3.1" class="anchored" data-anchor-id="費用構造が利益変動に及ぼす影響">
 <span class="header-section-number">16.3.1</span> 費用構造が利益変動に及ぼす影響</h3>
-<p><strong>損益分岐点</strong>(cost-volume-profit)とは，売上と費用が同額となる点をいい，そのときの売上高を損益分岐点売上高という。 損益分岐点を計算するために必要な要素は，</p>
+<p><strong>損益分岐点</strong>(cost-volume-profit)とは，売上と費用が同額となる点をいい，そのときの売上高を損益分岐点売上高といいます。 いろいろ説明しますが，以下の図で理解するのが一番早いです。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/CVP.png" class="img-fluid figure-img"></p>
+<figcaption>損益分岐点分析</figcaption></figure>
+</div>
+<p>損益分岐点を計算するために必要な要素は，</p>
 <ul>
 <li>収益</li>
 <li>変動費</li>
 <li>固定費</li>
 </ul>
 <p>の3つである。</p>
-<p>横軸を個数，縦軸を金額とするグラフを考える。 売上高<span class="math inline">S</span>は，生産個数<span class="math inline">X</span>と販売単価<span class="math inline">P</span>の積であるため，<span class="math inline">P \times X</span>となる。 変動費<span class="math inline">V</span>は，操業度や生産個数に応じて変化する費用であり，変動費率<span class="math inline">R</span>と生産個数<span class="math inline">X</span>の積<span class="math inline">R \times X</span>で表す。 ここで，変動費率<span class="math inline">R</span>は，変動費<span class="math inline">V</span>を販売単価<span class="math inline">P</span>で除したものである。 固定費は，操業度にかかわらず一定の費用であり，<span class="math inline">F</span>で表す。 変動費と固定費の合計である総費用<span class="math inline">C</span>は次のように表すことができる。</p>
+<p>横軸を個数，縦軸を金額とするグラフを考えてみましょう。 売上高<span class="math inline">S</span>は，販売単価<span class="math inline">P</span>と個数<span class="math inline">X</span>との積であるため，<span class="math inline">P \times X</span>となる。 変動費は，操業度(ここでは売上高)に応じて変化する費用であり，変動費の単価<span class="math inline">V</span>と個数<span class="math inline">X</span>の積<span class="math inline">V \times X</span>で表します。 売上高が1増えたときに，変動費がどれだけ増えるのかを知るために，変動費単価<span class="math inline">V</span>を販売単価<span class="math inline">P</span>で除したもの<span class="math inline">V/P</span>を<strong>変動費比率</strong>といいます。 固定費は，操業度にかかわらず一定の費用であり，<span class="math inline">F</span>で表す。 変動費と固定費の合計である総費用<span class="math inline">C</span>は次のように表すことができる。</p>
 <p><span class="math display">
-C = R \times X + F
+C = V \times X + F
 </span></p>
-<p>損益分岐点は定義より，<span class="math inline">S = C</span> つまり，<span class="math inline">P\times X =  V \times X + F</span> の点となる。よって，</p>
-<p><span class="math display">
+<p>損益分岐点売上個数は，定義から<span class="math inline">S = C</span> つまり，<span class="math inline">P\times X =  V \times X + F</span>の方程式を<span class="math inline">X</span>で解いたものになります。 解いてみましょう。 <span class="math display">
 \begin{aligned}
-P\times X &amp;=  R \times X + F\\
-(P - R) X &amp;= F\\
-X &amp;= \frac{F}{P-R}\\
+P\times X &amp;=  V \times X + F\\
+P\times X -  V \times X &amp;= F\\
+(P - V) X &amp; = F\\
+X &amp;= \frac{F}{P-V}\\
 X &amp;= \frac{F}{1- \frac{V}{P}}
 \end{aligned}
 </span></p>
-<p>となり，損益分岐点売上高が<span class="math inline">F / (1-V)</span> となることが分かる。ここで，<span class="math inline">1-V</span>を<strong>限界利益</strong>という。日本語でかくと，</p>
+<p>つまり， <span class="math display">
+X = \frac{\text{固定費}}{1- \text{変動費率}}
+</span></p>
+<p>となり，損益分岐点売上高が<span class="math inline">\text{固定費} / (1-\text{変動費率})</span> となることが分かるります。 ここで，<span class="math inline">1-\text{変動費率}</span>を<strong>限界利益</strong>といい，損益分岐点売上高は，固定費を限界利益で割ったものになります。 要するに，販売個数を1つ増やすごとに増える利益で，固定費を埋めることができる点が損益分岐点なのです。</p>
 <p><span class="math display">
 損益分岐点売上高= \frac{固定費}{限界利益}
 </span></p>
-<p>しかし，この計算を行うためには，総費用を変動費と固定費に分ける必要があるが，これは極めて困難である。そこで，簡便的な分類方法がある。</p>
+<p>しかし，この計算を行うためには，費用を変動費と固定費に分ける必要があり，これは難しいのです。 実務では，企業の中で基準が設けられますが，企業の外から入手できる情報から，変動費と固定費を正確に分けることができないため，簡便的な分類方法を用います。</p>
 </section><section id="総費用法" class="level3" data-number="16.3.2"><h3 data-number="16.3.2" class="anchored" data-anchor-id="総費用法">
 <span class="header-section-number">16.3.2</span> 総費用法</h3>
-<p>これは売上高と総費用の2期間比較によって，変動費率を計算する方法である。</p>
+<p>これは売上高と総費用の2期間比較から変動費率を計算する方法で，もっとも簡単な方法となります。</p>
 <p><span class="math display">
-変動費率= \frac{総費用_{t} - 総費用_{t-1}}{売上高_{t} - 売上高_{t-1}}
+変動費率 = \frac{総費用_{t} - 総費用_{t-1}}{売上高_{t} - 売上高_{t-1}}
 </span></p>
 <p>ここで計算された変動費率を売上高にかけることで，変動費を計算する。</p>
 <p><span class="math display">

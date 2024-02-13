@@ -296,6 +296,23 @@ window.Quarto = {
 </li>
       </ul>
 </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第4部 財務分析</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -349,10 +366,13 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: パッケージ 'stringr' はバージョン 4.2.3 の R の下で造られました</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
 ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -360,7 +380,7 @@ window.Quarto = {
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -439,7 +459,7 @@ window.Quarto = {
 </div>
 <p><code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>関数の引数は非常に多く、設定次第では効率的に前処理ができますが、ここではシンプルに読み込むだけの方法を使います。 読み込んだデータは、<code>df</code>という名前のオブジェクトに代入します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://so-ichi.com/presemi_part_two.csv"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://so-ichi.com/presemi_part_two.csv"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 44527 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
@@ -456,7 +476,7 @@ dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種
 <span class="header-section-number">11.4</span> データを確認する</h2>
 <p>この<code>df</code>のクラスを確認してみます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
 </div>
@@ -489,7 +509,7 @@ dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種
 </ul>
 </div></div><p>読み込んだデータを簡単にチェックする方法として、<code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>関数があります。 これは、データの先頭の行を表示する関数です。 デフォルトでは、先頭の6行が表示されます。引数<code>n</code>で表示する行数を指定することができます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -689,7 +709,7 @@ dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種
 </div>
 <p>より詳細な構造を理解するためには、<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>関数や<code><a href="https://pillar.r-lib.org/reference/glimpse.html">dplyr::glimpse()</a></code>関数を使います。 基本関数<code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>だと、</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [44,527 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ 会社コード                    : chr [1:44527] "0000001" "0000001" "0000001" "0000001" ...
@@ -724,7 +744,7 @@ dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種
 </div>
 <p>のように、変数ごとにデータの型、データの個数、データがいくつか表示されます。 <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>関数も同様に、変数ごとにデータの型やデータのいくつかが表示されます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 44,527
 Columns: 12
@@ -763,7 +783,7 @@ $ 株主資本                       &lt;dbl&gt; 14852, 16339, 16873, 17839, 183
 <p>複数の変数を具体的に指定する場合は，<code><a href="https://rdrr.io/r/base/c.html">c()</a></code>で変数名を指定します。</p>
 <p>先ほど読み込んだ<code>df</code>から，企業名，決算期，売上高の3つの変数を選択する場合は，次のように書きます。 読み込んだデータを<code>df_sale</code>というオブジェクトに代入します。 基本的に，読み込んだオリジナルのデータは加工せず，加工したデータフレームは新しいオブジェクトに代入していきます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">企業名</span>, <span class="va">決算期</span>, <span class="va">売上高</span>, <span class="va">資産合計</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>これで，4変数からなる<code>df_sale</code>が作成されました。</p>
@@ -794,7 +814,7 @@ $ 株主資本                       &lt;dbl&gt; 14852, 16339, 16873, 17839, 183
 </ul>
 <p>これらの条件式を組み合わせることで、複雑な条件を指定することができます。 例えば，先ほど作成した<code>df_sale</code>から，トヨタ自動車で，<strong>かつ</strong>売上高が30兆円以上のデータを抽出する場合，</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale_toyota</span> <span class="op">&lt;-</span> <span class="va">df_sale</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale_toyota</span> <span class="op">&lt;-</span> <span class="va">df_sale</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">企業名</span> <span class="op">==</span> <span class="st">"トヨタ自動車"</span> <span class="op">&amp;</span> <span class="va">売上高</span> <span class="op">&gt;=</span> <span class="fl">3e7</span><span class="op">)</span></span>
 <span><span class="va">df_sale_toyota</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -865,7 +885,7 @@ $ 株主資本                       &lt;dbl&gt; 14852, 16339, 16873, 17839, 183
 <div class="no-row-height column-margin column-container"><div class="">
 <p>総資産回転率は，売上高を資産合計で除したものです。</p>
 </div></div><div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale_toyota</span> <span class="op">&lt;-</span> <span class="va">df_sale_toyota</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_sale_toyota</span> <span class="op">&lt;-</span> <span class="va">df_sale_toyota</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span> <span class="co"># 変数の作成</span></span>
 <span>        総資産回転率 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">売上高</span> <span class="op">/</span> <span class="va">資産合計</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="co"># 計算式</span></span>
 <span>        <span class="op">)</span></span>
@@ -958,7 +978,7 @@ $ 株主資本                       &lt;dbl&gt; 14852, 16339, 16873, 17839, 183
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">df_ex</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -996,7 +1016,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
 
@@ -1029,7 +1049,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># 1の前に3が追加</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1059,7 +1079,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .after <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="co"># xの後に3が追加</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1093,7 +1113,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="co"># x,y,a,bの４変数</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span> <span class="co"># x,y,a,bの４変数</span></span>
 <span>    x <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    y <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    a <span class="op">=</span> <span class="st">"a"</span>,</span>
@@ -1130,7 +1150,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .keep <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="co"># デフォルトの動作</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1165,7 +1185,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .keep <span class="op">=</span> <span class="st">"used"</span><span class="op">)</span> <span class="co"># 計算に使わなかった変数が除外</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1196,7 +1216,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .keep <span class="op">=</span> <span class="st">"unused"</span><span class="op">)</span> <span class="co"># 計算に使わなかった変数が除外</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1227,7 +1247,7 @@ y
 <div class="column" style="width:49%;">
 <p><strong>コード</strong></p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_ex</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>z <span class="op">=</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, .keep <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="co"># 計算に使わなかった変数が除外</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:2%;">
@@ -1307,7 +1327,7 @@ y
 <div class="no-row-height column-margin column-container"><div class="">
 <p>日経業種コードは，6ケタの数値で出来ており，最初の1ケタは大分類，次の2ケタは中分類，最後の3ケタが小分類を表しています。 中分類を表すカテゴリー変数を作りたいので，<code><a href="https://rdrr.io/r/base/substr.html">substr()</a></code>関数を使って，日経業種コードの2ケタ目と3ケタ目を抽出します。 <code>substr(文字列，開始位置，終了位置)</code>という関数で，文字列の指定した位置の文字を抽出することができます。</p>
 </div></div><div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span> <span class="co"># substr()で産業中分類を作成</span></span>
 <span>        産業中分類 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">日経業種コード</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span>        <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1360,7 +1380,7 @@ y
 <p><code>mtcars</code>は32行11列のデータフレームであり，変数として，<code>"mpg","cyl","disp","hp","drat","wt","qsec","vs","am","gear","carb"</code>をもっています。 <code>mpg</code>は燃費，<code>cyl</code>はシリンダー数，<code>disp</code>は排気量，<code>hp</code>は馬力，<code>drat</code>は変速機のギア比，<code>wt</code>は重量，<code>qsec</code>は1/4マイル走のタイム，<code>vs</code>はV型エンジンか直列エンジンか，<code>am</code>は変速機が自動か手動か，<code>gear</code>は変速機のギア数，<code>carb</code>はキャブレターの数を表しています。</p>
 </div></div><p>シリンダー数でグループ化したものを<code>by_cyl</code>というオブジェクトに代入します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">by_cyl</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 32
@@ -1381,7 +1401,7 @@ $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1
 </div>
 <p>出力の3行目に<code>Groups: cyl [3]</code>とあるように，<code>cyl</code>でグループ化されていることがわかります。 このグループごとに，排気量<code>disp</code>と馬力<code>hp</code>の平均を計算してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>  disp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span>,</span>
 <span>  hp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">hp</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1438,7 +1458,7 @@ hp
 </div>
 <p>3グループごとに2変数の平均を計算したので，3行3列のデータフレームが作成されました。 次に，<code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>関数を使ってグループ内で最大の排気量を持つデータを抽出してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">disp</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span> <span class="co"># 最大の排気量を持つデータを抽出</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1505,7 +1525,7 @@ hp
 <!-- Each call to summarise() removes a layer of grouping -->
 <p>グルーピング化を解除する効果について確認してみましょう。 次のように，<code>vs</code>と<code>am</code>でグループ化した<code>by_vs_am</code>を作成し，<code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>を使ってグループごとのデータ数を計算します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs_am</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs_am</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span> <span class="co"># vsとamでグループ化</span></span>
 <span><span class="va">by_vs</span> <span class="op">&lt;-</span> <span class="va">by_vs_am</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># グループ内のデータ数を計算</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1517,11 +1537,11 @@ argument.</code></pre>
 <p>英語のメッセージが出力されました。 メッセージの内容は，「<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>関数は，<code>vs</code>でグループ化されたデータを出力しているので，グループ化を上書きしたいなら，<code>.groups</code>引数を使え」ということです。</p>
 <p>作成した<code>by_vs</code>の中を確認してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_vars</a></span><span class="op">(</span><span class="va">by_vs</span><span class="op">)</span> <span class="co"># グループ数</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_vars</a></span><span class="op">(</span><span class="va">by_vs</span><span class="op">)</span> <span class="co"># グループ数</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "vs"</code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead><tr class="header">
@@ -1556,7 +1576,7 @@ argument.</code></pre>
 </div>
 <p>グループが<code>vs</code>となっており，<code>am</code>でのグループ化が行われていないことがわかります。 そのため，</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead><tr>
@@ -1590,7 +1610,7 @@ n
 </div>
 <p>とすると，<code>vs</code>ごとの合計データ数が集計されています。 グループ化を解除するには，<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>関数を使います。</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_vs</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co">#グループ化を解除</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>table.attr <span class="op">=</span> <span class="st">"style='width:40%;'"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1607,14 +1627,14 @@ n
 </div>
 <p>グループが解除されたので，データの個数はデータフレーム全体のデータ数を表します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 32</code></pre>
 </div>
 </div>
 <p>デフォルトでは，<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>は既存のグループ化を上書きします。</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span> <span class="co"># cylでグループ化済み</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span> <span class="co"># cylでグループ化済み</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># vsとamでグループ化</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_vars</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># グループ化されている変数を確認</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1623,7 +1643,7 @@ n
 </div>
 <p><code>cyl</code>でグループ化されていた<code>by_cyl</code>が，<code>vs</code>と<code>am</code>でグループで上書きされています。 <code>add = TRUE</code>を指定すると，既存のグループ化に新しいグループ化を追加します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_cyl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">vs</span>, <span class="va">am</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_vars</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1633,7 +1653,7 @@ n
 <p>グループが<code>cyl</code>，<code>vs</code>，<code>am</code>の3つになっていることがわかります。</p>
 <p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>関数には，式を指定することもできます。 次の例では，<code>vs</code>と<code>am</code>の値を足した値でグループ化しています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>vsam <span class="op">=</span> <span class="va">vs</span> <span class="op">+</span> <span class="va">am</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -1747,7 +1767,7 @@ n
 <p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>はグループ化されていないデータに対して常に実行されるので，行数は変わりません。</p>
 <p>次の例では，<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>に<code>hp_cut = cut(hp,3)</code>という式を指定することで，<code>hp</code>を3等分したカテゴリーを表す変数<code>hp_cut</code>を作成しています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_hp3</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_hp3</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>hp_cut <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">hp</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">by_hp3</span> <span class="op">|&gt;</span></span>
@@ -1862,7 +1882,7 @@ n
 </div>
 <p><code>by_hp3</code>の一番右の列に<code>hp_cut</code>が追加され、<code>(51.7,146]</code>や<code>(146,241]</code>といったカテゴリーが作成されているのがわかります。 この<code>hp_cut</code>の中に含まれるデータ数を<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数で確認してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">by_hp3</span><span class="op">$</span><span class="va">hp_cut</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">by_hp3</span><span class="op">$</span><span class="va">hp_cut</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 (51.7,146]  (146,241]  (241,335] 
@@ -1872,7 +1892,7 @@ n
 <p><code>by_hp3</code>の<code>hp_cut</code>が3つのグループに分けられていることがわかります。</p>
 <p>グループごとに<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>を実行したい場合は，明示的に<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>を使う必要があります。 たとえば，<code>vs</code>の値(0か1)ごとに<code>hp</code>を3等分したカテゴリーを表す変数<code>hp_cut</code>を作成するには，次のように書きます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_hp6</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_hp6</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">vs</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># vsでグループ化</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hp_cut <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">hp</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># hpを3等分したカテゴリーを表す変数hp_cutを作成</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hp_cut</span><span class="op">)</span></span>
@@ -1988,7 +2008,7 @@ n
 </div>
 <p><code>by_hp6</code>の一番右の列に<code>hp_cut</code>が追加され、<code>(51.7,146]</code>や<code>(146,241]</code>といったカテゴリーが作成されているのがわかります。 先と同様に、<code>hp_cut</code>の中に含まれるデータ数を<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数で確認してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">by_hp6</span><span class="op">$</span><span class="va">hp_cut</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">by_hp6</span><span class="op">$</span><span class="va">hp_cut</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  (90.8,172]   (172,254]   (254,335] (51.9,75.7] (75.7,99.3]  (99.3,123] 
@@ -1999,7 +2019,7 @@ n
 <!-- when factors are involved and .drop = FALSE, groups can be empty -->
 <p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>関数のオプション<code>.drop</code>は，グループ化されたデータの行数が0になった場合に，グループを削除するかどうかを指定します。 各グループがどの行を含んでいるのかを<code><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html">group_rows()</a></code>で確認します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="co"># 1から10の数列</span></span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"c"</span><span class="op">)</span>, each  <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, <span class="co"># "a"と"c"を5回繰り返す</span></span>
@@ -2063,7 +2083,7 @@ n
 <div class="no-row-height column-margin column-container"><div class="">
 <p>ヘルプにあるとおりに<code><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html">group_rows()</a></code>を使うとエラーがでますが、これは<code><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html">group_rows()</a></code>が<code>dplyr</code>パッケージにあるものではなく基本関数<code><a href="https://rdrr.io/pkg/kableExtra/man/group_rows.html">group_rows()</a></code>を使っているためです。 したがって，<code><a href="https://dplyr.tidyverse.org/reference/group_data.html">dplyr::group_rows()</a></code>とすることでエラーを回避できます。</p>
 </div></div><div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span>, .drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_rows</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2082,7 +2102,189 @@ integer(0)
 </section></section><section id="group_byとmutate" class="level3" data-number="11.5.5"><h3 data-number="11.5.5" class="anchored" data-anchor-id="group_byとmutate">
 <span class="header-section-number">11.5.5</span> <code>group_by()</code>と<code>mutate()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>を用いてグループ化することで，<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>関数を使ってグループごとに新しい変数を作成することができます。</p>
+<p>同じ観測値(行)での変数の計算を行う場合は，<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>のみで十分ですが，異なる時点の変数の計算を行う場合は注意が必要です。 たとえば，以下のように，3つの企業における3ヶ年の売上高と総資産データから，総資産回転率を計算する場合を考えます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"トヨタ"</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"ホンダ"</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"日産"</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">2021</span><span class="op">:</span><span class="fl">2023</span>,<span class="fl">3</span><span class="op">)</span>,</span>
+<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">272145</span>,<span class="fl">313795</span>,<span class="fl">371542</span>,<span class="fl">131705</span>,<span class="fl">145526</span>,<span class="fl">169077</span>,<span class="fl">78625</span>,<span class="fl">84245</span>,<span class="fl">105966</span><span class="op">)</span>,</span>
+<span>    TotalAsset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">622671</span>,<span class="fl">676887</span>,<span class="fl">743031</span>,<span class="fl">219210</span>,<span class="fl">239731</span>,<span class="fl">246700</span>,<span class="fl">164520</span>,<span class="fl">163724</span>,<span class="fl">175985</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>        turnover <span class="op">=</span> <span class="va">sale</span> <span class="op">/</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span><span class="op">(</span><span class="va">TotalAsset</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">TotalAsset</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">turnover</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">272145</td>
+<td style="text-align: right;">622671</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">313795</td>
+<td style="text-align: right;">676887</td>
+<td style="text-align: right;">0.5039499</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">371542</td>
+<td style="text-align: right;">743031</td>
+<td style="text-align: right;">0.5488981</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">131705</td>
+<td style="text-align: right;">219210</td>
+<td style="text-align: right;">0.1772537</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">145526</td>
+<td style="text-align: right;">239731</td>
+<td style="text-align: right;">0.6638657</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">169077</td>
+<td style="text-align: right;">246700</td>
+<td style="text-align: right;">0.7052780</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">78625</td>
+<td style="text-align: right;">164520</td>
+<td style="text-align: right;">0.3187069</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">84245</td>
+<td style="text-align: right;">163724</td>
+<td style="text-align: right;">0.5120654</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">105966</td>
+<td style="text-align: right;">175985</td>
+<td style="text-align: right;">0.6472234</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>結果は出力されましたが，<code>turnover</code>の計算が企業ごとに行われていないことがわかります。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="img/groupby_mutate.png" class="img-fluid figure-img"></p>
+<figcaption>異なる時点の計算</figcaption></figure>
+</div>
+<p>具体的には，ホンダの2021の売上高をトヨタの2023年の総資産で割った値や，日産の2021年の売上高をホンダの2023年の総資産で割った値が計算されてしまっています。 これは<code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">dplyr::lag()</a></code>関数がデフォルトで全体のデータを対象としているため，企業ごとではなく，データフレーム全体での計算が行われているためです。</p>
+<p>このような場合は，<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>関数を使って企業ごとにグループ化し，<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>関数を使って計算する必要があります。</p>
+<div class="cell">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>        turnover <span class="op">=</span> <span class="va">sale</span> <span class="op">/</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span><span class="op">(</span><span class="va">TotalAsset</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">TotalAsset</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">turnover</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">272145</td>
+<td style="text-align: right;">622671</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">313795</td>
+<td style="text-align: right;">676887</td>
+<td style="text-align: right;">0.5039499</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">トヨタ</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">371542</td>
+<td style="text-align: right;">743031</td>
+<td style="text-align: right;">0.5488981</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">131705</td>
+<td style="text-align: right;">219210</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">145526</td>
+<td style="text-align: right;">239731</td>
+<td style="text-align: right;">0.6638657</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ホンダ</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">169077</td>
+<td style="text-align: right;">246700</td>
+<td style="text-align: right;">0.7052780</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">78625</td>
+<td style="text-align: right;">164520</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">84245</td>
+<td style="text-align: right;">163724</td>
+<td style="text-align: right;">0.5120654</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">日産</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">105966</td>
+<td style="text-align: right;">175985</td>
+<td style="text-align: right;">0.6472234</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>2021年の総資産回転率の計算のためには，2020年の総資産が必要ですが，2021年からしかデータが無いため，<code>NA</code>が入っていることが分かります。 これで正確な計算ができました。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>と<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>を使うと，グループごとの統計量を計算するため，出力される結果はグループ数と同じ行数になりますが， <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>と<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>を使うと，グループごとの計算を行うため，出力される結果は元の行数と同じになります。</p>
 
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
