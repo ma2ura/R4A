@@ -34,6 +34,8 @@ book:
     - part: part04.qmd
       chapters:
         - chap15_financialAnalysis.qmd
+        # - chap16_productivity.qmd
+        - chap16_uncertainty.qmd
   page-navigation: true
   back-to-top-navigation: true
   page-footer: "Copyright 2024, Soichi Matsuura"

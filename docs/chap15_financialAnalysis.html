@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.529">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>R for Empirical Accounting Research - 16&nbsp; 財務分析</title>
+<title>R for Empirical Accounting Research - 16&nbsp; 財務分析のための前処理</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./chap16_uncertainty.html" rel="next">
 <link href="./part04.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -96,46 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
+}</script>
 </head>
 <body class="nav-sidebar floating slimcontent">
 
@@ -144,7 +106,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap15_financialAnalysis.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap15_financialAnalysis.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -306,7 +268,13 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -320,38 +288,12 @@ window.Quarto = {
    
   <ul>
 <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E3%81%A8%E5%89%8D%E5%87%A6%E7%90%86" id="toc-データの読み込みと前処理" class="nav-link active" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF%E3%81%A8%E5%89%8D%E5%87%A6%E7%90%86"><span class="header-section-number">16.0.1</span> データの読み込みと前処理</a></li>
-  <li>
-<a href="#%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90" id="toc-生産性の分析" class="nav-link" data-scroll-target="#%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90"><span class="header-section-number">16.1</span> 生産性の分析</a>
-  <ul class="collapse">
-<li><a href="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%A8%E3%81%9D%E3%81%AE%E6%B8%AC%E5%AE%9A" id="toc-付加価値とその測定" class="nav-link" data-scroll-target="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%A8%E3%81%9D%E3%81%AE%E6%B8%AC%E5%AE%9A"><span class="header-section-number">16.1.1</span> 付加価値とその測定</a></li>
-  <li><a href="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%AE%E6%B8%AC%E5%AE%9A" id="toc-付加価値の測定" class="nav-link" data-scroll-target="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%AE%E6%B8%AC%E5%AE%9A"><span class="header-section-number">16.1.2</span> 付加価値の測定</a></li>
-  <li><a href="#%E5%8A%B4%E5%83%8D%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90" id="toc-労働生産性の分析" class="nav-link" data-scroll-target="#%E5%8A%B4%E5%83%8D%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90"><span class="header-section-number">16.1.3</span> 労働生産性の分析</a></li>
-  <li><a href="#%E5%8A%B4%E5%83%8D%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E8%A7%A3" id="toc-労働生産性の分解" class="nav-link" data-scroll-target="#%E5%8A%B4%E5%83%8D%E7%94%9F%E7%94%A3%E6%80%A7%E3%81%AE%E5%88%86%E8%A7%A3"><span class="header-section-number">16.1.4</span> 労働生産性の分解</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%AE%E5%88%86%E9%85%8D" id="toc-付加価値の分配" class="nav-link" data-scroll-target="#%E4%BB%98%E5%8A%A0%E4%BE%A1%E5%80%A4%E3%81%AE%E5%88%86%E9%85%8D"><span class="header-section-number">16.2</span> 3. 付加価値の分配</a>
-  <ul class="collapse">
-<li><a href="#%E5%AE%9A%E7%BE%A9%E3%82%92%E8%A6%9A%E3%81%88%E3%82%8B" id="toc-定義を覚える" class="nav-link" data-scroll-target="#%E5%AE%9A%E7%BE%A9%E3%82%92%E8%A6%9A%E3%81%88%E3%82%8B"><span class="header-section-number">16.2.1</span> 定義を覚える。</a></li>
-  <li><a href="#%E9%96%A2%E4%BF%82%E3%82%92%E8%A6%9A%E3%81%88%E3%82%8B" id="toc-関係を覚える" class="nav-link" data-scroll-target="#%E9%96%A2%E4%BF%82%E3%82%92%E8%A6%9A%E3%81%88%E3%82%8B"><span class="header-section-number">16.2.2</span> 関係を覚える</a></li>
-  </ul>
-</li>
-  <li>
-<a href="#%E4%B8%8D%E7%A2%BA%E5%AE%9F%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90" id="toc-不確実性の分析" class="nav-link" data-scroll-target="#%E4%B8%8D%E7%A2%BA%E5%AE%9F%E6%80%A7%E3%81%AE%E5%88%86%E6%9E%90"><span class="header-section-number">16.3</span> 不確実性の分析</a>
-  <ul class="collapse">
-<li><a href="#%E8%B2%BB%E7%94%A8%E6%A7%8B%E9%80%A0%E3%81%8C%E5%88%A9%E7%9B%8A%E5%A4%89%E5%8B%95%E3%81%AB%E5%8F%8A%E3%81%BC%E3%81%99%E5%BD%B1%E9%9F%BF" id="toc-費用構造が利益変動に及ぼす影響" class="nav-link" data-scroll-target="#%E8%B2%BB%E7%94%A8%E6%A7%8B%E9%80%A0%E3%81%8C%E5%88%A9%E7%9B%8A%E5%A4%89%E5%8B%95%E3%81%AB%E5%8F%8A%E3%81%BC%E3%81%99%E5%BD%B1%E9%9F%BF"><span class="header-section-number">16.3.1</span> 費用構造が利益変動に及ぼす影響</a></li>
-  <li><a href="#%E7%B7%8F%E8%B2%BB%E7%94%A8%E6%B3%95" id="toc-総費用法" class="nav-link" data-scroll-target="#%E7%B7%8F%E8%B2%BB%E7%94%A8%E6%B3%95"><span class="header-section-number">16.3.2</span> 総費用法</a></li>
-  <li><a href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95" id="toc-最小二乗法" class="nav-link" data-scroll-target="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95"><span class="header-section-number">16.3.3</span> 最小二乗法</a></li>
-  <li><a href="#%E8%B2%BB%E7%9B%AE%E5%88%A5%E6%B3%95" id="toc-費目別法" class="nav-link" data-scroll-target="#%E8%B2%BB%E7%9B%AE%E5%88%A5%E6%B3%95"><span class="header-section-number">16.3.4</span> 費目別法</a></li>
-  <li><a href="#%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%E6%AF%94%E7%8E%87%E3%81%A8%E5%96%B6%E6%A5%AD%E3%83%AC%E3%83%90%E3%83%AC%E3%83%83%E3%82%B8" id="toc-損益分岐点比率と営業レバレッジ" class="nav-link" data-scroll-target="#%E6%90%8D%E7%9B%8A%E5%88%86%E5%B2%90%E7%82%B9%E6%AF%94%E7%8E%87%E3%81%A8%E5%96%B6%E6%A5%AD%E3%83%AC%E3%83%90%E3%83%AC%E3%83%83%E3%82%B8"><span class="header-section-number">16.3.5</span> 損益分岐点比率と営業レバレッジ</a></li>
-  </ul>
-</li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap15_financialAnalysis.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></a></li></ol></nav><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap15_financialAnalysis.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span>
+<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span>
 </h1>
 </div>
 
@@ -387,7 +329,8 @@ window.Quarto = {
 <li>東京証券取引所のプライム・スタンダード・グロース市場に上場し，</li>
 <li>従業員数が500名以上いる企業</li>
 </ul>
-<p>とします。 この章で用いる会計項目は，</p>
+<p>とします。</p>
+<p>この章で用いる会計項目は，</p>
 <ul>
 <li>
 <code>R001</code> 決算月数</li>
@@ -415,6 +358,22 @@ window.Quarto = {
 <code>K079</code> [販管費] 賃借料</li>
 <li>
 <code>H021</code> 期末従業員数</li>
+<li>
+<code>D001</code> 営業利益［累計］</li>
+<li>
+<code>D001</code> 受取利息・配当金［累計］</li>
+<li>
+<code>D001</code> 持分法を適用した場合の投資損益［累計］</li>
+<li>
+<code>D001</code> 株主資本</li>
+<li>
+<code>D001</code> 評価・換算差額等／累積その他の包括利益</li>
+<li>
+<code>D001</code> 受取手形・売掛金及び契約資産／売掛金及びその他の短期債権</li>
+<li>
+<code>D001</code> 棚卸資産</li>
+<li>
+<code>D001</code> 売上原価・営業原価［累計］</li>
 </ul>
 <p>です。 日経NEEDS社会科学情報検索システムでデータを集めるときは，以下の項目コードを使ってください。</p>
 <pre><code>R001,R018,R022,B063,B110,D021,D101,D103,D047,D110,K075,K079,H021</code></pre>
@@ -1053,232 +1012,9 @@ $ sales            &lt;dbl&gt; 145778, 162731, 181885, 178046, 202387, 218350, 2
 </div>
 </div>
 <p>これで前処理が終わったので，次は生産性の分析に移っていきます。</p>
-</section><section id="生産性の分析" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="生産性の分析">
-<span class="header-section-number">16.1</span> 生産性の分析</h2>
-<section id="付加価値とその測定" class="level3" data-number="16.1.1"><h3 data-number="16.1.1" class="anchored" data-anchor-id="付加価値とその測定">
-<span class="header-section-number">16.1.1</span> 付加価値とその測定</h3>
-<p><strong>付加価値</strong>(added value)とは，企業が新たに生み出した価値であり，<strong>生産性</strong>(productivity)とは付加価値を生み出す能力をいいます。 付加価値は，企業の生産性を測る指標として用いられます。</p>
-</section><section id="付加価値の測定" class="level3" data-number="16.1.2"><h3 data-number="16.1.2" class="anchored" data-anchor-id="付加価値の測定">
-<span class="header-section-number">16.1.2</span> 付加価値の測定</h3>
-<p>付加価値の測定方法には大きく，控除法と<strong>加算法</strong>の2つがあります。</p>
-<p>控除法は，売上高から企業が消費した価値の額を引いたものです。 売上高は把握できますが，消費額は外部からは把握できないため，付加価値の測定が難しいです。</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-控除法
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">
-付加価値 = 売上高 - 前段階の企業が生産した価値の消費額
-</span></p>
-</div>
-</div>
-<p>そのため，よく利用されるのが加算法です。 企業がつくり出した付加価値は， 従業員に分配した人件費と，借主に支払った賃借料，国・地方自治体に支払った税金，債権者に支払った負債利子の合計に， 企業の当期純利益を加えたものとして，計算されます。</p>
-<div class="margin-note">
-<p>税金は連結損益計算書の法人税等から法人税調整額を加減したものとして計算します。</p>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-加算法
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><span class="math display">
-付加価値 = 人件費 + 賃借料 + 税金 + 負債利子 + 当期純利益
-</span></p>
-</div>
-</div>
-<p>データの入手可能性から，加算法がよく利用されますが，人件費の特定が困難です。 資格試験では従業員数や給与の情報が与えられるので，そこから計算しますが，ここでは連結損益計算書の販売費及び一般管理費の内訳項目である「人件費・福利厚生費」を人件費として扱います。 <code>dplyr</code>パッケージの<code>mutate()</code>関数で付加価値の変数<code>added_value</code>を計算します。</p>
-<div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span></span>
-<span>    added_value <span class="op">=</span> <span class="va">salary</span> <span class="op">+</span> <span class="va">rent_fee</span> <span class="op">+</span> <span class="op">(</span><span class="va">corporate_tax</span> <span class="op">+</span> <span class="va">tax_adjustment</span><span class="op">)</span> <span class="op">+</span> <span class="va">interest_expense</span> <span class="op">+</span> <span class="va">net_income</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">added_value</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
--1966993     3406     8211    32806    23898  2321237 </code></pre>
-</div>
-</div>
-<p>付加価値を計算することできたので，付加価値を使った財務分析を行ってみます。</p>
-</section><section id="労働生産性の分析" class="level3" data-number="16.1.3"><h3 data-number="16.1.3" class="anchored" data-anchor-id="労働生産性の分析">
-<span class="header-section-number">16.1.3</span> 労働生産性の分析</h3>
-<p><strong>労働生産性</strong>(labor productivity)とは，一定期間における付加価値を(平均)従業員数で割ったものです。 つまり，従業員一人が1年間に生み出した付加価値の額を示しています。</p>
-<p><span class="math display">
-労働生産性_t = \frac{付加価値_t}{平均従業員数_t}
-</span> 分子が付加価値というフロー情報であることから，分母の従業員数も期首と期末の平均をとることで対応させています。 では，計算してみましょう。 期首と期末の値を使って平均値を計算するため，<code>group_by()</code>関数と<code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code>関数を使います。</p>
-<div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">nikkei_code</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># 企業ごとに</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span></span>
-<span>    ave_employee <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">num_employee</span><span class="op">)</span> <span class="op">+</span> <span class="va">num_employee</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="co"># 平均従業員数</span></span>
-<span>    labor_prod <span class="op">=</span> <span class="va">added_value</span> <span class="op">/</span> <span class="va">ave_employee</span> <span class="co"># 労働生産性</span></span>
-<span>  <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>新しく作った変数の記述統計量を確認します。</p>
-<div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">ave_employee</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-     12     794    1576    5596    4367  285347    2026 </code></pre>
-</div>
-</div>
-<p>最も従業員が少ない会社で12名，最大で約28万名と，従業員数のばらつきが大きいことが分かります。</p>
-<div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">labor_prod</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
--49.957   2.778   5.257   7.262   9.027 453.811    2026 </code></pre>
-</div>
-</div>
-<p>中央値が<span class="math inline">5.257</span>で平均値が<span class="math inline">7.262</span>と中央値の</p>
-<p>ヒストグラムも作成してみます。</p>
-<div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu">aes</span><span class="op">(</span><span class="va">labor_prod</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_histogram</span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2026 rows containing non-finite values (`stat_bin()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chap15_financialAnalysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>分布が右に偏っており，大きな値に異常値がありそうです。</p>
-</section><section id="労働生産性の分解" class="level3" data-number="16.1.4"><h3 data-number="16.1.4" class="anchored" data-anchor-id="労働生産性の分解">
-<span class="header-section-number">16.1.4</span> 労働生産性の分解</h3>
-<p><strong>売上高</strong>を用いた分解：売上高を挟みこむことで，労働生産性を，<strong>一人当たり売上高</strong>と<strong>付加価値率</strong>に分解できる。</p>
-<p><span class="math display">
-労働生産性 = \frac{付加価値額}{平均従業員数} = \underbrace{\frac{売上高}{平均従業員数}}_{1人当たり売上高} \times \underbrace{\frac{付加価値額}{売上高}}_{付加価値率}
-</span></p>
-<p><strong>有形固定資産</strong>を用いた分解：有形固定資産を挟み込むことで，労働生産性を<strong>労働装備率</strong>と<strong>設備生産性</strong>に分解できる。</p>
-<p><span class="math display">
-労働生産性 =\frac{付加価値額}{平均従業員数} = \underbrace{\frac{平均有形固定資産}{平均従業員数}}_{労働装備率} \times \underbrace{\frac{付加価値額}{平均有形固定資産}}_{設備生産性}
-</span></p>
-</section></section><section id="付加価値の分配" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="付加価値の分配">
-<span class="header-section-number">16.2</span> 3. 付加価値の分配</h2>
-<p>付加価値の分配状況をみる。最も大きい分配先は<strong>人件費</strong>であり，<strong>付加価値に占める人件費の割合</strong>を<strong>労働分配率</strong>という。</p>
-<p><span class="math display">
-一人当たり人件費 = \frac{人件費}{平均従業員数} = \underbrace{\frac{付加価値額}{平均従業員数}}_{労働生産性} \times \underbrace{\frac{人件費}{付加価値額}}_{労働分配率}
-</span></p>
-<p>一人当たり人件費は，労働生産性と労働分配率に分類できる。</p>
-<section id="定義を覚える" class="level3" data-number="16.2.1"><h3 data-number="16.2.1" class="anchored" data-anchor-id="定義を覚える">
-<span class="header-section-number">16.2.1</span> 定義を覚える。</h3>
-<ul>
-<li><span class="math inline">付加価値 = 人件費 + 賃借料 + 税金 + 負債利子 + 当期純利益</span></li>
-<li><span class="math inline">労働生産性 = 付加価値額 \div 平均従業員数</span></li>
-<li><span class="math inline">付加価値率 = 付加価値額 \div 売上高</span></li>
-<li><span class="math inline">労働装備率 = 平均有形固定資産 \div 平均従業員数</span></li>
-<li><span class="math inline">設備生産性 = 付加価値額 \div 平均有形固定資産</span></li>
-<li><span class="math inline">労働分配率 = 人件費 \div 付加価値額</span></li>
-</ul></section><section id="関係を覚える" class="level3" data-number="16.2.2"><h3 data-number="16.2.2" class="anchored" data-anchor-id="関係を覚える">
-<span class="header-section-number">16.2.2</span> 関係を覚える</h3>
-<ul>
-<li><span class="math inline">労働生産性 = 一人当たり売上高 \times 付加価値率</span></li>
-<li><span class="math inline">労働生産性 = 労働装備率 \times 設備生産性</span></li>
-<li><span class="math inline">一人当たり人件費 =労働生産性 \times 労働分配率</span></li>
-</ul></section></section><section id="不確実性の分析" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="不確実性の分析">
-<span class="header-section-number">16.3</span> 不確実性の分析</h2>
-<section id="費用構造が利益変動に及ぼす影響" class="level3" data-number="16.3.1"><h3 data-number="16.3.1" class="anchored" data-anchor-id="費用構造が利益変動に及ぼす影響">
-<span class="header-section-number">16.3.1</span> 費用構造が利益変動に及ぼす影響</h3>
-<p><strong>損益分岐点</strong>(cost-volume-profit)とは，売上と費用が同額となる点をいい，そのときの売上高を損益分岐点売上高といいます。 いろいろ説明しますが，以下の図で理解するのが一番早いです。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/CVP.png" class="img-fluid figure-img"></p>
-<figcaption>損益分岐点分析</figcaption></figure>
-</div>
-<p>損益分岐点を計算するために必要な要素は，</p>
-<ul>
-<li>収益</li>
-<li>変動費</li>
-<li>固定費</li>
-</ul>
-<p>の3つである。</p>
-<p>横軸を個数，縦軸を金額とするグラフを考えてみましょう。 売上高<span class="math inline">S</span>は，販売単価<span class="math inline">P</span>と個数<span class="math inline">X</span>との積であるため，<span class="math inline">P \times X</span>となる。 変動費は，操業度(ここでは売上高)に応じて変化する費用であり，変動費の単価<span class="math inline">V</span>と個数<span class="math inline">X</span>の積<span class="math inline">V \times X</span>で表します。 売上高が1増えたときに，変動費がどれだけ増えるのかを知るために，変動費単価<span class="math inline">V</span>を販売単価<span class="math inline">P</span>で除したもの<span class="math inline">V/P</span>を<strong>変動費比率</strong>といいます。 固定費は，操業度にかかわらず一定の費用であり，<span class="math inline">F</span>で表す。 変動費と固定費の合計である総費用<span class="math inline">C</span>は次のように表すことができる。</p>
-<p><span class="math display">
-C = V \times X + F
-</span></p>
-<p>損益分岐点売上個数は，定義から<span class="math inline">S = C</span> つまり，<span class="math inline">P\times X =  V \times X + F</span>の方程式を<span class="math inline">X</span>で解いたものになります。 解いてみましょう。 <span class="math display">
-\begin{aligned}
-P\times X &amp;=  V \times X + F\\
-P\times X -  V \times X &amp;= F\\
-(P - V) X &amp; = F\\
-X &amp;= \frac{F}{P-V}\\
-X &amp;= \frac{F}{1- \frac{V}{P}}
-\end{aligned}
-</span></p>
-<p>つまり， <span class="math display">
-X = \frac{\text{固定費}}{1- \text{変動費率}}
-</span></p>
-<p>となり，損益分岐点売上高が<span class="math inline">\text{固定費} / (1-\text{変動費率})</span> となることが分かるります。 ここで，<span class="math inline">1-\text{変動費率}</span>を<strong>限界利益</strong>といい，損益分岐点売上高は，固定費を限界利益で割ったものになります。 要するに，販売個数を1つ増やすごとに増える利益で，固定費を埋めることができる点が損益分岐点なのです。</p>
-<p><span class="math display">
-損益分岐点売上高= \frac{固定費}{限界利益}
-</span></p>
-<p>しかし，この計算を行うためには，費用を変動費と固定費に分ける必要があり，これは難しいのです。 実務では，企業の中で基準が設けられますが，企業の外から入手できる情報から，変動費と固定費を正確に分けることができないため，簡便的な分類方法を用います。</p>
-</section><section id="総費用法" class="level3" data-number="16.3.2"><h3 data-number="16.3.2" class="anchored" data-anchor-id="総費用法">
-<span class="header-section-number">16.3.2</span> 総費用法</h3>
-<p>これは売上高と総費用の2期間比較から変動費率を計算する方法で，もっとも簡単な方法となります。</p>
-<p><span class="math display">
-変動費率 = \frac{総費用_{t} - 総費用_{t-1}}{売上高_{t} - 売上高_{t-1}}
-</span></p>
-<p>ここで計算された変動費率を売上高にかけることで，変動費を計算する。</p>
-<p><span class="math display">
-変動費=変動費率 \times 売上高
-</span></p>
-</section><section id="最小二乗法" class="level3" data-number="16.3.3"><h3 data-number="16.3.3" class="anchored" data-anchor-id="最小二乗法">
-<span class="header-section-number">16.3.3</span> 最小二乗法</h3>
-<p>回帰分析手法である最小二乗法を用いて変動費率を計算する方法である。これは比較的データが多く取得可能なときに利用可能だが，年次データともなると，過去5年程度のデータが必要となり，長期間になればなるほど，固定費が変動費となってしまうため，四半期データを用いるなど工夫が必要となる。</p>
-<p>総費用を売上高で回帰する。</p>
-<p><span class="math display">
-Y = a + bX+\varepsilon
-</span></p>
-<p>総費用<span class="math inline">Y</span> と売上高<span class="math inline">X</span> のデータを用いて，変動費率と解釈できる回帰パラメータ<span class="math inline">b</span> を推定する。最小二乗法の定義より，回帰係数<span class="math inline">b</span> は以下のようになる。</p>
-<p><span class="math display">
-b = \frac{\mathrm{cov}(Y,X)}{\mathrm{var}(Y)}=\frac{(X_i - \bar X)(Y_i - \bar Y)}{(Y_i - \bar Y)^2}
-</span></p>
-<p>つまり，売上高と総費用の平均を計算し，各データから平均値を差し引く。総費用の平均偏差の二乗を分母に，分子には売上高と総費用の平均偏差のかけ算を行うことで回帰係数が計算できる。たぶん，試験にはでないだろう。</p>
-</section><section id="費目別法" class="level3" data-number="16.3.4"><h3 data-number="16.3.4" class="anchored" data-anchor-id="費目別法">
-<span class="header-section-number">16.3.4</span> 費目別法</h3>
-<p>費用項目ごとに，何が固定費で何が変動費かを考えて分類する方法である。問題文で条件が指示されれば可能かもしれないが，現実には無理だとおもうので，試験には出ないような気がする。</p>
-<p>結論，<strong>総費用法をしっかり覚えておく</strong>。</p>
-</section><section id="損益分岐点比率と営業レバレッジ" class="level3" data-number="16.3.5"><h3 data-number="16.3.5" class="anchored" data-anchor-id="損益分岐点比率と営業レバレッジ">
-<span class="header-section-number">16.3.5</span> 損益分岐点比率と営業レバレッジ</h3>
-<p>実際の売上高と損益分岐点売上高との相対的な規模比較をするための尺度が，損益分岐点比率である。</p>
-<p><span class="math display">
-損益分岐点比率 = \frac{損益分岐点売上高}{実際の売上高}
-</span></p>
-<p>実際の売上高と損益分岐点売上高との間の距離のような尺度として安全余裕度がある。</p>
-<p><span class="math display">
-安全余裕度 = 1 - 損益分岐点比率
-</span></p>
-<p>安全余裕度が高いほど，売上高が減少しても，まだ損益分岐点売上高まで差があることを意味している。損益分岐点を低くするためには，</p>
-<ul>
-<li>売上高の増加</li>
-<li>変動費率の引き下げ</li>
-<li>固定費の削減</li>
-</ul>
-<p>が必要となる。</p>
-<p>売上高の変化が利益の変化に与える影響の度合いを示す尺度に，営業レバレッジがある。</p>
-<p><span class="math display">
-営業レバレッジ = \frac{営業利益変化率}{売上高変化率} = \frac{1}{1-損益分岐点比率} = \frac{1}{安全余裕度}
-</span></p>
-<p>となる。この式の導出は，以下のページを参照すること。</p>
-<p><a href="https://www.notion.so/27cd3c82559d400a9442361e125cd251?pvs=21">営業レバレッジ</a></p>
-<p>ここは，時間がかかりそうなので，何度も問題を解いてパターンになれておくこと。</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1680,6 +1416,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./chap16_uncertainty.html" class="pagination-link" aria-label="<span class='chapter-number'>17</span>&nbsp; <span class='chapter-title'>不確実性の分析</span>">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

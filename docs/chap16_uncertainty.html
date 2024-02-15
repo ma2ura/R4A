@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Empirical Accounting Research - 第4部 財務分析</title>
+<title>R for Empirical Accounting Research - 17&nbsp; 不確実性の分析</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chap15_financialAnalysis.html" rel="next">
-<link href="./chap14_ggplot_ghibli.html" rel="prev">
+<link href="./chap15_financialAnalysis.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -70,6 +69,49 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -82,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap16_uncertainty.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -238,7 +280,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part04.html" class="sidebar-item-text sidebar-link active">
+            <a href="./part04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第4部 財務分析</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -248,19 +290,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chap16_productivity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">生産性分析</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+  <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -275,16 +311,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目次</h2>
    
   <ul>
-  <li><a href="#第1部の目次" id="toc-第1部の目次" class="nav-link active" data-scroll-target="#第1部の目次">第1部の目次</a></li>
+  <li><a href="#総費用法" id="toc-総費用法" class="nav-link active" data-scroll-target="#総費用法"><span class="header-section-number">17.1</span> 総費用法</a></li>
+  <li><a href="#最小二乗法" id="toc-最小二乗法" class="nav-link" data-scroll-target="#最小二乗法"><span class="header-section-number">17.2</span> 最小二乗法</a></li>
+  <li><a href="#費目別法" id="toc-費目別法" class="nav-link" data-scroll-target="#費目別法"><span class="header-section-number">17.3</span> 費目別法</a></li>
+  <li><a href="#損益分岐点比率と営業レバレッジ" id="toc-損益分岐点比率と営業レバレッジ" class="nav-link" data-scroll-target="#損益分岐点比率と営業レバレッジ"><span class="header-section-number">17.4</span> 損益分岐点比率と営業レバレッジ</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part04.html">第4部 財務分析</a></li><li class="breadcrumb-item"><a href="./chap16_uncertainty.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">第4部 財務分析</h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></h1>
 </div>
 
 
@@ -301,15 +340,140 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>ここでは，「ビジネス会計検定1級」の受験対策にもなるように，財務分析について学習します。</p>
-<section id="第1部の目次" class="level2">
-<h2 class="anchored" data-anchor-id="第1部の目次">第1部の目次</h2>
-<!--
-- [第11章 ggplot2の基礎](chap11_visualizetion.html)
-- [第12章 ggpubrの基礎](chap12_ggpubr.html)
-- [第13章 ggplotを関数](chap13_gg_function.html)
-- [第14章 ジブリ](chap14_ggplot_ghibli.html)
--->
+<p>企業の不確実性を分析する方法の1つに損益分岐点分析があります。 ここでは，損益分岐点分析の基本的な考え方と，損益分岐点分析に関連する概念について説明します。</p>
+<p><strong>損益分岐点</strong>(cost-volume-profit)とは，売上と費用が同額となる点をいい，そのときの売上高を損益分岐点売上高といいます。 いろいろ説明しますが，以下の図で理解するのが一番早いです。</p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/CVP.png" class="img-fluid figure-img"></p>
+<figcaption>損益分岐点分析</figcaption>
+</figure>
+</div>
+<p>損益分岐点を計算するために必要な要素は，</p>
+<ul>
+<li>収益</li>
+<li>変動費</li>
+<li>固定費</li>
+</ul>
+<p>の3つである。</p>
+<p>横軸を個数，縦軸を金額とするグラフを考えてみましょう。 売上高<span class="math inline">S</span>は，販売単価<span class="math inline">P</span>と個数<span class="math inline">X</span>との積であるため，<span class="math inline">P \times X</span>となる。 変動費は，操業度(ここでは売上高)に応じて変化する費用であり，変動費の単価<span class="math inline">V</span>と個数<span class="math inline">X</span>の積<span class="math inline">V \times X</span>で表します。 売上高が1増えたときに，変動費がどれだけ増えるのかを知るために，変動費単価<span class="math inline">V</span>を販売単価<span class="math inline">P</span>で除したもの<span class="math inline">V/P</span>を<strong>変動費比率</strong>といいます。 固定費は，操業度にかかわらず一定の費用であり，<span class="math inline">F</span>で表す。 変動費と固定費の合計である総費用<span class="math inline">C</span>は次のように表すことができる。</p>
+<p><span class="math display">
+C = V \times X + F
+</span></p>
+<p>損益分岐点売上個数は，定義から<span class="math inline">S = C</span> つまり，<span class="math inline">P\times X =  V \times X + F</span>の方程式を<span class="math inline">X</span>で解いたものになります。 解いてみましょう。 <span class="math display">
+\begin{aligned}
+P\times X &amp;=  V \times X + F\\
+P\times X -  V \times X &amp;= F\\
+(P - V) X &amp; = F\\
+X &amp;= \frac{F}{P-V}\\
+X &amp;= \frac{F}{1- \frac{V}{P}}
+\end{aligned}
+</span></p>
+<p>つまり， <span class="math display">
+X = \frac{\text{固定費}}{1- \text{変動費率}}
+</span></p>
+<p>となり，損益分岐点売上高が<span class="math inline">\text{固定費} / (1-\text{変動費率})</span> となることが分かります。 ここで，<span class="math inline">1-\text{変動費率}</span>を<strong>限界利益</strong>といい，損益分岐点売上高は，固定費を限界利益で割ったものになります。 要するに，販売個数を1つ増やすごとに増える利益で，固定費を埋めることができる点が損益分岐点なのです。</p>
+<p><span class="math display">
+損益分岐点売上高= \frac{固定費}{限界利益}
+</span></p>
+<p>しかし，この計算を行うためには，費用を変動費と固定費に分ける必要があり，これは難しいのです。 実務では，企業の中で基準が設けられますが，企業の外から入手できる情報から，変動費と固定費を正確に分けることができないため，簡便的な分類方法を用います。</p>
+<section id="総費用法" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="総費用法"><span class="header-section-number">17.1</span> 総費用法</h2>
+<p>これは売上高と総費用の2期間比較から変動費率を計算する方法で，もっとも簡単な方法となります。</p>
+<p><span class="math display">
+変動費率 = \frac{総費用_{t} - 総費用_{t-1}}{売上高_{t} - 売上高_{t-1}}
+</span></p>
+<p>売上高の変化額と総費用の変化額の比率を変動費率として， この比率を売上高にかけることで簡便的に変動費を計算します。</p>
+<p><span class="math display">
+変動費 = 変動費率 \times 売上高
+</span></p>
+</section>
+<section id="最小二乗法" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="最小二乗法"><span class="header-section-number">17.2</span> 最小二乗法</h2>
+<p><strong>最小二乗法</strong>(Least Square Mothod)とは，経済学などで用いられる因果関係を分析するための統計分析の手法です。 ここでは，この最小二乗法を用いて変動費率を計算する方法について説明します。</p>
+<p>具体的には，総費用<span class="math inline">X</span>が売上高<span class="math inline">Y</span>に影響を与えている，という因果関係を想定し，原因となる総費用を独立変数，結果である売上高を従属変数とした回帰モデルを構築します。</p>
+<p><span class="math display">
+\text{売上高} = a + b \times \text{総費用} + \varepsilon
+</span></p>
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/ols.png" class="img-fluid figure-img"></p>
+<figcaption>回帰モデル</figcaption>
+</figure>
+</div>
+<p>この回帰モデルを，売上高と総費用のデータを用いて，最小二乗法という方法により<span class="math inline">a</span>と<span class="math inline">b</span>を推定します。 最小二乗法の定義より，回帰係数<span class="math inline">b</span>は以下のようになる。</p>
+<p><span class="math display">
+\begin{aligned}
+\hat b &amp;= \frac{\mathrm{cov}(Y,X)}{\mathrm{var}(X)} \\
+  &amp;= \frac{ \frac 1n \sum  ( X_i - \bar X)(Y_i - \bar Y)}{\frac{1}{n}\sum (X_i - \bar  X )^2}\\
+  % &amp;= \frac{(X_i - \bar X)(Y_i - \bar Y)}{(Y_i - \bar Y)^2}
+\hat a &amp;= \bar Y - \hat b \bar X
+\end{aligned}
+</span></p>
+<p>売上高平均<span class="math inline">\bar X</span>と総費用<span class="math inline">\bar C</span>の平均を計算し，各データから平均値を差し引く。総費用の平均偏差の二乗を分母に，分子には売上高と総費用の平均偏差のかけ算を行うことで回帰係数が計算できる。たぶん，試験にはでないだろう。</p>
+<p>この最小二乗法は比較的データが多く取得可能なときに利用できますが，年次データともなると，過去5年程度のデータが必要となり，長期間になればなるほど，固定費が変動費となってしまうため，四半期データを用いるなど工夫が必要となります。</p>
+</section>
+<section id="費目別法" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="費目別法"><span class="header-section-number">17.3</span> 費目別法</h2>
+<p>最後に，費目別法という最も正確な方法を解説します。 費目別法では，費用項目ごとに何が固定費で何が変動費かを考えて分類する方法です。何が固定費で何が変動費かは企業によって異なるので，これは企業内で行われる分析方法で，外部の人が実行可能な方法ではありません。 資格試験だと問題文で条件が指示されることもあります。</p>
+<p>結論として，ここでは<strong>総費用法をしっかり覚えておく</strong>ことだ大事です。</p>
+</section>
+<section id="損益分岐点比率と営業レバレッジ" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="損益分岐点比率と営業レバレッジ"><span class="header-section-number">17.4</span> 損益分岐点比率と営業レバレッジ</h2>
+<p>実際の売上高と損益分岐点売上高との相対的な規模比較をするための尺度を損益分岐点比率といいます。 損益分岐点売上高よりも大きな売上高を達成している場合，損益分岐点比率は1より大きくなり，大きければ大きいほど望ましい，とされます。 定義は，次の通りです。</p>
+<p><span class="math display">
+損益分岐点比率 = \frac{損益分岐点売上高}{実際の売上高}
+</span></p>
+<p>また，同様の尺度を逆の方向から見た尺度が安全余裕度といい，実際の売上高と損益分岐点売上高との間の距離のような尺度となっています。</p>
+<p><span class="math display">
+\begin{aligned}
+安全余裕度 &amp;= 1 - 損益分岐点比率\\
+          &amp;= 1 - \frac{損益分岐点売上高}{実際の売上高}\\
+          &amp;= \frac{実際の売上高 - 損益分岐点売上高}{実際の売上高}\\
+\end{aligned}
+</span></p>
+<p>安全余裕度が0のときは，売上高が損益分岐点にあり，売上高が損益分岐点より大きくなるほど，安全余裕度は1に近づいていきます。 安全余裕度が1に近いときは，売上高が少々減少しても，まだ損益分岐点売上高まで差がある，つまり利益が出る状態が続くことを意味しており，安全余裕度とよんでいます。</p>
+<p>安全余裕度を上げるためには，</p>
+<ul>
+<li>売上高の増加</li>
+<li>変動費率の引き下げ</li>
+<li>固定費の削減</li>
+</ul>
+<p>が必要となります。</p>
+<p>1つめの売上高の変化に注目した尺度に営業レバレッジがあります。 営業レバレッジは次のように定義されます。</p>
+<p><span class="math display">
+営業レバレッジ = \frac{営業利益変化率}{売上高変化率}
+</span></p>
+<p>つまり，売上高の増減と営業利益の増減の比率となっていて，売上高が増えたとき，営業利益がどれだけ増えるかを示しています。 式の変形を分かりやすくするため，数式の表記として，売上高を<span class="math inline">S</span>，営業利益を<span class="math inline">OI</span>，固定費を<span class="math inline">F</span>，変動費率を<span class="math inline">V</span>で表します。 ここで，変動費率<span class="math inline">V</span>と固定費<span class="math inline">F</span>は時間にともなって変化しない，という仮定を暗に置いています。</p>
+<p>この設定下で，総費用<span class="math inline">TC</span>と営業利益<span class="math inline">OI</span>は次のように表せます。</p>
+<p><span class="math display">
+\begin{aligned}
+TC_t &amp;= V \times S_t + F\\
+OI_t &amp;= S_t - TC_t \\
+     &amp;= S_t - (V \times S_t - F)\\
+     &amp;= ( 1- V) S_t - F
+\end{aligned}
+</span> と表せます。 この総費用<span class="math inline">TC</span>と営業利益<span class="math inline">OI</span>の変化率，つまり営業レバレッジを計算すると，</p>
+<p><span class="math display">
+\begin{aligned}
+営業レバレッジ &amp;= \frac{営業利益変化率}{売上高変化率}\\
+&amp;= \displaystyle \frac{\frac{OI_{t+1} - OI_{t}}{OI_{t}}}{\frac{S_{t+1} - S_{t}}{S_{t}}} \\
+&amp;= \frac{(( 1- V) S_{t+1} - F) - (( 1- V) S_t - F)}{( 1- V) S_t - F} \times \frac{S_{t}}{S_{t+1} - S_{t}}\\
+&amp;= \frac{( 1- V)(S_{t+1} - S_t)}{( 1- V) S_t - F}\times \frac{S_{t}}{S_{t+1} - S_{t}}\\
+&amp;= \frac{( 1- V)S_{t}}{( 1- V) S_t - F}
+\end{aligned}
+</span> 最後の式の分母と分子を<span class="math inline">(1-V)S_t</span>で除すると， <span class="math display">
+\begin{aligned}
+営業レバレッジ &amp;= \frac{( 1- V)S_{t}}{( 1- V) S_t - F} =
+\frac{\frac{( 1- V)S_{t}}{(1-V)S_t}}{\frac{( 1- V) S_t - F}{(1-V)S_t}}\\
+&amp;= \frac{1}{1 - \frac{F}{(1-V)S_t}} = \frac{1}{1 - \frac{\frac{F}{(1 - V)}}{\frac{(1-V)S_t}{(1-V)}}} = \frac{1}{1 - \frac{\frac{F}{(1 - V)}}{S_t}}\\
+\end{aligned}
+</span> と変形できます。 <span class="math display">
+\frac{1}{1 - \frac{\frac{F}{(1 - V)}}{S_t}}
+</span> 項に注目すると，<span class="math inline">F/(1-V)</span>は損益分岐点売上高となっています。 よって変数名を分かりやすく日本語でかくと， <span class="math display">
+\frac{1}{1 - \frac{\text{損益分岐点売上高}}{\text{売上高}}}
+</span> となります。 この<span class="math inline">損益分岐点売上高 / 売上高</span>は先ほど説明した損益分岐点比率であるため， 書き換えると， <span class="math display">
+\frac{1}{1-損益分岐点比率} = \frac{1}{安全余裕度}
+</span> となります。 まとめると，<strong>営業レバレッジは安全余裕度の逆数</strong>となります。</p>
 
 
 </section>
@@ -714,14 +878,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chap14_ggplot_ghibli.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span>
+      <a href="./chap15_financialAnalysis.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap15_financialAnalysis.html" class="pagination-link" aria-label="<span class='chapter-number'>16</span>&nbsp; <span class='chapter-title'>財務分析</span>">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
