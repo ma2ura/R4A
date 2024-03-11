@@ -7,6 +7,8 @@ book:
   author: "Soichi Matsuura"
   date: "1/1/2024"
   favicon: img/favicon.ico
+  twitter-card: true
+  site-url: https://so-ichi.com
   chapters:
     - index.qmd
     - part: part01.qmd
@@ -19,7 +21,10 @@ book:
         - chap06_function.qmd
         - chap07_pipe.qmd
         - chap08_tidydata.qmd
+    - part: part00.qmd
+      chapters:
         - chap08_needs.qmd
+        - chap08_needs02.qmd
     - part: part02.qmd
       chapters:
         - chap09_merge.qmd
@@ -36,9 +41,19 @@ book:
         - chap15_financialAnalysis.qmd
         # - chap16_productivity.qmd
         - chap16_uncertainty.qmd
+        - chap16_valuation.qmd
   page-navigation: true
   back-to-top-navigation: true
-  page-footer: "Copyright 2024, Soichi Matsuura"
+  page-footer:
+      border: true
+      # background: "#a10000"
+      left: "Copyright 2024, Soichi Matsuura"
+      right:
+        - icon: github
+          href: https://github.com/ma2ura
+        - icon: twitter
+          href: https://twitter.com/matsuura_rits
+          aria-label: Twitter
 
 filters:
     - webr

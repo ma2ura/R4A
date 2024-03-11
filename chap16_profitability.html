@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.529">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>収益性の分析</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="chap16_profitability_files/libs/clipboard/clipboard.min.js"></script>
+<script src="chap16_profitability_files/libs/quarto-html/quarto.js"></script>
+<script src="chap16_profitability_files/libs/quarto-html/popper.min.js"></script>
+<script src="chap16_profitability_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="chap16_profitability_files/libs/quarto-html/anchor.min.js"></script>
+<link href="chap16_profitability_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="chap16_profitability_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="chap16_profitability_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="chap16_profitability_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="chap16_profitability_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="chap16_profitability_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="chap16_profitability_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">収益性の分析</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>ここでは財務分析で最も重要である収益性分析について学習します。 本章で利用するパッケージを読み込みます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+ 次のパッケージを付け加えます: 'kableExtra' 
+
+ 以下のオブジェクトは 'package:dplyr' からマスクされています:
+
+    group_rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev =</span> <span class="st">"ragg_png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>また、この章で扱うデータは以下の通りです。 2008年1月1日から2023年3月31日の期間に、東京証券取引所に上場している、従業員が500名以上の企業2066社を対象に、以下の25項目のデータを取得しています。 「連結優先」として、IFRS、米国基準、日本連結、日本単独の順でデータを取得しています。</p>
+<ul>
+<li><code>R001</code> 決算月数</li>
+<li><code>R018</code> 上場場部：コード</li>
+<li><code>R022</code> 日経業種：コード</li>
+<li><code>B022</code> 現金・預金／現金及び現金同等物</li>
+<li><code>B023</code> 受取手形・売掛金及び契約資産／売掛金及びその他の短期債権</li>
+<li><code>B033</code> 有価証券</li>
+<li><code>B034</code> 棚卸資産</li>
+<li><code>B063</code> 有形固定資産</li>
+<li><code>B051</code> 短期貸付金</li>
+<li><code>B084</code> 投資・その他の資産合計</li>
+<li><code>B087</code> （関係会社有価証券）／（持分法で会計処理されている投資）</li>
+<li><code>B110</code> 資産合計</li>
+<li><code>C082</code> 負債合計</li>
+<li><code>C085</code> 資本金</li>
+<li><code>C087</code> 資本剰余金</li>
+<li><code>C092</code> 利益剰余金</li>
+<li><code>C097</code> 自己株式（▲）</li>
+<li><code>C098</code> 評価・換算差額等／累積その他の包括利益</li>
+<li><code>D021</code> 売上高</li>
+<li><code>D024</code> 売上原価</li>
+<li><code>D029</code> 営業利益</li>
+<li><code>D031</code> 受取利息・配当金</li>
+<li><code>D042</code> 持分法による投資利益</li>
+<li><code>D062</code> 持分法による投資損失</li>
+<li><code>D110</code> 親会社株主に帰属する当期純利益（連結）／当期利益（単独）［累計］</li>
+</ul>
+<p>社会科学情報検索システムで項目をまとめて取得する場合は、以下の項目を指定してください。</p>
+<pre><code>R001,R018,R022,B022,B023,B033,B034,B063,B051,B084,B087,B110,C082,C085,C087,C092,C097,C098,D021,D029,D024,D031,D042,D062,D110</code></pre>
+<p>早速データを読み込んでみましょう。 同時に、変数名を半角英数のスネークケースに変換します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/profitability.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 30830 Columns: 30
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (3): 日経会社コード, 企業名称, 決算期
+dbl (27): 決算種別, 連結基準, 決算月数, 上場場部：コード, 日経業種：コード, 現金・預金／現金及び現金同等物, 受取手形・売掛金及び契...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">nikkei_code =</span> <span class="st">"日経会社コード"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> <span class="st">"企業名称"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">date =</span> <span class="st">"決算期"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">shubetsu =</span> <span class="st">"決算種別"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">renketsu =</span> <span class="st">"連結基準"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">kessan_months =</span> <span class="st">"決算月数"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">listed_code =</span> <span class="st">"上場場部：コード"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">industry_code =</span> <span class="st">"日経業種：コード"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">cash =</span> <span class="st">"現金・預金／現金及び現金同等物"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">receivable =</span> <span class="st">"受取手形・売掛金及び契約資産／売掛金及びその他の短期債権"</span>,      <span class="at">securities =</span> <span class="st">"有価証券"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">inventory =</span> <span class="st">"棚卸資産"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">tangible_asset =</span> <span class="st">"有形固定資産"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">short_loan =</span> <span class="st">"短期貸付金"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">total_investments =</span> <span class="st">"投資・その他の資産合計"</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">affiliated_securities =</span> <span class="st">"（関係会社有価証券）／（持分法で会計処理されている投資）"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">total_asset =</span> <span class="st">"資産合計"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">total_debt =</span> <span class="st">"負債合計"</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">equity =</span> <span class="st">"資本金"</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">capital_surplus =</span> <span class="st">"資本剰余金"</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">earned_surplus =</span> <span class="st">"利益剰余金"</span>,</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">treasury_stock =</span> <span class="st">"自己株式（▲）"</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">accumulated_OCI=</span> <span class="st">"評価・換算差額等／累積その他の包括利益"</span>,</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">sales =</span> <span class="st">"売上高・営業収益［累計］"</span>,</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">operating_income =</span> <span class="st">"営業利益［累計］"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">cogs =</span> <span class="st">"売上原価・営業原価［累計］"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">interest_devidend =</span> <span class="st">"受取利息・配当金［累計］"</span>,</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">moti_rieki =</span> <span class="st">"持分法による投資利益［累計］"</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">moti_son =</span> <span class="st">"持分法による投資損失［累計］"</span>,</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">net_income =</span> <span class="st">"親会社株主に帰属する当期純利益（連結）／当期利益（単独）［累計］"</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>データの構造を確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> nikkei_code            name               date              shubetsu 
+ Length:30830       Length:30830       Length:30830       Min.   :10  
+ Class :character   Class :character   Class :character   1st Qu.:10  
+ Mode  :character   Mode  :character   Mode  :character   Median :10  
+                                                          Mean   :10  
+                                                          3rd Qu.:10  
+                                                          Max.   :10  
+                                                                      
+    renketsu     kessan_months    listed_code    industry_code   
+ Min.   :0.000   Min.   : 1.00   Min.   :11.00   Min.   :101001  
+ 1st Qu.:1.000   1st Qu.:12.00   1st Qu.:11.00   1st Qu.:121204  
+ Median :1.000   Median :12.00   Median :11.00   Median :241401  
+ Mean   :1.066   Mean   :11.98   Mean   :11.28   Mean   :188538  
+ 3rd Qu.:1.000   3rd Qu.:12.00   3rd Qu.:12.00   3rd Qu.:257561  
+ Max.   :3.000   Max.   :16.00   Max.   :13.00   Max.   :271704  
+                                                                 
+      cash            receivable         securities          inventory      
+ Min.   :       1   Min.   :       1   Min.   :      1.0   Min.   :      1  
+ 1st Qu.:    3873   1st Qu.:    3971   1st Qu.:    205.8   1st Qu.:   1778  
+ Median :    9690   Median :   11863   Median :   1501.0   Median :   6754  
+ Mean   :   62735   Mean   :   65526   Mean   :  21293.8   Mean   :  40476  
+ 3rd Qu.:   27299   3rd Qu.:   37100   3rd Qu.:   9300.0   3rd Qu.:  22875  
+ Max.   :70243186   Max.   :11865936   Max.   :2782099.0   Max.   :4255614  
+ NA's   :12         NA's   :133        NA's   :22014       NA's   :944      
+ tangible_asset       short_loan     total_investments  affiliated_securities
+ Min.   :       1   Min.   :     1   Min.   :       1   Min.   :      1      
+ 1st Qu.:    5601   1st Qu.:    32   1st Qu.:    2316   1st Qu.:     96      
+ Median :   16506   Median :   412   Median :    6582   Median :    594      
+ Mean   :  131802   Mean   :  8056   Mean   :   56991   Mean   :  24294      
+ 3rd Qu.:   56392   3rd Qu.:  3254   3rd Qu.:   21804   3rd Qu.:   3981      
+ Max.   :13032389   Max.   :491769   Max.   :22372218   Max.   :5234519      
+ NA's   :32         NA's   :28824    NA's   :1575       NA's   :8656         
+  total_asset          total_debt            equity        capital_surplus  
+ Min.   :       40   Min.   :        2   Min.   :      1   Min.   :-169322  
+ 1st Qu.:    27020   1st Qu.:    10580   1st Qu.:   1875   1st Qu.:   1667  
+ Median :    65291   Median :    29067   Median :   5030   Median :   4949  
+ Mean   :   548861   Mean   :   370969   Mean   :  21830   Mean   :  26691  
+ 3rd Qu.:   200336   3rd Qu.:    93359   3rd Qu.:  13676   3rd Qu.:  14980  
+ Max.   :303846980   Max.   :289157998   Max.   :3500000   Max.   :4503856  
+ NA's   :7           NA's   :10          NA's   :13        NA's   :536      
+ earned_surplus     treasury_stock     accumulated_OCI        sales         
+ Min.   :-2110794   Min.   :-3736562   Min.   :-1345362   Min.   :       3  
+ 1st Qu.:    6284   1st Qu.:   -2688   1st Qu.:     -58   1st Qu.:   26854  
+ Median :   20126   Median :    -671   Median :     294   Median :   66171  
+ Mean   :  118728   Mean   :   -7935   Mean   :    8346   Mean   :  326916  
+ 3rd Qu.:   63790   3rd Qu.:    -133   3rd Qu.:    2685   3rd Qu.:  204269  
+ Max.   :28343296   Max.   :      -1   Max.   : 4145039   Max.   :37154298  
+ NA's   :11         NA's   :3029       NA's   :1475       NA's   :15        
+ operating_income       cogs          interest_devidend   moti_rieki      
+ Min.   :-520358   Min.   :       1   Min.   :     1    Min.   :    -1.0  
+ 1st Qu.:    966   1st Qu.:   17927   1st Qu.:    30    1st Qu.:    36.0  
+ Median :   3053   Median :   46321   Median :   113    Median :   149.0  
+ Mean   :  19375   Mean   :  241364   Mean   :  1174    Mean   :  3591.5  
+ 3rd Qu.:  10400   3rd Qu.:  149111   3rd Qu.:   437    3rd Qu.:   752.8  
+ Max.   :2995697   Max.   :29128561   Max.   :343410    Max.   :811957.0  
+ NA's   :127       NA's   :227        NA's   :1411      NA's   :20432     
+    moti_son        net_income      
+ Min.   :     1   Min.   :-2008074  
+ 1st Qu.:    16   1st Qu.:     485  
+ Median :    63   Median :    1818  
+ Mean   :  1182   Mean   :   12285  
+ 3rd Qu.:   269   3rd Qu.:    6387  
+ Max.   :175389   Max.   : 4987962  
+ NA's   :26999    NA's   :8         </code></pre>
+</div>
+</div>
+<p>カテゴリー変数をファクター型に変更したり、決算期を日付に変換したり、異常値を除去したり、欠損値にゼロを代入したりしておきます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 決算月数が12ヶ月で、売上高、資産合計、資本金が0超の企業を抽出</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      kessan_months <span class="sc">==</span> <span class="dv">12</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>      sales <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>      total_asset <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>      equity <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>欠損値にゼロを代入します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># データフレームdfに対して、すべての列のNAを0に置き換える</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">replace</span>(., <span class="fu">is.na</span>(.), <span class="dv">0</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>カテゴリー変数をファクター型に変更します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">year =</span> <span class="fu">substr</span>(date, <span class="dv">1</span>, <span class="dv">4</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">listed_code =</span> <span class="fu">factor</span>(listed_code),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">industry_code =</span> <span class="fu">factor</span>(industry_code),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>おおよその前処理が終わりました。</p>
+<section id="資本利益率" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="資本利益率">資本利益率</h2>
+<p>企業分析で最も重要な視点の1つが，企業の収益性(profitability)です。 収益性とは，企業が資金を投下した<strong>資本</strong>(capital)に対して，どれだけの<strong>リターン</strong>(return)が生み出されているかを示す指標です。 したがって収益性の尺度は，資本とリターンの組み合わせで決まり，分析視点として</p>
+<ol type="1">
+<li>企業全体の収益性</li>
+<li>株主の観点からみた収益性</li>
+</ol>
+<p>があります。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>資本概念</th>
+<th>リターン概念</th>
+<th>視点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>総資本</td>
+<td>事業利益</td>
+<td>企業全体</td>
+</tr>
+<tr class="even">
+<td>事業資産</td>
+<td>営業利益</td>
+<td>企業全体</td>
+</tr>
+<tr class="odd">
+<td>自己資本</td>
+<td>純利益</td>
+<td>株主</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>総資本：純資産と負債の合計</li>
+<li>事業資産：総資本から金融資産を除いたもの</li>
+<li>自己資本：株主資本とその他包括利益累計額の合計</li>
+</ul>
+<section id="企業全体の収益性" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="企業全体の収益性">企業全体の収益性</h3>
+<p>企業全体の収益性を表す尺度として，<strong>総資本事業利益率</strong>があります。 <strong>総資本</strong>とは，他人資本と自己資本の合計であり，資本利用者からみた企業全体の利益率を表しています。</p>
+<p>総資本と総資産は等しいので，総資本事業利益率は総資産利益率(return on asset)，通称<strong>ROA</strong>とも呼ばれます。 定義は以下の通りです。</p>
+<p><span class="math display">\[
+総資本事業利益率_t = \frac{営業利益_t + 受取利息・配当金_t + 持分法利益_t}{(使用総資本_t + 使用総資本_{t-1} )/2}
+\]</span></p>
+<p>分子がフロー項目なので，分母も使用総資本の変化を考慮した平均値を用いています。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>理論的には，分子の利益等の項目が期末の使用総資本に含められているため，分母に期末総資本を用いるのは，分母と分子の対応関係として整合的ではないのですが，実務的に平均値を用いることが多いようです。 理論的には，期首総資本を用いるべきです(太田本より)が，期中に組織再編など使用総資本が大きく動いている場合もあるので，ケースバイケースです。</p>
+</div></div><p>具体的に計算してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(nikkei_code) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">roa =</span> (operating_income <span class="sc">+</span> interest_devidend <span class="sc">+</span> moti_rieki) <span class="sc">/</span> ((total_asset <span class="sc">+</span> <span class="fu">lag</span>(total_asset)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>roa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+-0.6966  0.0304  0.0540  0.0627  0.0861  1.2142    2066 </code></pre>
+</div>
+</div>
+<p>平均ROAが6.27％、中央値が5.40%となっており、分布が右に歪んでいることがわかります。 最大値が121.42%と、総資産の1.2倍もの事業利益をあげている企業が存在し、このような企業が平均値を右にシフトさせている可能性があります。 ヒストグラムで確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(roa) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="株主から見た収益性" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="株主から見た収益性">株主から見た収益性</h3>
+<p>株式会社の主たる出資者である株主からみた収益性は，<strong>自己資本純利益率</strong>(return on equity)，通称<strong>ROE</strong>があります。 定義は以下の通りです。</p>
+<p><span class="math display">\[
+ROE = \frac{親会社株主に帰属する当期純利益_t}{(自己資本_t + 自己資本_{t-1})/2}
+\]</span></p>
+<p>株主に帰属する資本を表す<strong>自己資本</strong>の金額は貸借対照表に記載されていないので，自分で計算する必要があります。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>自己資本とは，他人資本(つまり負債)に対応する概念で，B/Sの右側を総資本とする場合，株主から調達した資本を自己資本，他人から調達した資本(つまり負債)を他人資本とよびます。 この自己資本とは別に，東京証券取引所がROEの算定で用いる自己資本があり，この資料ではこの意味で自己資本を使います。</p>
+</div></div><p>東京証券取引所の定義は以下の通りです。</p>
+<p><span class="math display">\[
+自己資本 = 株主資本 + その他の包括利益累計額
+\]</span></p>
+<p>です。</p>
+<p>なぜこれが株主に帰属する自己資本になるのか考えてみましょう。 第1項である株主資本は，</p>
+<ol type="1">
+<li>資本金</li>
+<li>資本剰余金
+<ol type="1">
+<li>資本準備金</li>
+<li>その他資本剰余金</li>
+</ol></li>
+<li>利益剰余金
+<ol type="1">
+<li>利益準備金</li>
+<li>その他利益剰余金</li>
+</ol></li>
+<li>自己株式</li>
+</ol>
+<p>から構成されています。 このうち，資本金と資本剰余金は株主の出資した資本であり，利益剰余金は企業が獲得した利益のうち企業内に留保された部分(<strong>内部留保</strong>ともいいます)です。 自己株式は，保有している自社株式の取得原価を表しています。 自社が発行した株式を保有しているということは，実質的に資本の払い戻しをしていることになるため，株主資本のマイナス項目として扱われます。 つまり，株主資本は，</p>
+<p><span class="math display">\[
+株主資本 = 資本金 + 資本剰余金 + 利益剰余金 - 自己株式
+\]</span></p>
+<p>で計算されます。</p>
+<p>次に，その他の包括利益累計額は，未実現利益の累積額であり，価値変動が把握でき，純資産の価値を変動させるものです。 たとえば，現実的に売却が困難な持ち合い上場株式はその他有価証券として区分され，時価評価の対象となりますが，その評価損益を実現させることができないため，その他包括利益累計額に計上されます。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>この定義は，「企業内容等の開示に関する内閣府令」で定めている第2様式と第3様式で採用されているものです。</p>
+</div></div><p>具体的に計算してみましょう。 自己資本とROEを計算します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">net_worth =</span> equity <span class="sc">+</span> capital_surplus <span class="sc">+</span> earned_surplus <span class="sc">-</span> treasury_stock,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">roe =</span> net_income <span class="sc">/</span> ((net_worth <span class="sc">+</span> <span class="fu">lag</span>(net_worth)) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>roe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+-56.4737   0.0325   0.0669   0.0591   0.1078  16.0552     2066 </code></pre>
+</div>
+</div>
+<p>平均ROEが5.91%、中央値が6.69%となっており、今度は分布が左に歪んでいることがわかります。 最小値をみると、ROEが-5600%という企業が存在していることが分かります。どんな会社かみてみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(roe <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">56</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(name, year, net_worth, net_income, roe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `nikkei_code`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+# Groups:   nikkei_code [1]
+  nikkei_code name       year  net_worth net_income   roe
+  &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+1 0025720     タカキュー 2022      -1035      -2146 -56.5</code></pre>
+</div>
+</div>
+<p>タカキューでした。 タカキュー(8166)は、昭和25年に東京で設立した小売業を営む株式会社です。 資本金は1億円で東証スタンダードに上場していますが、2022年度から債務超過となっており、 2024年2月29日までに債務超過が解消できない場合は上場廃止となる、財務的困窮状態にある企業です。 タカキューのデータ全体をみてみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(nikkei_code <span class="sc">==</span> <span class="st">"0025720"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(name, year, net_worth, net_income, roe) <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `nikkei_code`</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">nikkei_code</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">net_worth</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">net_income</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">roe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2008</td>
+<td style="text-align: right;">5176</td>
+<td style="text-align: right;">486</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2009</td>
+<td style="text-align: right;">5245</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">0.0364648</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2010</td>
+<td style="text-align: right;">5625</td>
+<td style="text-align: right;">427</td>
+<td style="text-align: right;">0.0785649</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2011</td>
+<td style="text-align: right;">6140</td>
+<td style="text-align: right;">587</td>
+<td style="text-align: right;">0.0997875</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2012</td>
+<td style="text-align: right;">6179</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">0.0220797</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2013</td>
+<td style="text-align: right;">7229</td>
+<td style="text-align: right;">1122</td>
+<td style="text-align: right;">0.1673628</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2014</td>
+<td style="text-align: right;">7529</td>
+<td style="text-align: right;">468</td>
+<td style="text-align: right;">0.0634232</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2015</td>
+<td style="text-align: right;">7377</td>
+<td style="text-align: right;">-30</td>
+<td style="text-align: right;">-0.0040252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2016</td>
+<td style="text-align: right;">7344</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.0020379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2017</td>
+<td style="text-align: right;">7409</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">0.0154545</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2018</td>
+<td style="text-align: right;">7388</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">0.0068933</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2019</td>
+<td style="text-align: right;">5301</td>
+<td style="text-align: right;">-2013</td>
+<td style="text-align: right;">-0.3172827</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2020</td>
+<td style="text-align: right;">4249</td>
+<td style="text-align: right;">-1051</td>
+<td style="text-align: right;">-0.2201047</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">1111</td>
+<td style="text-align: right;">-3139</td>
+<td style="text-align: right;">-1.1712687</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">-1035</td>
+<td style="text-align: right;">-2146</td>
+<td style="text-align: right;">-56.4736842</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0025720</td>
+<td style="text-align: left;">タカキュー</td>
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">-2085</td>
+<td style="text-align: right;">-1050</td>
+<td style="text-align: right;">0.6730769</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>2019年度から赤字が続き、2022年度から自己資本がマイナスになっています。 しかし分母は前期末との平均値を使うため、分母が非常に小さな正の値になり、分子にが大きな赤字となっているため、ROEが非常に大きなマイナス値になっています。 ROEの計算では、分母も分子もマイナスでROEがプラスになることもあるため、自己資本がマイナスのケースは除外するようにします。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(net_worth <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ヒストグラムで確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(roe) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2060 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>ROEのレンジが広すぎるため、ヒストグラムが棒のようになっています。 極端な値を除外するか、表示する区間を絞るかしてみましょう。 以下では、表示する区間を-1から1に限定し、平均値を赤線で表示しています。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span> <span class="fu">aes</span>(roe) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(df<span class="sc">$</span>roe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>次に、上場企業のROE平均がどのように推移しているかを確認してみましょう。 <code>mean()</code>関数に<code>trim = 0.2</code>のオプションをつけて、 上下20%の値を除外した平均を計算してみます。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span> <span class="co"># lag()で消えた2008年を除外</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean_roe =</span> <span class="fu">mean</span>(roe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">trim =</span> <span class="fl">0.2</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(year, mean_roe, <span class="at">group =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>2009年のリーマンショック期から2018年まではR0Eが右肩上がりで増加し、2020年のコロナ禍で減少、その後は回復していることがわかります。</p>
+<p>製造業と非製造業でROEの推移が異なっているかどうかを確認してみましょう。 製造業ダミー変数を作成します。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">dai =</span> <span class="fu">substr</span>(industry_code, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">manufactur =</span> <span class="fu">factor</span>(dai, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"製造業"</span>, <span class="st">"非製造業"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(year, manufactur) <span class="sc">|&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean_roe =</span> <span class="fu">mean</span>(roe, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">trim =</span> <span class="fl">0.2</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">aes</span>(year, mean_roe, <span class="at">group =</span> manufactur, <span class="at">color =</span> manufactur) <span class="sc">+</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>製造業の方がROEが低く、また景気の影響を受けやすいことが読み取れます。</p>
+</section>
+</section>
+<section id="roaの活動別分析" class="level2">
+<h2 class="anchored" data-anchor-id="roaの活動別分析">ROAの活動別分析</h2>
+<p>企業全体の投下資本に対する収益性を示すROAを、構成要素に基づいて企業活動別に分析してみましょう。</p>
+<ul>
+<li>企業本来の営業活動に投下された資本：<strong>経営資本</strong></li>
+<li>余剰資金を運用する金融活動に投下された資本：<strong>金融資本</strong></li>
+</ul>
+<p>実際の区分方法として、金融資本を特定し、使用総資本から金融資本を除いて経営資本を計算します。</p>
+<p>金融資本には以下のようなモノが含まれる。</p>
+<ul>
+<li>現金預金</li>
+<li>有価証券</li>
+<li>短期貸付金</li>
+<li>投資その他の資産(関連会社株式を除く)</li>
+</ul>
+<p>経営資本は使用総資本から金融資本を除いたものであり、経営資本と対応する利益は営業利益です。 したがって、</p>
+<p><span class="math display">\[
+経営資本営業利益率 = \frac{(営業利益 + 持分法による投資損益)}{経営資本}
+\]</span></p>
+<p>金融活動の利益率は、</p>
+<p><span class="math display">\[
+金融活動利益率 = \frac{(受取利息 + 受取配当金)}{金融資本}
+\]</span></p>
+<p>それぞれ計算してみよう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>      金融資本 <span class="ot">=</span> (cash <span class="sc">+</span> securities <span class="sc">+</span> short_loan <span class="sc">+</span> total_investments <span class="sc">-</span> affiliated_securities),</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>      経営資本 <span class="ot">=</span> total_asset <span class="sc">-</span> 金融資本,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>      経営資本営業利益率 <span class="ot">=</span> (operating_income <span class="sc">+</span> moti_rieki <span class="sc">+</span> moti_son) <span class="sc">/</span> 経営資本,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>      金融活動利益率 <span class="ot">=</span> (interest_devidend) <span class="sc">/</span> 金融資本</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>それぞれの時系列推移を産業別にプロットしてみましょう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_roa_mean <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">2008</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(year, manufactur) <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>      平均経営資本営業利益率 <span class="ot">=</span> <span class="fu">mean</span>(経営資本営業利益率, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">trim =</span> <span class="fl">0.1</span>),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>      平均金融活動利益率 <span class="ot">=</span> <span class="fu">mean</span>(金融活動利益率, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">trim =</span> <span class="fl">0.1</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'year'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_roa_mean) <span class="sc">+</span> <span class="fu">aes</span>(year, 平均経営資本営業利益率, <span class="at">group =</span> manufactur, <span class="at">color =</span> manufactur) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_roa_mean) <span class="sc">+</span> <span class="fu">aes</span>(year, 平均金融活動利益率, <span class="at">group =</span> manufactur, <span class="at">color =</span> manufactur) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chap16_profitability_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="資本利益率の分解" class="level2">
+<h2 class="anchored" data-anchor-id="資本利益率の分解">資本利益率の分解</h2>
+</section>
+<section id="売上高利益率の分析" class="level2">
+<h2 class="anchored" data-anchor-id="売上高利益率の分析">売上高利益率の分析</h2>
+</section>
+<section id="資本回転率の分析" class="level2">
+<h2 class="anchored" data-anchor-id="資本回転率の分析">資本回転率の分析</h2>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

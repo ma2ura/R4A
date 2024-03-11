@@ -1,0 +1,89 @@
+# 打ち切り分布
+
+
+## Rによる実践
+
+変数を2つ作成する。
+
+```{r}
+set.seed(123) # 乱数の種を指定
+u <- rnorm(n = 2000, mean = 0, sd = 2) # 標準正規分布に従う乱数を2000個生成
+x <- rnorm(n = 2000, mean = 1, sd = 2) # 標準正規分布に従う乱数を2000個生成
+```
+
+変数$u$と$x$の散布図は以下のようになる。
+
+```{r}
+plot(u,x)
+```
+
+2つの変数は無相関であることがわかる。
+次に，従属変数となる変数をいくつか作成する。
+
+- `ystar` : $1 + 2x + u$となる変数
+- `cens` : `ystar`が0以下の場合は0，それ以外は1となる変数
+- `y` : `ystar`が0以下の場合は0，それ以外は`ystar`となる変数
+
+
+```{r}
+ystar <- 1 + 2 * x + u
+cens <- ifelse(ystar <= 0, 0, 1)
+y <- ifelse(ystar <= 0, 0, ystar)
+```
+
+この3つの変数を昇順に並び替えると，次のようになります。
+
+```{r}
+layout(matrix(1:3, ncol=3))
+plot(sort(ystar))
+plot(sort(cens))
+plot(sort(y))
+```
+
+今まで作成したデータをデータフレーム`data1`にまとめる。
+
+```{r}
+data1 <- data.frame(u, x, ystar, cens, y)
+head(data1)
+```
+
+これらのデータを使って，以下のモデルを推定する。
+まずは，必要なパッケージを読み込みます。
+```{r}
+#| message: false
+#| error: false
+#| warning: false
+library(AER) # tobitモデルの推定に使用
+library(stargazer) # 回帰結果の表を作成
+```
+
+回帰モデルを推定する。
+
+- 単回帰 $ y = \alpha + \beta x + u$
+- 部分データの単回帰 $ y = \alpha + \beta x + u$，ただし，$y>0$の場合のみ
+
+```{r}
+ols1 <- lm(y ~ x)
+ols2 <- lm(y ~ x, subset = y > 0)
+```
+
+次は，従属変数を`cens`，独立変数`x`とするプロビット分析を行う。
+プロビット分析を行うためには，`glm()`関数を使い，オプションで`family = binomial(link = "probit")`でリンク関数にプロビット関数を指定する。
+
+```{r probit}
+probit <- glm(cens ~ x, family = binomial(link = "probit"))
+```
+
+
+```{r}
+xb <- predict(probit) # 予測値
+lambda <- dnorm(xb) / pnorm(xb) # 予測値から標準正規分布の確率を求める
+reg <- lm(y ~ x + lambda, subset = y > 0) # 予測値を説明変数に加えた回帰分析
+```
+
+
+
+tobit <- tobit(y ~ x, left = 0)
+ols0 <- lm(ystar ~ x)
+stargazer(ols1, ols2, probit, reg, tobit, ols0, keep.stat = c("ser"), type = "text")
+```

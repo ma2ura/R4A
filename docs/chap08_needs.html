@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Empirical Accounting Research - 9&nbsp; 日経NEEDSデータの処理</title>
+<title>R for Empirical Accounting Research - 9&nbsp; 日経NEEDSの使い方</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./part02.html" rel="next">
-<link href="./chap08_tidydata.html" rel="prev">
+<link href="./chap08_needs02.html" rel="next">
+<link href="./part00.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -71,6 +71,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<meta name="twitter:title" content="R for Empirical Accounting Research - 9&nbsp; 日経NEEDSの使い方">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar floating slimcontent">
@@ -82,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part00.html">第2部 日経NEEDSの使い方</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -170,10 +173,27 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 日経NEEDSの使い方</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></span></a>
   </div>
 </li>
       </ul>
@@ -182,21 +202,21 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./part02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第2部 前処理と記述統計量</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
@@ -205,33 +225,33 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./part03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第3部 データの可視化</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
   </div>
 </li>
       </ul>
@@ -240,21 +260,27 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./part04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第4部 財務分析</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_valuation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">企業価値評価分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -273,7 +299,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#日経needsへのアクセス方法" id="toc-日経needsへのアクセス方法" class="nav-link" data-scroll-target="#日経needsへのアクセス方法"><span class="header-section-number">9.2</span> 日経NEEDSへのアクセス方法</a></li>
   <li><a href="#日経needsの使い方" id="toc-日経needsの使い方" class="nav-link" data-scroll-target="#日経needsの使い方"><span class="header-section-number">9.3</span> 日経NEEDSの使い方</a>
   <ul class="collapse">
-  <li><a href="#企業タグ" id="toc-企業タグ" class="nav-link" data-scroll-target="#企業タグ"><span class="header-section-number">9.3.1</span> 企業タグ</a></li>
+  <li><a href="#企業タブ" id="toc-企業タブ" class="nav-link" data-scroll-target="#企業タブ"><span class="header-section-number">9.3.1</span> 企業タブ</a></li>
   <li><a href="#項目選択" id="toc-項目選択" class="nav-link" data-scroll-target="#項目選択"><span class="header-section-number">9.3.2</span> 項目選択</a></li>
   </ul></li>
   <li><a href="#出力設定" id="toc-出力設定" class="nav-link" data-scroll-target="#出力設定"><span class="header-section-number">9.4</span> 出力設定</a>
@@ -290,9 +316,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part00.html">第2部 日経NEEDSの使い方</a></li><li class="breadcrumb-item"><a href="./chap08_needs.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></h1>
 </div>
 
 
@@ -345,7 +371,7 @@ ul.task-list li input[type="checkbox"] {
 </div></div></section>
 <section id="日経needsへのアクセス方法" class="level2 page-columns page-full" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="日経needsへのアクセス方法"><span class="header-section-number">9.2</span> 日経NEEDSへのアクセス方法</h2>
-<p>立命館大学図書館のウェブサイトに行きます。</p>
+<p>立命館大学図書館のウェブサイトに行きます。 もし大学外からアクセスしている場合は，VPNを経由して図書館のウェブサイトにアクセスするようにしましょう。</p>
 <p><a href="https://www.ritsumei.ac.jp/lib/" target="_blank">立命館大学図書館ウェブサイト</a></p>
 <p>トップページに行くと、サイトの上部に「データベース」という項目があります。</p>
 <p><img src="img/rits_library_top.png" class="img-fluid" alt="データベース"><link href="image.css" rel="stylesheet"></p>
@@ -378,9 +404,9 @@ ul.task-list li input[type="checkbox"] {
 </div></div><p>日経NEEDS社会科学情報検索システムの「一般企業財務」のトップページは以下のように、上下2つのパートで構成されています。</p>
 <p><img src="img/nikkei_needs_ippan_above.png" class="img-fluid" alt="一般企業財務の上パート"> <img src="img/nikkei_needs_ippan_below.png" class="img-fluid" alt="一般企業財務の下パート"></p>
 <p>上のパートは、企業や財務項目を選択する場所です。 左上のタグに「企業」と「項目」があり、「企業」タグでサンプルとしたい企業を選択し、「項目」タグで入手したい財務項目を選択します。</p>
-<section id="企業タグ" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="企業タグ"><span class="header-section-number">9.3.1</span> 企業タグ</h3>
-<p>企業タグでは、分析対象となる企業を選択します。 左側の項目で、</p>
+<section id="企業タブ" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="企業タブ"><span class="header-section-number">9.3.1</span> 企業タブ</h3>
+<p>企業タブでは、分析対象となる企業を選択します。 左側の項目で、</p>
 <ul>
 <li>業種</li>
 <li>上場</li>
@@ -398,14 +424,14 @@ ul.task-list li input[type="checkbox"] {
 <div class="img-fluid quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/nikkei_needs_firm.png" class="img-fluid figure-img"></p>
-<figcaption>企業タグ</figcaption>
+<figcaption>企業タブ</figcaption>
 </figure>
 </div>
 <p>企業の抽出が終わったら、つぎは「項目」タグを押して、入手したい財務項目を選択します。</p>
 </section>
 <section id="項目選択" class="level3" data-number="9.3.2">
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="項目選択"><span class="header-section-number">9.3.2</span> 項目選択</h3>
-<p>下のパートは、選択した企業や財務項目に対して、データ入手期間や、入手するデータの種類を選択する場所です。</p>
+<p>「項目」タブは、選択した企業や財務項目に対して、データ入手期間や、入手するデータの種類を選択する場所です。</p>
 <p>「項目一覧」から入手したい財務項目が記載されている財務諸表や区分を選択します。 たとえば、「貸借対照表（資産）」を選択すると、右側に「貸借対照表（資産）」の区分から入手可能な項目のリストが表示されます。 その中で必要な項目を選択し、「出力一覧に追加」をクリックすると、選択した項目が下の「出力一覧」に表示されます。</p>
 <p>データを取得する際に、必ず入手しておいた方がよい項目は、</p>
 <ul>
@@ -579,7 +605,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -897,13 +923,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./chap08_tidydata.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span>
+      <a href="./part00.html" class="pagination-link  aria-label=" 第2部="" 日経needsの使い方"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第2部 日経NEEDSの使い方</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./part02.html" class="pagination-link" aria-label="第2部 前処理と記述統計量">
-        <span class="nav-page-text">第2部 前処理と記述統計量</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chap08_needs02.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>株式データの取得</span>">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -911,13 +937,26 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">
 <p>Copyright 2024, Soichi Matsuura</p>
-</div>
-    <div class="nav-footer-right">
+</div>   
+    <div class="nav-footer-center">
       &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
     </div>
   </div>
 </footer>
