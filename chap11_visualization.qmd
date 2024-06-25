@@ -55,10 +55,8 @@ mystyle <- list ( # mystyleとして設定を保存
   theme(
     text = element_text(
       size=16,  #  フォントサイズ
-     family = "HiraKakuProN-W3" # ヒラギノフォント
-    )
-  )
-)
+      family = "HiraKakuProN-W3" # ヒラギノフォント
+    )))
 ```
 
 
