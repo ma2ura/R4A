@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.529">
+<meta name="generator" content="quarto-1.4.554">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>R for Empirical Accounting Research - 8&nbsp; 整然データ</title>
 <style>
 code{white-space: pre-wrap;}
@@ -53,6 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -60,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chap08_needs.html" rel="next">
+<link href="./part00.html" rel="next">
 <link href="./chap07_pipe.html" rel="prev">
 <link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -71,7 +75,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -97,9 +102,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+}</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
 <style type="text/css">
 .monaco-editor pre {
   background-color: unset !important;
@@ -247,9 +255,10 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"id":1,"options":{"context":"interactive"},"code":"df_car <- data.frame(\n    name = c(rep(\"トヨタ\",2),rep(\"日産\",2),rep(\"ホンダ\",2)),\n    year = rep(c(\"2022\", \"2023\"),3), # 時点\n    sale = c(31379507,37154298,8424585,10596695,14552696,16907725) # 気温\n)\n\n# ロングをワイドにしてみましょう。\ndf |>\n    pivot_wider(names_from = year, values_from = sale)"}];
+globalThis.qwebrCellDetails = [{"code":"df_car <- data.frame(\n    name = c(rep(\"トヨタ\",2),rep(\"日産\",2),rep(\"ホンダ\",2)),\n    year = rep(c(\"2022\", \"2023\"),3), # 時点\n    sale = c(31379507,37154298,8424585,10596695,14552696,16907725) # 気温\n)\n\n# ロングをワイドにしてみましょう。\ndf |>\n    pivot_wider(names_from = year, values_from = sale)","options":{"context":"interactive"},"id":1}];
 
-</script><script type="module">
+</script>
+<script type="module">
 // Declare startupMessageQWebR globally
 globalThis.qwebrStartupMessage = document.createElement("p");
 
@@ -342,7 +351,8 @@ function displayStartupMessage(showStartupMessage, showHeaderMessage) {
 }
 
 displayStartupMessage(qwebrShowStartupMessage, qwebrShowHeaderMessage);
-</script><script type="module">
+</script>
+<script type="module">
 // Supported Evaluation Types for Context
 globalThis.EvalTypes = Object.freeze({
   Interactive: 'interactive',
@@ -522,7 +532,8 @@ globalThis.createLoadingContainer = function(qwebrCounter) {
 
   return container;
 }
-</script><script type="module">
+</script>
+<script type="module">
 // Function to install a single package
 async function qwebrInstallRPackage(packageName) {
   await mainWebR.evalRVoid(`webr::install('${packageName}');`);
@@ -616,7 +627,8 @@ globalThis.qwebrInstance = import(qwebrCustomizedWebROptions.baseURL + "webr.mjs
 // Stop timer
 const initializeWebRTimerEnd = performance.now();
 
-</script><script type="module">
+</script>
+<script type="module">
 // Function to verify a given JavaScript Object is empty
 globalThis.qwebrIsObjectEmpty = function (arr) {
     return Object.keys(arr).length === 0;
@@ -833,14 +845,19 @@ globalThis.qwebrExecuteCode = async function (
 }
 
 </script>
+
+
 <meta name="twitter:title" content="R for Empirical Accounting Research - 8&nbsp; 整然データ">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
+
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -851,9 +868,13 @@ globalThis.qwebrExecuteCode = async function (
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for Empirical Accounting Research</a> 
     </div>
@@ -865,7 +886,7 @@ globalThis.qwebrExecuteCode = async function (
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rによる実証会計入門</span></a>
@@ -879,8 +900,8 @@ globalThis.qwebrExecuteCode = async function (
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></span></a>
@@ -928,122 +949,142 @@ globalThis.qwebrExecuteCode = async function (
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
-  </div>
-</li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第2部 前処理と記述統計量</span></a>
+            <a href="./part00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 日経NEEDSの使い方</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 前処理と記述統計量</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第3部 データの可視化</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第4部 財務分析</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap16_valuation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">企業価値評価分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">企業価値評価分析</span></span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
    
   <ul>
-<li>
-<a href="#%E6%95%B4%E7%84%B6%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF" id="toc-整然データとは" class="nav-link active" data-scroll-target="#%E6%95%B4%E7%84%B6%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF"><span class="header-section-number">8.1</span> 整然データとは</a>
+  <li><a href="#整然データとは" id="toc-整然データとは" class="nav-link active" data-scroll-target="#整然データとは"><span class="header-section-number">8.1</span> 整然データとは</a>
   <ul class="collapse">
-<li><a href="#long%E5%BD%A2%E5%BC%8F%E3%81%A8wide%E5%BD%A2%E5%BC%8F" id="toc-long形式とwide形式" class="nav-link" data-scroll-target="#long%E5%BD%A2%E5%BC%8F%E3%81%A8wide%E5%BD%A2%E5%BC%8F"><span class="header-section-number">8.1.1</span> long形式とwide形式</a></li>
-  <li><a href="#%E3%83%AD%E3%83%B3%E3%82%B0%E3%81%8B%E3%82%89%E3%83%AF%E3%82%A4%E3%83%89-pivot_wider" id="toc-ロングからワイド-pivot_wider" class="nav-link" data-scroll-target="#%E3%83%AD%E3%83%B3%E3%82%B0%E3%81%8B%E3%82%89%E3%83%AF%E3%82%A4%E3%83%89-pivot_wider">ロングからワイド <code>pivot_wider</code></a></li>
-  <li><a href="#%E3%83%AF%E3%82%A4%E3%83%89%E3%81%8B%E3%82%89%E3%83%AD%E3%83%B3%E3%82%B0-pivot_longer" id="toc-ワイドからロング-pivot_longer" class="nav-link" data-scroll-target="#%E3%83%AF%E3%82%A4%E3%83%89%E3%81%8B%E3%82%89%E3%83%AD%E3%83%B3%E3%82%B0-pivot_longer">ワイドからロング <code>pivot_longer</code></a></li>
+  <li><a href="#long形式とwide形式" id="toc-long形式とwide形式" class="nav-link" data-scroll-target="#long形式とwide形式"><span class="header-section-number">8.1.1</span> long形式とwide形式</a></li>
+  <li><a href="#ロングからワイド-pivot_wider" id="toc-ロングからワイド-pivot_wider" class="nav-link" data-scroll-target="#ロングからワイド-pivot_wider">ロングからワイド <code>pivot_wider</code></a></li>
+  <li><a href="#ワイドからロング-pivot_longer" id="toc-ワイドからロング-pivot_longer" class="nav-link" data-scroll-target="#ワイドからロング-pivot_longer">ワイドからロング <code>pivot_longer</code></a></li>
+  </ul></li>
+  <li><a href="#練習してみよう" id="toc-練習してみよう" class="nav-link" data-scroll-target="#練習してみよう"><span class="header-section-number">8.2</span> 練習してみよう。</a></li>
   </ul>
-</li>
-  <li><a href="#%E7%B7%B4%E7%BF%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86" id="toc-練習してみよう" class="nav-link" data-scroll-target="#%E7%B7%B4%E7%BF%92%E3%81%97%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86"><span class="header-section-number">8.2</span> 練習してみよう。</a></li>
-  </ul></nav>
+</nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script><script type="module" id="qwebr-monaco-editor-init">
+<main class="content page-columns page-full" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
 
   // Configure the Monaco Editor's loader
   require.config({
@@ -1051,7 +1092,8 @@ globalThis.qwebrExecuteCode = async function (
       'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
     }
   });
-</script><script type="module">
+</script>
+<script type="module">
 // Global dictionary to store Monaco Editor instances
 globalThis.qwebrEditorInstances = {};
 
@@ -1196,10 +1238,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
   };
 
 }
-</script><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_tidydata.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title">
-<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span>
-</h1>
+</script>
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part01.html">第1部 R言語の基礎</a></li><li class="breadcrumb-item"><a href="./chap08_tidydata.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></h1>
 </div>
 
 
@@ -1213,8 +1256,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
   
 
 
-</header><section id="整然データとは" class="level2 page-columns page-full" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="整然データとは">
-<span class="header-section-number">8.1</span> 整然データとは</h2>
+</header>
+
+
+<section id="整然データとは" class="level2 page-columns page-full" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="整然データとは"><span class="header-section-number">8.1</span> 整然データとは</h2>
 <!--
 “Tidy datasets are all alike, but every messy dataset is messy in its own way.”
 -->
@@ -1249,40 +1295,48 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </div>
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;display: flex;">
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/observation.png" class="img-fluid figure-img"></p>
-<figcaption>1.観測値</figcaption></figure>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/observation.png" class="img-fluid figure-img"></p>
+<figcaption>1.観測値</figcaption>
+</figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;display: flex;">
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/variables.png" class="img-fluid figure-img"></p>
-<figcaption>2.変数</figcaption></figure>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/variables.png" class="img-fluid figure-img"></p>
+<figcaption>2.変数</figcaption>
+</figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;display: flex;">
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/values.png" class="img-fluid figure-img"></p>
-<figcaption>3.値</figcaption></figure>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/values.png" class="img-fluid figure-img"></p>
+<figcaption>3.値</figcaption>
+</figure>
 </div>
 </div>
 </div>
 </div>
 <p>整然データのルールを満たすデータは，データの整理や可視化が容易になります。 そして整然データを扱うために非常に強力なツールを提供してくれるのが，<code>tidyverse</code>パッケージ群です。 以下では，<code>tidyverse</code>パッケージ群の中でも，データの整理に特化した<code>tidyr</code>パッケージを使って，整然データを作成する方法を学びます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="long形式とwide形式" class="level3" data-number="8.1.1"><h3 data-number="8.1.1" class="anchored" data-anchor-id="long形式とwide形式">
-<span class="header-section-number">8.1.1</span> long形式とwide形式</h3>
+<section id="long形式とwide形式" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="long形式とwide形式"><span class="header-section-number">8.1.1</span> long形式とwide形式</h3>
 <p>人間には読みやすいけれどパソコンは読みにくい，というデータの形式があります。例えば下の表を見てみましょう。</p>
 <table class="table">
 <caption>自動車会社3社の売上高</caption>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: center;">地点</th>
 <th style="text-align: center;">2022</th>
 <th style="text-align: center;">2023</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">トヨタ自動車</td>
@@ -1305,11 +1359,13 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>コンピュータが理解しやすいデータとして表すなら，次のような表になります。</p>
 <table class="table">
 <caption>自動車会社のロング型の表</caption>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: center;">企業名</th>
 <th style="text-align: center;">年度</th>
 <th style="text-align: center;">売上高</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">トヨタ自動車</td>
@@ -1345,24 +1401,27 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </table>
 <p>このような形式のデータをロング型(long)といいます。</p>
 <p>上の表は，行が、トヨタの2022年度の売上高、といったように1つの行が1つの観測を表しています(ルール1)。 企業名、年度、売上高の3列から構成されていて、1列が1つの変数を意味している(ルール2)。 各セルには1つの値が入っています(ルール3)。 よって，これが整然データとなります。</p>
-<p>上のロング型のデータを使って，ロングからワイド，ワイドからロングの操作を学びましょう。 <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>関数を使って，3つの変数<code>name</code>，<code>year</code>，<code>sale</code>をもつデータフレームを作ります。</p>
+<p>上のロング型のデータを使って，ロングからワイド，ワイドからロングの操作を学びましょう。 <code>data.frame()</code>関数を使って，3つの変数<code>name</code>，<code>year</code>，<code>sale</code>をもつデータフレームを作ります。</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
-<span><span class="va">df_car</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span>    <span class="co"># rep("札幌",3)は"札幌"を3回繰り返すという意味</span></span>
-<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"トヨタ"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"日産"</span>,<span class="fl">2</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"ホンダ"</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022"</span>, <span class="st">"2023"</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span>, <span class="co"># 時点</span></span>
-<span>    sale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">31379507</span>,<span class="fl">37154298</span>,<span class="fl">8424585</span>,<span class="fl">10596695</span>,<span class="fl">14552696</span>,<span class="fl">16907725</span><span class="op">)</span> <span class="co"># 気温</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">df_car</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df_car <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rep("札幌",3)は"札幌"を3回繰り返すという意味</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"トヨタ"</span>,<span class="dv">2</span>),<span class="fu">rep</span>(<span class="st">"日産"</span>,<span class="dv">2</span>),<span class="fu">rep</span>(<span class="st">"ホンダ"</span>,<span class="dv">2</span>)),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"2022"</span>, <span class="st">"2023"</span>),<span class="dv">3</span>), <span class="co"># 時点</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sale =</span> <span class="fu">c</span>(<span class="dv">31379507</span>,<span class="dv">37154298</span>,<span class="dv">8424585</span>,<span class="dv">10596695</span>,<span class="dv">14552696</span>,<span class="dv">16907725</span>) <span class="co"># 気温</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>df_car <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+<div>
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">トヨタ</td>
@@ -1396,26 +1455,32 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </tr>
 </tbody>
 </table>
+
+
+</div>
 </div>
 </div>
 <p>これはロング型の整然データとなります。</p>
-</section><section id="ロングからワイド-pivot_wider" class="level3 unnumbered page-columns page-full"><h3 class="unnumbered anchored" data-anchor-id="ロングからワイド-pivot_wider">ロングからワイド <code>pivot_wider</code>
-</h3>
+</section>
+<section id="ロングからワイド-pivot_wider" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="ロングからワイド-pivot_wider">ロングからワイド <code>pivot_wider</code></h3>
 <p>Rで使うならこのままでよいのですが，あえてこれをワイド型に変えてみましょう。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/long_to_wide.png" class="img-fluid figure-img"></p>
-<figcaption>ワイド型をロング型に</figcaption></figure>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/long_to_wide.png" class="img-fluid figure-img"></p>
+<figcaption>ワイド型をロング型に</figcaption>
+</figure>
 </div>
 <!-- 
 ::: {.column-margin}
 教科書などでよく使用されている`spread()`は「根本的に設計ミスってた」と公式で発表されているので，R神が作った`pivot_wider()`を使います。widerという名前の通り，ワイド型に変換する関数です。
 ::: 
 -->
-<p>データフレームをロング型からワイド型に変換するには、<code>tidyr</code>パッケージの<code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>関数を使います。</p>
+<p>データフレームをロング型からワイド型に変換するには、<code>tidyr</code>パッケージの<code>pivot_wider()</code>関数を使います。</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>以前は、<code>reshap2</code>パッケージの<code>dcast()</code>関数や、その改良版の<code>tidyr</code>パッケージの<code><a href="https://tidyr.tidyverse.org/reference/spread.html">spread()</a></code>関数が使われていました。しかし、これらは根本的に設計ミスがあるとして、新たに設計しなおされた<code>tidyr</code>の<code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>が現在のベストプラクティスです。</p>
-</div></div><p><code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>の主な引数は，</p>
+<p>以前は、<code>reshap2</code>パッケージの<code>dcast()</code>関数や、その改良版の<code>tidyr</code>パッケージの<code>spread()</code>関数が使われていました。しかし、これらは根本的に設計ミスがあるとして、新たに設計しなおされた<code>tidyr</code>の<code>pivot_wider()</code>が現在のベストプラクティスです。</p>
+</div></div><p><code>pivot_wider()</code>の主な引数は，</p>
 <ul>
 <li><code>names_from</code></li>
 <li><code>values_from</code></li>
@@ -1423,19 +1488,22 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <p>です。 <code>names_from</code>は，ワイド型に変換するときに，どの変数の値を列にするかを指定します。 <code>values_from</code>は、<code>names_from</code>で指定した変数の値が列になったとき、どの値をもつ変数にするのかを指定します。</p>
 <p>以下のコードでは，<code>year</code>変数の値(つまり2022と2023)を列に，その変数が<code>sale</code>変数の値をもつように指定し，<code>df_wide</code>という変数に代入しています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_wide</span> <span class="op">&lt;-</span> <span class="va">df_car</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
-<span>        names_from <span class="op">=</span> <span class="va">year</span>, <span class="co"># 列にする変数</span></span>
-<span>        values_from <span class="op">=</span> <span class="va">sale</span> <span class="co"># 変数がもつ値</span></span>
-<span>        <span class="op">)</span></span>
-<span><span class="va">df_wide</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> df_car <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_from =</span> year, <span class="co"># 列にする変数</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_from =</span> sale <span class="co"># 変数がもつ値</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df_wide <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+<div>
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">2022</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">2023</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">トヨタ</td>
@@ -1454,45 +1522,51 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </tr>
 </tbody>
 </table>
+
+
+</div>
 </div>
 </div>
 <p>これでワイド型に変換できました。</p>
-</section><section id="ワイドからロング-pivot_longer" class="level3 unnumbered page-columns page-full"><h3 class="unnumbered anchored" data-anchor-id="ワイドからロング-pivot_longer">ワイドからロング <code>pivot_longer</code>
-</h3>
+</section>
+<section id="ワイドからロング-pivot_longer" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="ワイドからロング-pivot_longer">ワイドからロング <code>pivot_longer</code></h3>
 <p>次に，このワイド型のデータをロング型に変換してみます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="img/wide_to_long.png" class="img-fluid figure-img"></p>
-<figcaption>ワイド型をロング型に</figcaption></figure>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/wide_to_long.png" class="img-fluid figure-img"></p>
+<figcaption>ワイド型をロング型に</figcaption>
+</figure>
 </div>
-<p>データフレームをワイド型からロング型に変換するには、<code>tidyr</code>パッケージの<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code>関数を使います。</p>
+<p>データフレームをワイド型からロング型に変換するには、<code>tidyr</code>パッケージの<code>pivot_longer()</code>関数を使います。</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>以前は、<code>reshap2</code>パッケージの<code>melt()</code>関数や、その改良版の<code>tidyr</code>パッケージの<code>gahter()</code>関数が使われていました。しかし、これらは根本的に設計ミスがあるとして、新たに設計しなおされた<code>tidyr</code>の<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code>が現在のベストプラクティスです。</p>
+<p>以前は、<code>reshap2</code>パッケージの<code>melt()</code>関数や、その改良版の<code>tidyr</code>パッケージの<code>gahter()</code>関数が使われていました。しかし、これらは根本的に設計ミスがあるとして、新たに設計しなおされた<code>tidyr</code>の<code>pivot_longer()</code>が現在のベストプラクティスです。</p>
 </div></div><p>ば</p>
-<p><code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code>の引数は，<code>cols</code>と<code>names_to</code>と<code>values_to</code>です。</p>
+<p><code>pivot_longer()</code>の引数は，<code>cols</code>と<code>names_to</code>と<code>values_to</code>です。</p>
 <ul>
-<li>
-<code>cols</code>は，ロング型に変換するときに，どの変数を行にするかを指定</li>
-<li>
-<code>names_to</code>は，ロング型に変換するときに，どの変数の値を使うかを指定</li>
-<li>
-<code>values_to</code>は，ロング型に変換するときに，どの変数の値を使うかを指定</li>
+<li><code>cols</code>は，ロング型に変換するときに，どの変数を行にするかを指定</li>
+<li><code>names_to</code>は，ロング型に変換するときに，どの変数の値を使うかを指定</li>
+<li><code>values_to</code>は，ロング型に変換するときに，どの変数の値を使うかを指定</li>
 </ul>
 <p>以下のコードでは，<code>2022</code>，<code>2023</code>の2つの変数を行に，<code>year</code>という変数の値を列に，<code>sale</code>という変数の値を値にして，<code>df_long</code>という変数に代入しています。</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_long</span> <span class="op">&lt;-</span> <span class="va">df_wide</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
-<span>        cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022"</span>,<span class="st">"2023"</span><span class="op">)</span>, <span class="co"># 縦にする変数</span></span>
-<span>        names_to <span class="op">=</span> <span class="st">"year"</span>, <span class="co"># 縦にした変数名</span></span>
-<span>        values_to <span class="op">=</span> <span class="st">"sale"</span><span class="op">)</span> <span class="co"># 値</span></span>
-<span><span class="va">df_long</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df_wide <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"2022"</span>,<span class="st">"2023"</span>), <span class="co"># 縦にする変数</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="co"># 縦にした変数名</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"sale"</span>) <span class="co"># 値</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df_long <span class="sc">|&gt;</span> <span class="fu">kable</span>() <span class="sc">|&gt;</span> <span class="fu">kable_styling</span>(<span class="at">font_size =</span> <span class="dv">20</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
+<div>
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">name</th>
 <th style="text-align: left;" data-quarto-table-cell-role="th">year</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">sale</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">トヨタ</td>
@@ -1526,11 +1600,16 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </tr>
 </tbody>
 </table>
+
+
+</div>
 </div>
 </div>
 <p>元のロング型に戻りました。</p>
-</section></section><section id="練習してみよう" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="練習してみよう">
-<span class="header-section-number">8.2</span> 練習してみよう。</h2>
+</section>
+</section>
+<section id="練習してみよう" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="練習してみよう"><span class="header-section-number">8.2</span> 練習してみよう。</h2>
 <p>まず、</p>
 <div class="cell">
 <div id="qwebr-insertion-location-1"></div>
@@ -1538,7 +1617,10 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1628,6 +1710,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
           // default icon
           link.classList.add("external");
       }
@@ -1666,7 +1753,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1714,7 +1805,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1934,19 +2030,22 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./chap07_pipe.html" class="pagination-link  aria-label=">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chap07_pipe.html" class="pagination-link" aria-label="パイプ演算子">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">パイプ演算子</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap08_needs.html" class="pagination-link" aria-label="<span class='chapter-number'>9</span>&nbsp; <span class='chapter-title'>日経NEEDSデータの処理</span>">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./part00.html" class="pagination-link" aria-label="第2部 日経NEEDSの使い方">
+        <span class="nav-page-text">第2部 日経NEEDSの使い方</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
 <p>Copyright 2024, Soichi Matsuura</p>
 </div>   
@@ -1955,7 +2054,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-<li class="nav-item compact">
+    <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ma2ura">
       <i class="bi bi-github" role="img">
 </i> 
@@ -1968,9 +2067,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-</div>
+    </div>
   </div>
-</footer><script type="module">
+</footer>
+<script type="module">
 // Handle cell initialization initialization
 qwebrCellDetails.map(
   (entry) => {
@@ -2068,6 +2168,8 @@ qwebrInstance.then(
   }
 );
 </script>
+
+
 
 
 </body></html>

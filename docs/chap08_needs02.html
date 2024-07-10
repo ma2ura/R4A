@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.529">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>R for Empirical Accounting Research - 10&nbsp; 株式データの取得</title>
 <style>
 code{white-space: pre-wrap;}
@@ -20,8 +17,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -41,8 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -68,10 +97,7 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "検索",
     "search-label": "サーチ"
   }
-}</script>
-
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
+}</script><script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script><script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
  var macros = [];
  for (var i = 0; i < mathElements.length; i++) {
@@ -84,9 +110,7 @@ ul.task-list li input[type="checkbox"] {
     fleqn: false
    });
 }}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
+  </script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
 <script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
@@ -113,18 +137,14 @@ window.Quarto = {
   typesetMath
 };
 </script>
-
 <meta name="twitter:title" content="R for Empirical Accounting Research - 10&nbsp; 株式データの取得">
 <meta name="twitter:description" content="">
 <meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -135,13 +155,9 @@ window.Quarto = {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for Empirical Accounting Research</a> 
     </div>
@@ -153,7 +169,7 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Rによる実証会計入門</span></a>
@@ -167,8 +183,8 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap02_prepare.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">準備</span></span></a>
@@ -217,7 +233,7 @@ window.Quarto = {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part00.html" class="sidebar-item-text sidebar-link">
@@ -226,8 +242,8 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span></a>
@@ -240,7 +256,7 @@ window.Quarto = {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part02.html" class="sidebar-item-text sidebar-link">
@@ -249,8 +265,8 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
@@ -263,7 +279,7 @@ window.Quarto = {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part03.html" class="sidebar-item-text sidebar-link">
@@ -272,8 +288,8 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
@@ -298,7 +314,7 @@ window.Quarto = {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./part04.html" class="sidebar-item-text sidebar-link">
@@ -307,8 +323,8 @@ window.Quarto = {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
@@ -327,40 +343,42 @@ window.Quarto = {
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">目次</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-  <li><a href="#株価データ" id="toc-株価データ" class="nav-link active" data-scroll-target="#株価データ"><span class="header-section-number">10.1</span> 株価データ</a>
+<li><a href="#%E6%A0%AA%E5%BC%8F%E5%B8%82%E5%A0%B4%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF" id="toc-株式市場の仕組み" class="nav-link active" data-scroll-target="#%E6%A0%AA%E5%BC%8F%E5%B8%82%E5%A0%B4%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF"><span class="header-section-number">10.1</span> 株式市場の仕組み</a></li>
+  <li>
+<a href="#%E6%A0%AA%E4%BE%A1%E3%83%87%E3%83%BC%E3%82%BF" id="toc-株価データ" class="nav-link" data-scroll-target="#%E6%A0%AA%E4%BE%A1%E3%83%87%E3%83%BC%E3%82%BF"><span class="header-section-number">10.2</span> 株価データ</a>
   <ul class="collapse">
-  <li><a href="#項目選択" id="toc-項目選択" class="nav-link" data-scroll-target="#項目選択"><span class="header-section-number">10.1.1</span> 項目選択</a></li>
-  </ul></li>
-  <li><a href="#出力設定" id="toc-出力設定" class="nav-link" data-scroll-target="#出力設定"><span class="header-section-number">10.2</span> 出力設定</a>
-  <ul class="collapse">
-  <li><a href="#期間" id="toc-期間" class="nav-link" data-scroll-target="#期間"><span class="header-section-number">10.2.1</span> 期間</a></li>
-  <li><a href="#期種" id="toc-期種" class="nav-link" data-scroll-target="#期種"><span class="header-section-number">10.2.2</span> 期種</a></li>
-  <li><a href="#同時に出力する株価指数" id="toc-同時に出力する株価指数" class="nav-link" data-scroll-target="#同時に出力する株価指数"><span class="header-section-number">10.2.3</span> 同時に出力する株価指数</a></li>
-  <li><a href="#レイアウト" id="toc-レイアウト" class="nav-link" data-scroll-target="#レイアウト"><span class="header-section-number">10.2.4</span> レイアウト</a></li>
-  <li><a href="#ダウンロード設定" id="toc-ダウンロード設定" class="nav-link" data-scroll-target="#ダウンロード設定"><span class="header-section-number">10.2.5</span> ダウンロード設定</a></li>
-  </ul></li>
-  <li><a href="#銘柄と項目の保存" id="toc-銘柄と項目の保存" class="nav-link" data-scroll-target="#銘柄と項目の保存"><span class="header-section-number">10.3</span> 銘柄と項目の保存</a></li>
-  <li><a href="#データの入手" id="toc-データの入手" class="nav-link" data-scroll-target="#データの入手"><span class="header-section-number">10.4</span> データの入手</a></li>
+<li><a href="#%E9%A0%85%E7%9B%AE%E9%81%B8%E6%8A%9E" id="toc-項目選択" class="nav-link" data-scroll-target="#%E9%A0%85%E7%9B%AE%E9%81%B8%E6%8A%9E"><span class="header-section-number">10.2.1</span> 項目選択</a></li>
   </ul>
-</nav>
+</li>
+  <li>
+<a href="#%E5%87%BA%E5%8A%9B%E8%A8%AD%E5%AE%9A" id="toc-出力設定" class="nav-link" data-scroll-target="#%E5%87%BA%E5%8A%9B%E8%A8%AD%E5%AE%9A"><span class="header-section-number">10.3</span> 出力設定</a>
+  <ul class="collapse">
+<li><a href="#%E6%9C%9F%E9%96%93" id="toc-期間" class="nav-link" data-scroll-target="#%E6%9C%9F%E9%96%93"><span class="header-section-number">10.3.1</span> 期間</a></li>
+  <li><a href="#%E6%9C%9F%E7%A8%AE" id="toc-期種" class="nav-link" data-scroll-target="#%E6%9C%9F%E7%A8%AE"><span class="header-section-number">10.3.2</span> 期種</a></li>
+  <li><a href="#%E5%90%8C%E6%99%82%E3%81%AB%E5%87%BA%E5%8A%9B%E3%81%99%E3%82%8B%E6%A0%AA%E4%BE%A1%E6%8C%87%E6%95%B0" id="toc-同時に出力する株価指数" class="nav-link" data-scroll-target="#%E5%90%8C%E6%99%82%E3%81%AB%E5%87%BA%E5%8A%9B%E3%81%99%E3%82%8B%E6%A0%AA%E4%BE%A1%E6%8C%87%E6%95%B0"><span class="header-section-number">10.3.3</span> 同時に出力する株価指数</a></li>
+  <li><a href="#%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88" id="toc-レイアウト" class="nav-link" data-scroll-target="#%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88"><span class="header-section-number">10.3.4</span> レイアウト</a></li>
+  <li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E8%A8%AD%E5%AE%9A" id="toc-ダウンロード設定" class="nav-link" data-scroll-target="#%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E8%A8%AD%E5%AE%9A"><span class="header-section-number">10.3.5</span> ダウンロード設定</a></li>
+  </ul>
+</li>
+  <li><a href="#%E9%8A%98%E6%9F%84%E3%81%A8%E9%A0%85%E7%9B%AE%E3%81%AE%E4%BF%9D%E5%AD%98" id="toc-銘柄と項目の保存" class="nav-link" data-scroll-target="#%E9%8A%98%E6%9F%84%E3%81%A8%E9%A0%85%E7%9B%AE%E3%81%AE%E4%BF%9D%E5%AD%98"><span class="header-section-number">10.4</span> 銘柄と項目の保存</a></li>
+  <li><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%85%A5%E6%89%8B" id="toc-データの入手" class="nav-link" data-scroll-target="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%85%A5%E6%89%8B"><span class="header-section-number">10.5</span> データの入手</a></li>
+  <li><a href="#%E5%AE%9F%E8%B7%B5" id="toc-実践" class="nav-link" data-scroll-target="#%E5%AE%9F%E8%B7%B5"><span class="header-section-number">10.6</span> 実践</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part00.html">第2部 日経NEEDSの使い方</a></li><li class="breadcrumb-item"><a href="./chap08_needs02.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></a></li></ol></nav>
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></h1>
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part00.html">第2部 日経NEEDSの使い方</a></li><li class="breadcrumb-item"><a href="./chap08_needs02.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span>
+</h1>
 </div>
 
 
@@ -374,10 +392,7 @@ window.Quarto = {
   
 
 
-</header>
-
-
-<div class="callout callout-style-default callout-important callout-titled">
+</header><div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -388,38 +403,110 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ul>
+<li>株価データの特徴</li>
 <li>株式データの集め方</li>
 <li>株式データの使い方</li>
 </ul>
 </div>
 </div>
-<section id="株価データ" class="level2 page-columns page-full" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="株価データ"><span class="header-section-number">10.1</span> 株価データ</h2>
-<p>日経NEEDSから株式データを取得します。 立命館大学の図書館の<a href="https://www.ritsumei.ac.jp/lib/" target="_blank">ウェブサイト</a>から，日経NEEDS社会科学情報検索システムのトップページに移動し，「<strong>株式</strong>」を選択します。</p>
+<section id="株式市場の仕組み" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="株式市場の仕組み">
+<span class="header-section-number">10.1</span> 株式市場の仕組み</h2>
+<p>金融商品取引市場とは，有価証券の売買や市場デリバティブ取引が行われる市場をいい(金商法2条14項)，そこで有価証券が金融商品取引所である東京証券取引所などが開設する市場での取引対象になることを，<strong>有価証券の上場</strong>とよんでいます。 発行する株式が上場されている場合，その株式会社を上場会社(163条1項)，一般には上場企業とよびます。</p>
+<p>株式を新たに上場しようとする会社は金融証券取引所の審査を受け，一定の基準に適合しており，また企業内容の開示を適切に行うことができる状況にあるのかどうか，などが確認され，上場が適当と認められた株式が上場を許されるのです。</p>
+</section><section id="株価データ" class="level2 page-columns page-full" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="株価データ">
+<span class="header-section-number">10.2</span> 株価データ</h2>
+<p>金融商品取引所は，投資家が株式を売買する場を設けており，またそこで生み出される取引データなどを収集しています。</p>
+<p>株式取引やファイナンス・金融論文で用いられる用語について，笠原・村宮 (2022)に基づいて示しておきます。</p>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 83%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">相場用語</th>
+<th style="text-align: left;">解説</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>成行注文</strong></td>
+<td style="text-align: left;">値段を指定せず，最良気配値で取引を希望すること</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>指値注文</strong></td>
+<td style="text-align: left;">特定の値段を指定して取引を希望すること</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>板</strong></td>
+<td style="text-align: left;">その時点で有効な指し値注文を売りと買いで分けて価格ごとにまとめた一覧表のこと</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>板寄せ方式</strong></td>
+<td style="text-align: left;">取引開始時に板情報（それまでに提出された売りと買いの注文）に基づいて取引価格を決定する方法のこと</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>ザラ場寄せ方式</strong></td>
+<td style="text-align: left;">取引時間（ザラ場）中に新規注文と板情報に基づいて取引価格を決定する方法のこと</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>歩み値</strong></td>
+<td style="text-align: left;">取引時間中の売買履歴（約定価格や出来高）に関する時系列データのこと</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>証拠金</strong></td>
+<td style="text-align: left;">信用取引を行う際に資金の貸し手に差し入れる担保のこと</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>値洗い</strong></td>
+<td style="text-align: left;">保有するポートフォリオ（ポジション）の価値を時価で再評価すること</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>追証</strong></td>
+<td style="text-align: left;">値洗いの結果，追加の証拠金を求められること</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>逆日歩</strong></td>
+<td style="text-align: left;">信用売りが殺到し株不足となった銘柄でショート・セラーが追加で支払う費用のこと</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>踏み上げ</strong></td>
+<td style="text-align: left;">株価上昇で損失を抱えたショート・セラー（ 2.2.3 節を参照）のロスカットが一段の株高を招くこと</td>
+</tr>
+</tbody>
+</table>
+<p>日経NEEDSはそのデータを使いやすくデータベース化してくれているので，そこから株式データを取得します。 立命館大学の図書館の<a href="https://www.ritsumei.ac.jp/lib/" target="_blank">ウェブサイト</a>から，日経NEEDS社会科学情報検索システムのトップページに移動し，「<strong>株式</strong>」を選択します。</p>
 <p><img src="img/nikkei_needs_top_stock.png" class="img-fluid" alt="日経NEEDSのトップページ"><link href="image.css" rel="stylesheet"></p>
 <p>日経NEEDS社会科学情報検索システムの「株式」のトップページは，先の「一般企業財務」と同じように、上下2つのパートで構成されています。</p>
-<p><img src="img/needs_stock_above.png" class="img-fluid" alt="株式の上パート"> <img src="img/needs_stock_below2.png" class="img-fluid" alt="株式の下パート"></p>
+<p><img src="img/needs_stock_above.png" class="img-fluid" alt="株式の上パート"><img src="img/needs_stock_below2.png" class="img-fluid" alt="株式の下パート"></p>
 <p>上のパートは、株式の銘柄や株式の項目を選択する場所です。</p>
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>銘柄検索画面にコードを直接入力することで，データを入手することもできます。 新株・優先株のデータは”S+4桁株式コード”もしくは”N+7桁日経会社コード”の後に”株式種別コード（１桁）”をつけてコード検索が可能です。 株式種別コードは下記の通りです。 1：新株式，2：第二新株式，3：第三新株式，4：第四新株式，5：優先株式，6：優先新株式，7：後配株式，8：後配新株式，9：新株引受権証書</p>
 </div></div><p>「銘柄」タブは財務データと同じなので銘柄を選択するものですが，財務データのときとほぼ同じなので，ここでは「項目」タブを見ていきましょう。</p>
-<section id="項目選択" class="level3" data-number="10.1.1">
-<h3 data-number="10.1.1" class="anchored" data-anchor-id="項目選択"><span class="header-section-number">10.1.1</span> 項目選択</h3>
+<section id="項目選択" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="項目選択">
+<span class="header-section-number">10.2.1</span> 項目選択</h3>
 <p>「項目一覧」から入手したいデータが含まれている項目を選択します。 たとえば、「株価」を選択すると、右側に「株価」の区分から入手可能な項目のリストが表示されます。 よく利用される項目として，「株価」項目から</p>
 <ul>
-<li><code>STKTYPE</code> 株式区分</li>
-<li><code>EXCHANGE</code> 取引所</li>
-<li><code>SECTION_A</code> 上場場部</li>
-<li><code>CLOSE_D</code> 終値</li>
-<li><code>CLOSE_A</code> 終値（権利落ち調整済）</li>
-<li><code>MV_SHS</code> 時価総額（発行済株式数ベース）</li>
+<li>
+<code>STKTYPE</code> 株式区分</li>
+<li>
+<code>EXCHANGE</code> 取引所</li>
+<li>
+<code>SECTION_A</code> 上場場部</li>
+<li>
+<code>CLOSE_D</code> 終値</li>
+<li>
+<code>CLOSE_A</code> 終値（権利落ち調整済）</li>
+<li>
+<code>MV_SHS</code> 時価総額（発行済株式数ベース）</li>
 </ul>
 <p>「銘柄属性」から</p>
 <ul>
-<li><code>SECCODE</code> 銘柄コード</li>
-<li><code>ISSUREK</code> 幹事銘柄名</li>
-<li><code>NKINDYCD1</code> 日経業種区分</li>
+<li>
+<code>SECCODE</code> 銘柄コード</li>
+<li>
+<code>ISSUREK</code> 幹事銘柄名</li>
+<li>
+<code>NKINDYCD1</code> 日経業種区分</li>
 </ul>
 <p>があります。</p>
 <p>調整済み株価のデータを表示するために「調整係数」を使用しています。 市場ごとに以下の式にて調整済み株価のデータを算出しています。 <span class="math display">
@@ -428,29 +515,22 @@ window.Quarto = {
 <p><span class="math inline">V_i</span> ： <span class="math inline">i</span>時点の株価 <span class="math inline">A_i</span> ： <span class="math inline">i</span>時点の新累積調整係数<span class="math inline">A</span> <span class="math inline">A_j</span> ： 直近の新累積調整係数<span class="math inline">A</span></p>
 <p>とりあえず，以下の図のように終値，終値（権利落調整済），時価総額（発行済み株式数ベース）の3つのデータを集めてみましょう。</p>
 <div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/needs_stock_item.png" class="img-fluid figure-img"></p>
-<figcaption>項目選択</figcaption>
-</figure>
+<figure class="figure"><p><img src="img/needs_stock_item.png" class="img-fluid figure-img"></p>
+<figcaption>項目選択</figcaption></figure>
 </div>
 <p>銘柄と項目を選択し，それぞれ「出力一覧に追加」をクリックして，画面下部に選択した銘柄と項目を登録すれば，次のような表示になっているでしょう。</p>
 <div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/needs_stock_below.png" class="img-fluid figure-img"></p>
-<figcaption>項目選択</figcaption>
-</figure>
+<figure class="figure"><p><img src="img/needs_stock_below.png" class="img-fluid figure-img"></p>
+<figcaption>項目選択</figcaption></figure>
 </div>
-</section>
-</section>
-<section id="出力設定" class="level2 page-columns page-full" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="出力設定"><span class="header-section-number">10.2</span> 出力設定</h2>
+</section></section><section id="出力設定" class="level2 page-columns page-full" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="出力設定">
+<span class="header-section-number">10.3</span> 出力設定</h2>
 <p>上のパートで銘柄と項目を選択したら、次の下パートの「出力設定」で、データの入手期間や、データの種類を選択します。 左側の項目で、サンプルの期間や同時に出力する株式指数、レイアウトを選択します。</p>
-<section id="期間" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="期間"><span class="header-section-number">10.2.1</span> 期間</h3>
+<section id="期間" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="期間">
+<span class="header-section-number">10.3.1</span> 期間</h3>
 <p>ここでは、データの入手期間を選択します。 開始期間と終了期間を指定することができます。</p>
-</section>
-<section id="期種" class="level3 page-columns page-full" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="期種"><span class="header-section-number">10.2.2</span> 期種</h3>
+</section><section id="期種" class="level3 page-columns page-full" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="期種">
+<span class="header-section-number">10.3.2</span> 期種</h3>
 <p>次に，期種を選択します。 期種には，</p>
 <ul>
 <li>日次（証券営業日）</li>
@@ -462,9 +542,8 @@ window.Quarto = {
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>たとえば，東京証券取引所の売買立会は，前場と後場に分かれ，前場は午前9時から11時30分まで，午後立会は12時30分から15時までとなっています。 土日祝日，12月31日〜1月3日は休業日となります。 よって日次の終値は1銘柄1年間で245日(2022年度)になります。 これを東証上場全社で10年間分の日次終値を取得しようとすると，非常に大規模なデータとなります。必要な期間，銘柄数をよく考えてデータを取得するようにしましょう。</p>
-</div></div></section>
-<section id="同時に出力する株価指数" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="同時に出力する株価指数"><span class="header-section-number">10.2.3</span> 同時に出力する株価指数</h3>
+</div></div></section><section id="同時に出力する株価指数" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="同時に出力する株価指数">
+<span class="header-section-number">10.3.3</span> 同時に出力する株価指数</h3>
 <p>個別銘柄のデータとともに，株価指数を入手することができます。 ここではよく利用される</p>
 <ul>
 <li>日経平均</li>
@@ -472,41 +551,133 @@ window.Quarto = {
 </ul>
 <p>の2つを選択しておきましょう。</p>
 <div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/needs_stock_period.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>出力設定</figcaption>
-</figure>
+<figure class="figure"><p><img src="img/needs_stock_period.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>出力設定</figcaption></figure>
 </div>
-</section>
-<section id="レイアウト" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="レイアウト"><span class="header-section-number">10.2.4</span> レイアウト</h3>
+</section><section id="レイアウト" class="level3" data-number="10.3.4"><h3 data-number="10.3.4" class="anchored" data-anchor-id="レイアウト">
+<span class="header-section-number">10.3.4</span> レイアウト</h3>
 <p>レイアウトでは、データの並び順を指定します。 特に重要ではないので、そのままで大丈夫です。</p>
-</section>
-<section id="ダウンロード設定" class="level3" data-number="10.2.5">
-<h3 data-number="10.2.5" class="anchored" data-anchor-id="ダウンロード設定"><span class="header-section-number">10.2.5</span> ダウンロード設定</h3>
+</section><section id="ダウンロード設定" class="level3" data-number="10.3.5"><h3 data-number="10.3.5" class="anchored" data-anchor-id="ダウンロード設定">
+<span class="header-section-number">10.3.5</span> ダウンロード設定</h3>
 <p>ダウンロード設定も特に変更する必要はありません。</p>
-</section>
-</section>
-<section id="銘柄と項目の保存" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="銘柄と項目の保存"><span class="header-section-number">10.3</span> 銘柄と項目の保存</h2>
+</section></section><section id="銘柄と項目の保存" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="銘柄と項目の保存">
+<span class="header-section-number">10.4</span> 銘柄と項目の保存</h2>
 <p>財務データと同様に，やはり株式データについても分析の再現性を確保するため，「銘柄保存」と「項目保存」のボタンをクリックし，取得する銘柄と項目のリストを残しておきましょう。</p>
-</section>
-<section id="データの入手" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="データの入手"><span class="header-section-number">10.4</span> データの入手</h2>
+</section><section id="データの入手" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="データの入手">
+<span class="header-section-number">10.5</span> データの入手</h2>
 <p>今までの作業で、銘柄と項目の選択が終わり、データの入手期間や期種の選択が終わったら、あとはデータをcsvファイルとしてダウンロードするだけです。</p>
 <div class="img-fluid quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/needs_stock_save_download.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>データの入手</figcaption>
-</figure>
+<figure class="figure"><p><img src="img/needs_stock_save_download.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>データの入手</figcaption></figure>
 </div>
 <p>最後に、大事なことなのでもう一度いいます。 <strong>ダウンロードしたcsvファイルをMS Excelで開かないようにしよう。</strong></p>
+</section><section id="実践" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="実践">
+<span class="header-section-number">10.6</span> 実践</h2>
+<p>では，以下の条件に合致する企業が発行している株式の終値と時価総額を取得してみましょう。</p>
+<ul>
+<li>製造業に属する銘柄</li>
+<li>東京証券取引所のプライム，スタンダード，グロースに上場している銘柄</li>
+</ul>
+<p>その結果，1193銘柄が選択されました(2024年3月11日時点)。 「項目」として，</p>
+<ul>
+<li>終値</li>
+<li>終値（権利落ち調整済）</li>
+<li>時価総額（発行済み株式数ベース）</li>
+</ul>
+<p>の3項目を選びましょう。</p>
+<p>出力設定では，</p>
+<ul>
+<li>2022年4月から2023年3月</li>
+<li>日経平均とTOPIX</li>
+</ul>
+<p>を選択します。</p>
+<p>準備ができたのでCSVファイルをダウンロードしてみましょう。 その結果，292,286件のデータとなりました。 では，このデータを確認してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># ライブラリを読み込む</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: パッケージ 'stringr' はバージョン 4.2.3 の R の下で造られました</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span></span>
+<span><span class="co"># データの読み込み</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/stock_TSE_manufacture_2022-2023.csv"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 292285 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (2): 上場コード, 銘柄名称
+dbl  (6): 日経平均, TOPIX, 株式コード, 終値, 終値（権利落調整済）, 時価総額（発行済み株式数ベース）...
+date (1): 期間
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 292,285
+Columns: 9
+$ 期間                               &lt;date&gt; 2022-04-01, 2022-04-04, 2022-04-05…
+$ 日経平均                           &lt;dbl&gt; 27665.98, 27736.47, 27787.98, 27350…
+$ TOPIX                              &lt;dbl&gt; 1944.27, 1953.63, 1949.12, 1922.91,…
+$ 株式コード                         &lt;dbl&gt; 1909, 1909, 1909, 1909, 1909, 1909,…
+$ 上場コード                         &lt;chr&gt; "011", "012", "012", "012", "012", …
+$ 銘柄名称                           &lt;chr&gt; "日本ドライケミカル", "日本ドライケ…
+$ 終値                               &lt;dbl&gt; 1775, 1767, 1811, 1749, 1719, 1741,…
+$ `終値（権利落調整済）`             &lt;dbl&gt; 1775, 1767, 1811, 1749, 1719, 1741,…
+$ `時価総額（発行済み株式数ベース）` &lt;dbl&gt; 12747716300, 12690261804, 130062615…</code></pre>
+</div>
+</div>
+<p>ではTOPIXを折れ線グラフで表してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># グラフ内の日本語文字化け対策のおまじない</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>dev <span class="op">=</span> <span class="st">"ragg_png"</span><span class="op">)</span></span>
+<span><span class="co"># グラフの見た目の設定</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">期間</span>, y <span class="op">=</span> <span class="va">TOPIX</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap08_needs02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>トヨタ自動車の株価を折れ線グラフで表してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_toyota</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">銘柄名称</span> <span class="op">==</span> <span class="st">"トヨタ自動車"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_toyota</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">期間</span>, y <span class="op">=</span> <span class="va">終値</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap08_needs02_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>トヨタ自動車の時価総額を折れ線グラフで表してみましょう。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_toyota</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">期間</span>, y <span class="op">=</span> <span class="va">`時価総額（発行済み株式数ベース）`</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap08_needs02_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -902,10 +1073,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./chap08_needs.html" class="pagination-link  aria-label=" &lt;span="">
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./chap08_needs.html" class="pagination-link  aria-label=">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span>
       </a>          
   </div>
@@ -916,8 +1085,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
-<footer class="footer">
-  <div class="nav-footer">
+<footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
 <p>Copyright 2024, Soichi Matsuura</p>
 </div>   
@@ -926,7 +1094,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
+<li class="nav-item compact">
     <a class="nav-link" href="https://github.com/ma2ura">
       <i class="bi bi-github" role="img">
 </i> 
@@ -939,11 +1107,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    </div>
+</div>
   </div>
 </footer>
-
-
 
 
 </body></html>

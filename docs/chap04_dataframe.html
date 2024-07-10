@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.529">
+<meta name="generator" content="quarto-1.4.554">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>R for Empirical Accounting Research - 4&nbsp; データフレーム</title>
 <style>
@@ -62,6 +62,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./chap05_packages.html" rel="next">
 <link href="./chap04_R.html" rel="prev">
+<link href="./img/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -97,6 +98,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "サーチ"
   }
 }</script>
+<meta name="twitter:title" content="R for Empirical Accounting Research - 4&nbsp; データフレーム">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 <body class="nav-sidebar floating slimcontent">
 
@@ -193,8 +197,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./part02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">第2部 前処理と記述統計量</span></a>
+            <a href="./part00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 日経NEEDSの使い方</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -202,14 +206,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 前処理と記述統計量</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
@@ -218,27 +245,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a href="./part03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第3部 データの可視化</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第4部 財務分析</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_valuation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">企業価値評価分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>Rにもともと備わっている<code>data.frame</code>の拡張版として、<code>tidyverse</code>では<code>tibble</code>というデータフレームの拡張版が使われていますが、初心者のうちはほとんど違いを意識することがないと思うので、ここでは<code>data.frame</code>を使います。</p>
-</div></div><div class="img-fluid quarto-figure quarto-figure-center">
+</div></div><div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>データフレームの例</figcaption></figure>
 </div>
@@ -325,68 +387,68 @@ sale
 <tbody>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2022
+2 | 3
 </td>
 <td style="text-align:right;">
-31379507
+379507|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2023
+3 | 3
 </td>
 <td style="text-align:right;">
-37154298
+154298|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-日産
+日産 |2
 </td>
 <td style="text-align:left;">
-2022
+22 |
 </td>
 <td style="text-align:right;">
-8424585
+8424585|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-日産
+日産 |2
 </td>
 <td style="text-align:left;">
-2023
+23 |
 </td>
 <td style="text-align:right;">
-10596695
+0596695|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-ホンダ
+ホンダ |20
 </td>
 <td style="text-align:left;">
-2022
+2 | 1
 </td>
 <td style="text-align:right;">
-14552696
+552696|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-ホンダ
+ホンダ |20
 </td>
 <td style="text-align:left;">
-2023
+3 | 1
 </td>
 <td style="text-align:right;">
-16907725
+907725|
 </td>
 </tr>
 </tbody>
@@ -406,7 +468,7 @@ sale
 </section><section id="変数へのアクセス" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="変数へのアクセス">
 <span class="header-section-number">4.3</span> 変数へのアクセス</h2>
 <p>データフレームの中の特定の変数にアクセスするには、<code>$</code>を使います。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/dataframe_access.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>データフレームの変数</figcaption></figure>
 </div>
@@ -418,12 +480,12 @@ sale
 </div>
 </div>
 <p>あるいは、データフレームの列数を指定することで、特定の変数にアクセスすることもできます。 Rのデータフレームは行と列に1から順に番号が振られています。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame_number.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>データフレームの位置</figcaption></figure>
 </div>
 <p>特定の行、列、値にアクセスするには、<code>[行,列]</code>を指定します。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/dataframe_access1.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>変数へのアクセス</figcaption></figure>
 </div>
@@ -434,7 +496,7 @@ sale
 <pre><code>[1] "トヨタ" "トヨタ" "日産"   "日産"   "ホンダ" "ホンダ"</code></pre>
 </div>
 </div>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame_row.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>列のアクセス</figcaption></figure>
 </div>
@@ -456,19 +518,19 @@ sale
 </tr></thead>
 <tbody><tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2022
+2 | 3
 </td>
 <td style="text-align:right;">
-31379507
+379507|
 </td>
 </tr></tbody>
 </table>
 </div>
 </div>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame_column.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>行のアクセス</figcaption></figure>
 </div>
@@ -479,12 +541,12 @@ sale
 <pre><code>[1] 37154298</code></pre>
 </div>
 </div>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame_value.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>値のアクセス</figcaption></figure>
 </div>
 <p>条件を指定して、特定の行を抽出することもできます。</p>
-<div class="img-fluid quarto-figure quarto-figure-center">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/data_frame_condition.png" class="img-fluid figure-img" style="width:80.0%"></p>
 <figcaption>条件の指定</figcaption></figure>
 </div>
@@ -507,24 +569,24 @@ sale
 <tbody>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2022
+2 | 3
 </td>
 <td style="text-align:right;">
-31379507
+379507|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2023
+3 | 3
 </td>
 <td style="text-align:right;">
-37154298
+154298|
 </td>
 </tr>
 </tbody>
@@ -567,46 +629,46 @@ sale
 <tbody>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2022
+2 | 3
 </td>
 <td style="text-align:right;">
-31379507
+379507|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-トヨタ
+トヨタ |20
 </td>
 <td style="text-align:left;">
-2023
+3 | 3
 </td>
 <td style="text-align:right;">
-37154298
+154298|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-日産
+日産 |2
 </td>
 <td style="text-align:left;">
-2022
+22 |
 </td>
 <td style="text-align:right;">
-8424585
+8424585|
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-日産
+日産 |2
 </td>
 <td style="text-align:left;">
-2023
+23 |
 </td>
 <td style="text-align:right;">
-10596695
+0596695|
 </td>
 </tr>
 </tbody>
@@ -696,7 +758,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -705,6 +767,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
           // default icon
           link.classList.add("external");
       }
@@ -743,7 +810,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -791,7 +862,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1012,12 +1088,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./chap04_R.html" class="pagination-link  aria-label=">
+      <a href="./chap04_R.html" class="pagination-link" aria-label="Rの基礎">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Rの基礎</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap05_packages.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>パッケージ</span>">
+      <a href="./chap05_packages.html" class="pagination-link" aria-label="パッケージ">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">パッケージ</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1025,14 +1101,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">
 <p>Copyright 2024, Soichi Matsuura</p>
-</div>
-    <div class="nav-footer-right">
+</div>   
+    <div class="nav-footer-center">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
   </div>
 </footer>
 

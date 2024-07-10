@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.529">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>R for Empirical Accounting Research - 12&nbsp; ggplot2で可視化</title>
+<title>R for Empirical Accounting Research - 13&nbsp; ggplot2で可視化</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,6 +137,9 @@ window.Quarto = {
   typesetMath
 };
 </script>
+<meta name="twitter:title" content="R for Empirical Accounting Research - 13&nbsp; ggplot2で可視化">
+<meta name="twitter:description" content="">
+<meta name="twitter:card" content="summary">
 </head>
 <body class="nav-sidebar floating slimcontent">
 
@@ -145,7 +148,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap11_visualization.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap11_visualization.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="サイドバーを切り替える" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -229,10 +232,27 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">整然データ</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./part00.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第2部 日経NEEDSの使い方</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap08_needs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSデータの処理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">日経NEEDSの使い方</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap08_needs02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">株式データの取得</span></span></a>
   </div>
 </li>
       </ul>
@@ -241,21 +261,21 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第2部 前処理と記述統計量</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_merge.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データの結合</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap09_handling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">データハンドリング</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,33 +284,33 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第3部 データの可視化</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap11_visualization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap12_ggpubr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap13_gg_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotを関数に埋め込む</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap14_ggplot_ghibli.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ggplotとジブリ</span></span></a>
   </div>
 </li>
       </ul>
@@ -299,15 +319,27 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="./part04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">第4部 財務分析</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="セクションを切り替え">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="セクションを切り替え">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chap15_financialAnalysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">財務分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">財務分析のための前処理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">不確実性の分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chap16_valuation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">企業価値評価分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -320,33 +352,33 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">目次</h2>
    
   <ul>
-<li><a href="#%E5%8F%AF%E8%A6%96%E5%8C%96%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-可視化のパッケージ" class="nav-link active" data-scroll-target="#%E5%8F%AF%E8%A6%96%E5%8C%96%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">12.1</span> 可視化のパッケージ</a></li>
+<li><a href="#%E5%8F%AF%E8%A6%96%E5%8C%96%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8" id="toc-可視化のパッケージ" class="nav-link active" data-scroll-target="#%E5%8F%AF%E8%A6%96%E5%8C%96%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"><span class="header-section-number">13.1</span> 可視化のパッケージ</a></li>
   <li>
-<a href="#ggplot%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E5%9F%BA%E7%A4%8E" id="toc-ggplotパッケージの基礎" class="nav-link" data-scroll-target="#ggplot%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E5%9F%BA%E7%A4%8E"><span class="header-section-number">12.2</span> ggplotパッケージの基礎</a>
+<a href="#ggplot%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E5%9F%BA%E7%A4%8E" id="toc-ggplotパッケージの基礎" class="nav-link" data-scroll-target="#ggplot%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E5%9F%BA%E7%A4%8E"><span class="header-section-number">13.2</span> ggplotパッケージの基礎</a>
   <ul class="collapse">
-<li><a href="#ggplot%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E5%A4%89%E6%95%B0%E3%81%AE%E7%89%B9%E5%BE%B4%E6%8A%8A%E6%8F%A1" id="toc-ggplot関数の基本的な使い方と変数の特徴把握" class="nav-link" data-scroll-target="#ggplot%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E5%A4%89%E6%95%B0%E3%81%AE%E7%89%B9%E5%BE%B4%E6%8A%8A%E6%8F%A1"><span class="header-section-number">12.2.1</span> <code>ggplot()</code>関数の基本的な使い方と変数の特徴把握</a></li>
+<li><a href="#ggplot%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E5%A4%89%E6%95%B0%E3%81%AE%E7%89%B9%E5%BE%B4%E6%8A%8A%E6%8F%A1" id="toc-ggplot関数の基本的な使い方と変数の特徴把握" class="nav-link" data-scroll-target="#ggplot%E9%96%A2%E6%95%B0%E3%81%AE%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9%E3%81%A8%E5%A4%89%E6%95%B0%E3%81%AE%E7%89%B9%E5%BE%B4%E6%8A%8A%E6%8F%A1"><span class="header-section-number">13.2.1</span> <code>ggplot()</code>関数の基本的な使い方と変数の特徴把握</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-変数の可視化" class="nav-link" data-scroll-target="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">12.3</span> 1変数の可視化</a>
+<a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96" id="toc-変数の可視化" class="nav-link" data-scroll-target="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96"><span class="header-section-number">13.3</span> 1変数の可視化</a>
   <ul class="collapse">
-<li><a href="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0" id="toc-ヒストグラム" class="nav-link" data-scroll-target="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0"><span class="header-section-number">12.3.1</span> ヒストグラム</a></li>
+<li><a href="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0" id="toc-ヒストグラム" class="nav-link" data-scroll-target="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0"><span class="header-section-number">13.3.1</span> ヒストグラム</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96-1" id="toc-変数の可視化-1" class="nav-link" data-scroll-target="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96-1"><span class="header-section-number">12.4</span> 2変数の可視化</a>
+<a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96-1" id="toc-変数の可視化-1" class="nav-link" data-scroll-target="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96-1"><span class="header-section-number">13.4</span> 2変数の可視化</a>
   <ul class="collapse">
-<li><a href="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E7%B8%A6%E8%BB%B8%E3%82%82%E9%80%A3%E7%B6%9A%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-横軸が連続縦軸も連続の場合" class="nav-link" data-scroll-target="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E7%B8%A6%E8%BB%B8%E3%82%82%E9%80%A3%E7%B6%9A%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">12.4.1</span> 横軸が連続・縦軸も連続の場合</a></li>
-  <li><a href="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E7%B8%A6%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-横軸がカテゴリー変数縦軸が連続変数の場合" class="nav-link" data-scroll-target="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E7%B8%A6%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">12.4.2</span> 横軸がカテゴリー変数・縦軸が連続変数の場合</a></li>
-  <li><a href="#%E5%9B%B3%E3%81%AE%E4%BF%9D%E5%AD%98" id="toc-図の保存" class="nav-link" data-scroll-target="#%E5%9B%B3%E3%81%AE%E4%BF%9D%E5%AD%98"><span class="header-section-number">12.4.3</span> 図の保存</a></li>
+<li><a href="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E7%B8%A6%E8%BB%B8%E3%82%82%E9%80%A3%E7%B6%9A%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-横軸が連続縦軸も連続の場合" class="nav-link" data-scroll-target="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E7%B8%A6%E8%BB%B8%E3%82%82%E9%80%A3%E7%B6%9A%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">13.4.1</span> 横軸が連続・縦軸も連続の場合</a></li>
+  <li><a href="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E7%B8%A6%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" id="toc-横軸がカテゴリー変数縦軸が連続変数の場合" class="nav-link" data-scroll-target="#%E6%A8%AA%E8%BB%B8%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%83%BC%E5%A4%89%E6%95%B0%E7%B8%A6%E8%BB%B8%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><span class="header-section-number">13.4.2</span> 横軸がカテゴリー変数・縦軸が連続変数の場合</a></li>
+  <li><a href="#%E5%9B%B3%E3%81%AE%E4%BF%9D%E5%AD%98" id="toc-図の保存" class="nav-link" data-scroll-target="#%E5%9B%B3%E3%81%AE%E4%BF%9D%E5%AD%98"><span class="header-section-number">13.4.3</span> 図の保存</a></li>
   </ul>
 </li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap11_visualization.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></a></li></ol></nav><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part03.html">第3部 データの可視化</a></li><li class="breadcrumb-item"><a href="./chap11_visualization.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">12</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span>
+<span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggplot2で可視化</span>
 </h1>
 </div>
 
@@ -390,8 +422,8 @@ window.Quarto = {
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>1冊目はアメリカで絶賛された可視化本が翻訳されたものです。ソースコードとともに、データの可視化の基本や実例を学べます。 2冊目は、統計学を可視化という視点で学習する本です。 3冊目は前の2冊とは若干毛色が異なっており、<code>Shiny</code>というPosit社が開発したパッケージを使って、インタラクティブなグラフを作成する方法を学べます。</p>
-</div></div><section id="可視化のパッケージ" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="可視化のパッケージ">
-<span class="header-section-number">12.1</span> 可視化のパッケージ</h2>
+</div></div><section id="可視化のパッケージ" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="可視化のパッケージ">
+<span class="header-section-number">13.1</span> 可視化のパッケージ</h2>
 <p>いままで利用してきた<code>tidyverse</code>にはグラフ作成のためのパッケージとして<code>ggplot2</code>が含まれています。 本章では，この<code>ggplot2</code>パッケージの使い方を学習し，読者にもデータの特徴を伝えやすく，シンプルで，美しいグラフの作成を目指します。 また<code>ggplot2</code>の機能を拡張するための<code>ggthemes</code>と<code>patchwork</code>も一緒に読み込んでおきます。 まだインストールできていなければ，始めにインストールしておいてください。</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("ggthemes") # fist time only</span></span>
@@ -399,17 +431,17 @@ window.Quarto = {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># とりあえずこれ</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span> <span class="co"># ggplotのテーマ拡張</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://jrnold.github.io/ggthemes/">ggthemes</a></span><span class="op">)</span> <span class="co"># ggplotのテーマ拡張</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span> <span class="co"># ggplotの図を並べる</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>また、Macだとggplot2で作図したグラフで日本語が表示されないことがあります。 以下の設定をすることで文字化けを回避することができます。</p>
@@ -420,14 +452,12 @@ window.Quarto = {
 <p>あるいは，<code>ggplot</code>のグラフ作成時に，<code>base_family = "フォント名"</code>として，作図で用いるフォントを指定することでも文字化けを回避できます。 たとえば次のように，<code><a href="https://rdrr.io/r/base/list.html">list()</a></code>関数を使ってグラフの設定を前もって<code>mystyle</code>というオブジェクトに入れておけば，作図時に<code>+ mystyle</code>を付けるだけで， フォントやグラフの見た目を指定できます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mystyle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span> <span class="op">(</span> <span class="co"># mystyleとして設定を保存</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># ggthemesのテーマ</span></span>
+<span>  <span class="fu"><a href="http://jrnold.github.io/ggthemes/reference/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># ggthemesのテーマ</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>    text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
 <span>      size<span class="op">=</span><span class="fl">16</span>,  <span class="co">#  フォントサイズ</span></span>
-<span>     family <span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span> <span class="co"># ヒラギノフォント</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>      family <span class="op">=</span> <span class="st">"HiraKakuProN-W3"</span> <span class="co"># ヒラギノフォント</span></span>
+<span>    <span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>以下の作図で使うデータを読み込んでおきましょう。</p>
 <div class="cell">
@@ -454,11 +484,11 @@ dbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種
 </div>
 </div>
 <p>練習用の財務データを読み込み，オブジェクト<code>df</code>に代入しました。 <code>df</code>のクラスはspec_tbl_df, tbl_df, tbl, data.frameです。</p>
-</section><section id="ggplotパッケージの基礎" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="ggplotパッケージの基礎">
-<span class="header-section-number">12.2</span> ggplotパッケージの基礎</h2>
+</section><section id="ggplotパッケージの基礎" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="ggplotパッケージの基礎">
+<span class="header-section-number">13.2</span> ggplotパッケージの基礎</h2>
 <p>前節で、カテゴリー変数のファクター化，<code><a href="https://rdrr.io/r/base/with.html">with()</a></code>関数と<code><a href="https://rdrr.io/r/base/table.html">table()</a></code>関数を使ったクロス集計表の作成，<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>関数と<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>関数を使ったグループごとの統計量の計算について学んだので，これらの結果を使ってグラフを作ることで，読者に伝わるデータの可視化を行いたいと思います。 キレイなグラフを比較的簡単に作ることができる<code>ggplot2</code>パッケージを使います。</p>
-<section id="ggplot関数の基本的な使い方と変数の特徴把握" class="level3" data-number="12.2.1"><h3 data-number="12.2.1" class="anchored" data-anchor-id="ggplot関数の基本的な使い方と変数の特徴把握">
-<span class="header-section-number">12.2.1</span> <code>ggplot()</code>関数の基本的な使い方と変数の特徴把握</h3>
+<section id="ggplot関数の基本的な使い方と変数の特徴把握" class="level3" data-number="13.2.1"><h3 data-number="13.2.1" class="anchored" data-anchor-id="ggplot関数の基本的な使い方と変数の特徴把握">
+<span class="header-section-number">13.2.1</span> <code>ggplot()</code>関数の基本的な使い方と変数の特徴把握</h3>
 <p><code>ggplot2</code>パッケージの<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数は，次のような引数をとります。</p>
 <ul>
 <li>
@@ -521,11 +551,11 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># グループ化解除</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>これで準備が整ったので、<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数を使ってグラフを作成していきます。</p>
-</section></section><section id="変数の可視化" class="level2 page-columns page-full" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="変数の可視化">
-<span class="header-section-number">12.3</span> 1変数の可視化</h2>
+</section></section><section id="変数の可視化" class="level2 page-columns page-full" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="変数の可視化">
+<span class="header-section-number">13.3</span> 1変数の可視化</h2>
 <p>まずは，1変数の可視化から始めていきましょう。 1変数の可視化とは，1つの変数の分布を可視化することです。 1変数のグラフの代表的なものとして、<strong>ヒストグラム</strong>(histogram)があります。 <code>ggplot2</code>パッケージでは、</p>
 <ul>
-<li><code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code></li>
+<li><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code></li>
 </ul>
 <p>で作図します。</p>
 <p>まず土台となるデータフレームを指定します。 ここでは、年度別に集計する前の<code>df</code>を使います。</p>
@@ -549,10 +579,10 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 </div>
 </div>
 <p>作図する変数としてROEが指定されました。</p>
-<section id="ヒストグラム" class="level3 page-columns page-full" data-number="12.3.1"><h3 data-number="12.3.1" class="anchored" data-anchor-id="ヒストグラム">
-<span class="header-section-number">12.3.1</span> ヒストグラム</h3>
+<section id="ヒストグラム" class="level3 page-columns page-full" data-number="13.3.1"><h3 data-number="13.3.1" class="anchored" data-anchor-id="ヒストグラム">
+<span class="header-section-number">13.3.1</span> ヒストグラム</h3>
 <p>ヒストグラムは、横軸に連続変数の区間をとり、その区間ごとの度数を縦軸にとったグラフで、連続変数の分布を可視化するのに適しています。 分布の偏りや外れ値の有無を確認するのに有用で、重要な変数に対して必ず作図するものと言えます。</p>
-<p>ヒストグラムを作成するには、<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>を使います。 <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数の引数を全て書くのは面倒なので、<code>data =</code>とか<code>mapping =</code>は省略します。</p>
+<p>ヒストグラムを作成するには、<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>を使います。 <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数の引数を全て書くのは面倒なので、<code>data =</code>とか<code>mapping =</code>は省略します。 ついでに、関数の入れ子構造を回避するため、<code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>関数は外に出しておきます。</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -567,8 +597,9 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
-<p>「<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">stat_bin()</a></code> using <code>bins = 30</code>. Pick better value with <code>binwidth</code>.」というメッセージが出ました。 ヒストグラムを作成する際に区間幅やビンの数(棒の数)を指定しないと、<code>ggplot2</code>が自動的に30本の棒になるように区間幅を指定していますよ，というメッセージです。 好みの区間幅や棒の数を指定したい場合は，<code>binwidth = 0.1</code>のように指定してみてください。</p>
-</div></div><div class="cell">
+<p>「<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">stat_bin()</a></code> using <code>bins = 30</code>. Pick better value with <code>binwidth</code>.」というメッセージが出ました。 ヒストグラムを作成する際に区間幅やビンの数(棒の数)を指定しないと、<code>ggplot2</code>が自動的に30本の棒になるように区間幅を指定していますよ，というメッセージです。 無視しても問題ないです。 好みの区間幅や棒の数を指定したい場合は，<code>binwidth = 0.1</code>のように指定してみてください。</p>
+</div></div><p>ヒストグラムがただの棒になっています。これは大部分のROEがゼロ付近の値を取っているけれど、異常値があるせいで、ROEの範囲が広くなってしまっているためです。 区間幅を<code>0.1</code>に狭めて、もう少し分布の形状が分かるようにしてみます。</p>
+<div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -577,14 +608,17 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 </div>
 </div>
 </div>
-<p>ヒストグラムが、ただの棒になっています。 これは大部分のデータがゼロ付近の値を取っているけれど、異常値があるせいで、横軸の範囲が広くなってしまっているためです。 先ほど計算したROEの記述統計量でも、最小値は<span class="math inline">-32.167</span>、最大値は<span class="math inline">136.143</span>となっています。 当期純利益が株主資本の136倍というのは、異常な値ですね。 そこで、<code>x</code>軸の範囲を<span class="math inline">[-1,1]</span>に限定してみましょう。 <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数に<code><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim()</a></code>を追加して、<code>x</code>軸の範囲を指定します。</p>
+<p>ヒストグラムが細い棒になりました。</p>
+<p>先ほど計算したROEの記述統計量でも、最小値は<span class="math inline">-32.167</span>、最大値は<span class="math inline">136.143</span>となっています。 当期純利益が株主資本の136倍というのは、異常な値ですね。 そこで、棒の周辺の様子を確認するために、<code>x</code>軸の範囲を<span class="math inline">[-1,1]</span>に限定してみましょう。 <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>関数に<code><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim()</a></code>を追加して、<code>x</code>軸の範囲を指定します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 319 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>Warning: Removed 319 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -596,29 +630,53 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 
 <div class="no-row-height column-margin column-container"><div class="">
 <p>なにやら<code>Warning</code>が出ていますが、区間を区切ったことでグラフに入らなかったデータがあることを教えてくれているだけなので，無視します。</p>
-</div></div><p>左右対称のヒストグラムが描けました。 ヒストグラムは分布の形や異常値を確認するためにも，分析する変数すべてに対して作成するように心がけましょう。</p>
-</section></section><section id="変数の可視化-1" class="level2" data-number="12.4"><h2 data-number="12.4" class="anchored" data-anchor-id="変数の可視化-1">
-<span class="header-section-number">12.4</span> 2変数の可視化</h2>
-<p>次に，2変数の可視化を行っていきましょう。 2変数の可視化では、横軸と縦軸にそれぞれ1つの変数をとるグラフを作成します。 また、横軸に割り当てられる変数が連続変数かカテゴリー変数かによって、作成するグラフが異なります。</p>
-<section id="横軸が連続縦軸も連続の場合" class="level3" data-number="12.4.1"><h3 data-number="12.4.1" class="anchored" data-anchor-id="横軸が連続縦軸も連続の場合">
-<span class="header-section-number">12.4.1</span> 横軸が連続・縦軸も連続の場合</h3>
-<p>横軸と縦軸の両方が連続変数の場合、2つの変数の関係性を表すグラフとして<strong>散布図</strong>(scatter plot)を作成します。 散布図は、横軸の値と対応する縦軸の値の組み合わせを点で表したグラフです。 散布図は、<code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code>を使って作成します。</p>
-<p>先ほど作成した<code>df</code>の<code>ROE</code>と<code>TURN</code>の関係を散布図で表してみましょう。 先と同様に、<code>x</code>軸と<code>y</code>軸の範囲をしておきます。</p>
+</div></div><p>まともなヒストグラムが描けました。 分布の形や異常値を確認するためにも，分析する重要な変数に対してヒストグラムを作成するように心がけましょう。</p>
+<p>次にROEの平均値を計算し、ヒストグラムに書き込んでみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span>, <span class="va">TURN</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_ROE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">ROE</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ROEの平均値は、0.0660036でした。 この値をヒストグラムに書き込むには、垂直線を引く<code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline()</a></code>を使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">mean_ROE</span>, color <span class="op">=</span> <span class="st">"red"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 322 rows containing missing values (`geom_point()`).</code></pre>
+<pre><code>Warning: Removed 319 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="変数の可視化-1" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="変数の可視化-1">
+<span class="header-section-number">13.4</span> 2変数の可視化</h2>
+<p>次に，2変数の可視化を行っていきましょう。 2変数の可視化では、横軸と縦軸にそれぞれ1つの変数をとるグラフを作成します。 また、横軸に割り当てられる変数が連続変数かカテゴリー変数かによって、作成するグラフが異なります。</p>
+<section id="横軸が連続縦軸も連続の場合" class="level3" data-number="13.4.1"><h3 data-number="13.4.1" class="anchored" data-anchor-id="横軸が連続縦軸も連続の場合">
+<span class="header-section-number">13.4.1</span> 横軸が連続・縦軸も連続の場合</h3>
+<p>横軸と縦軸の両方が連続変数の場合、2つの変数の関係性を表すグラフとして<strong>散布図</strong>(scatter plot)を作成します。 散布図は、横軸の値と対応する縦軸の値の組み合わせを点で表したグラフです。 散布図は、<code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code>を使って作成します。</p>
+<p>先ほど作成した<code>df</code>の<code>ROE</code>と<code>TURN</code>の関係を散布図で表してみましょう。 先と同様に、<code>x</code>軸と<code>y</code>軸の範囲をしておきます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ROE</span>, <span class="va">TURN</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 322 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>なんとなく、総資産回転率<code>TURN</code>が大きいほど、<code>ROE</code>が大きいように見えます。 このように、散布図を作成すると、2つの変数の関係を直観的に把握することができます。</p>
-</section><section id="横軸がカテゴリー変数縦軸が連続変数の場合" class="level3" data-number="12.4.2"><h3 data-number="12.4.2" class="anchored" data-anchor-id="横軸がカテゴリー変数縦軸が連続変数の場合">
-<span class="header-section-number">12.4.2</span> 横軸がカテゴリー変数・縦軸が連続変数の場合</h3>
+</section><section id="横軸がカテゴリー変数縦軸が連続変数の場合" class="level3" data-number="13.4.2"><h3 data-number="13.4.2" class="anchored" data-anchor-id="横軸がカテゴリー変数縦軸が連続変数の場合">
+<span class="header-section-number">13.4.2</span> 横軸がカテゴリー変数・縦軸が連続変数の場合</h3>
 <p>横軸が順序のないカテゴリー変数で、縦軸が連続変数となるグラフとして</p>
 <ul>
 <li>
@@ -638,8 +696,8 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 横軸がカテゴリー変数で縦軸が連続変数の場合、カテゴリーごとの連続変数の分布を表すグラフとして**箱ひげ図**(box plot)を作成します。
 -->
 <p>それぞれ作成してみましょう。</p>
-<section id="棒グラフ" class="level4" data-number="12.4.2.1"><h4 data-number="12.4.2.1" class="anchored" data-anchor-id="棒グラフ">
-<span class="header-section-number">12.4.2.1</span> 棒グラフ</h4>
+<section id="棒グラフ" class="level4" data-number="13.4.2.1"><h4 data-number="13.4.2.1" class="anchored" data-anchor-id="棒グラフ">
+<span class="header-section-number">13.4.2.1</span> 棒グラフ</h4>
 <p>棒グラフはヒストグラムに似ていますが、<strong>棒グラフは離散変数やカテゴリー変数の分布を表し</strong>、ヒストグラムは連続変数の分布を表している、という点で違いがあります。</p>
 <p>棒グラフを作成するには、<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>を使います。 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>は次の引数をとります。</p>
 <ul>
@@ -650,16 +708,16 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 </ul>
 <p>また、2変数のグラフとなるため、<code>aes(x = 変数1, y = 変数2)</code>と2つの変数を指定します。 ここでは年度ごとに集計した<code>df_year</code>を使って、年度ごとの平均ROEを棒グラフで表してみましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section><section id="箱ひげ図" class="level4" data-number="12.4.2.2"><h4 data-number="12.4.2.2" class="anchored" data-anchor-id="箱ひげ図">
-<span class="header-section-number">12.4.2.2</span> 箱ひげ図</h4>
+</section><section id="箱ひげ図" class="level4" data-number="13.4.2.2"><h4 data-number="13.4.2.2" class="anchored" data-anchor-id="箱ひげ図">
+<span class="header-section-number">13.4.2.2</span> 箱ひげ図</h4>
 <p>箱ひげ図(box plot)は、カテゴリーごとの連続変数の分布を表すグラフです。 棒と箱の図からなるグラフで、箱の部分から中央値(Q2)，第1四分位点(Q1)，第3四分位点(Q3)統計量，そしてヒゲの部分から正常値と設定される範囲が読み取れるグラフです。 <!-- 箱の下辺は第1四分位(Q1)で、上辺は第3四分位(Q3)を表しています。 --></p>
 <div class="img-fluid quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="img/geom_boxplot.png" class="img-fluid figure-img"></p>
@@ -668,52 +726,11 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 <p>年度ごとのROEの分布を箱ひげ図で表してみましょう。 横軸のカテゴリー変数ごとに作図するため，<code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>の中で<code>x</code>軸と<code>y</code>軸を設定するのと同時に，<code>group =</code>でカテゴリーを指示します。</p>
 <p>では集計前の<code>df</code>を用いて，上場コードごとの<code>ROE</code>の分布を表す箱ひげ図を作成します。 異常値のせいで箱ひげ図が潰れてしまうことが予想できるので，表示する幅を<code><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim()</a></code>で設定しておきます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">上場コード</span>, y <span class="op">=</span> <span class="va">ROE</span>, group <span class="op">=</span> <span class="va">上場コード</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1168 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>この上場場ごとのROEの箱ひげ図から，東証プライム(東証1部)に属する企業は，ROEの中央値が他よりも高いが，東証スタンダードとグロースは中央値に差が無さそうに見える。しかし東証グロースはROEのばらつきが最も大きく，業績の格差が大きいことが分かる。</p>
-</section><section id="ヴァイオリンプロット" class="level4" data-number="12.4.2.3"><h4 data-number="12.4.2.3" class="anchored" data-anchor-id="ヴァイオリンプロット">
-<span class="header-section-number">12.4.2.3</span> ヴァイオリンプロット</h4>
-<p>次に，バイオリンプロットを作成します。 バイオリン・プロットも箱ひげ図を同じようなグラフですが，分布の形を中央値などの代表値で表すのではなく，分布の形をそのまま表現することができます。 バイオリンプロットの作成には<code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>を使います。</p>
-<div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">ROE</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>,<span class="fl">.5</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"上場場"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"ROE"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1168 rows containing non-finite values (`stat_ydensity()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>バイオリンプロットから，プライム・東証1部とスタンダード・東証2部の上場企業のROEは中央値に差があるものの，分布の形は似ていますが，グロース・マザーズの企業は，ROEの分布が大きく異なることがわかります。</p>
-</section><section id="カスタマイズした箱ひげ図とバイオリンプロット" class="level4" data-number="12.4.2.4"><h4 data-number="12.4.2.4" class="anchored" data-anchor-id="カスタマイズした箱ひげ図とバイオリンプロット">
-<span class="header-section-number">12.4.2.4</span> カスタマイズした箱ひげ図とバイオリンプロット</h4>
-<p><code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>をもっとカスタマイズして，より豊かな情報をもつグラフにしてみようと思います。 まずは，グラフを色分けしてみましょう。 <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>の中で<code>fill =</code>で色を指定します。 ついでに，<code><a href="https://ggplot2.tidyverse.org/reference/geom_dotplot.html">geom_dotplot()</a></code>を使って，データの分布を点で表現してみます。</p>
-<div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">ROE</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
-<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1168 rows containing non-finite values (`stat_ydensity()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1168 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+<pre><code>Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -722,12 +739,57 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 </div>
 </div>
 </div>
-</section><section id="折れ線グラフ" class="level4" data-number="12.4.2.5"><h4 data-number="12.4.2.5" class="anchored" data-anchor-id="折れ線グラフ">
-<span class="header-section-number">12.4.2.5</span> 折れ線グラフ</h4>
+<p>この上場場ごとのROEの箱ひげ図から，東証プライム(東証1部)に属する企業は，ROEの中央値が他よりも高いが，東証スタンダードとグロースは中央値に差が無さそうに見える。しかし東証グロースはROEのばらつきが最も大きく，業績の格差が大きいことが分かる。</p>
+</section><section id="ヴァイオリンプロット" class="level4" data-number="13.4.2.3"><h4 data-number="13.4.2.3" class="anchored" data-anchor-id="ヴァイオリンプロット">
+<span class="header-section-number">13.4.2.3</span> ヴァイオリンプロット</h4>
+<p>次に，バイオリンプロットを作成します。 バイオリン・プロットも箱ひげ図を同じようなグラフですが，分布の形を中央値などの代表値で表すのではなく，分布の形をそのまま表現することができます。 バイオリンプロットの作成には<code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>を使います。</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">ROE</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>,<span class="fl">.5</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"上場場"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"ROE"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>バイオリンプロットから，プライム・東証1部とスタンダード・東証2部の上場企業のROEは中央値に差があるものの，分布の形は似ていますが，グロース・マザーズの企業は，ROEの分布が大きく異なることがわかります。</p>
+</section><section id="カスタマイズした箱ひげ図とバイオリンプロット" class="level4" data-number="13.4.2.4"><h4 data-number="13.4.2.4" class="anchored" data-anchor-id="カスタマイズした箱ひげ図とバイオリンプロット">
+<span class="header-section-number">13.4.2.4</span> カスタマイズした箱ひげ図とバイオリンプロット</h4>
+<p><code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>をもっとカスタマイズして，より豊かな情報をもつグラフにしてみようと思います。 まずは，グラフを色分けしてみましょう。 <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>の中で<code>fill =</code>で色を指定します。 ついでに，<code><a href="https://ggplot2.tidyverse.org/reference/geom_dotplot.html">geom_dotplot()</a></code>を使って，データの分布を点で表現してみます。</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">ROE</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">上場コード</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"white"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="折れ線グラフ" class="level4" data-number="13.4.2.5"><h4 data-number="13.4.2.5" class="anchored" data-anchor-id="折れ線グラフ">
+<span class="header-section-number">13.4.2.5</span> 折れ線グラフ</h4>
 <p><strong>横軸が時間を表すカテゴリー変数</strong>である場合，データの時系列的特性を表すために折れ線グラフを作成します。</p>
 <p>折れ線グラフを作成するためには<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code>関数を使います。 年度平均を集計した<code>df_year</code>を用いて，横軸が<code>年度</code>，縦軸が<code>平均ROE</code>となる折れ線グラフを作成し，上場企業全体のROE平均が時間とともにどのように変化したのかを確認してみましょう。 ここで<code>年度</code>が文字列となっていますが，本来は<strong>順序に意味のあるカテゴリー変数</strong>ですので，<code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>関数を使って，ファクター型に変換します。</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_year</span> <span class="op">&lt;-</span> <span class="va">df_year</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_year</span> <span class="op">&lt;-</span> <span class="va">df_year</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    年度 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span> <span class="co"># 因子型に変換</span></span>
 <span>      <span class="va">年度</span>, <span class="co"># 因子型にする変数</span></span>
@@ -737,14 +799,14 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 <span>      <span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_line()`: Each group consists of only one observation.
 ℹ Do you need to adjust the group aesthetic?</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -752,19 +814,19 @@ ROE_{t} = \frac{\text{親会社株主に帰属する当期純利益}_t}{株主�
 <p>「<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line()</a></code>: Each group consists of only one observation. Do you need to adjust the group aesthetic?」というメッセージが出ました。</p>
 <p>これは，<code>年度</code>が因子型であり，<code>ggplot2</code>が自動的に<code>年度</code>ごとにグループ分けをしてくれないために出るメッセージです。 <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>の中で<code>group = 1</code>として，データ全体が1つのグループであることを明示する必要があります。 横軸がファクター型であるときは，<code>group = 1</code>をつける，というおまじないを覚えておきましょう。</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">年度</span>, y <span class="op">=</span> <span class="va">平均ROE</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># グラフ</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"年度"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"平均ROE"</span><span class="op">)</span> <span class="co"># 軸ラベル</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="chap11_visualization_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>上のようにすべての要素を<code>+</code>でつなぐよりも，レイヤーごとにオブジェクトに代入していくほうが，コードが読みやすくなります。 以下の例では，グラフの基本要素を<code>g</code>というオブジェクトに代入しておき，<code>g &lt;- g +</code>でどんどんレイヤーを追加していきます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">年度</span>, <span class="va">平均ROE</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># 基本要素</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df_year</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">年度</span>, <span class="va">平均ROE</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># 基本要素</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># 折れ線グラフと散布図</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"年度"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"平均ROE"</span><span class="op">)</span> <span class="co"># 見た目の調整</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -800,7 +862,8 @@ print(g)
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 319 rows containing non-finite values (`stat_bin()`).
+Warning: Removed 319 rows containing non-finite outside the scale range
+(`stat_bin()`).
 ```
 
 
@@ -809,14 +872,15 @@ Warning: Removed 319 rows containing non-finite values (`stat_bin()`).
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 2 rows containing missing values (`geom_bar()`).
+Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_bar()`).
 ```
 
 
 :::
 
 ::: {.cell-output-display}
-![](chap11_visualization_files/figure-html/unnamed-chunk-22-1.png){width=672}
+![](chap11_visualization_files/figure-html/unnamed-chunk-24-1.png){width=672}
 :::
 :::
 
@@ -837,7 +901,7 @@ print(g)
 ```
 
 ::: {.cell-output-display}
-![](chap11_visualization_files/figure-html/unnamed-chunk-23-1.png){width=672}
+![](chap11_visualization_files/figure-html/unnamed-chunk-25-1.png){width=672}
 :::
 :::
 
@@ -856,14 +920,15 @@ print(g)
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 1168 rows containing non-finite values (`stat_boxplot()`).
+Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_boxplot()`).
 ```
 
 
 :::
 
 ::: {.cell-output-display}
-![](chap11_visualization_files/figure-html/unnamed-chunk-24-1.png){width=672}
+![](chap11_visualization_files/figure-html/unnamed-chunk-26-1.png){width=672}
 :::
 :::
 
@@ -885,14 +950,15 @@ print(g)
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 1168 rows containing non-finite values (`stat_ydensity()`).
+Warning: Removed 1168 rows containing non-finite outside the scale range
+(`stat_ydensity()`).
 ```
 
 
 :::
 
 ::: {.cell-output-display}
-![](chap11_visualization_files/figure-html/unnamed-chunk-25-1.png){width=672}
+![](chap11_visualization_files/figure-html/unnamed-chunk-27-1.png){width=672}
 :::
 :::
 
@@ -900,8 +966,8 @@ Warning: Removed 1168 rows containing non-finite values (`stat_ydensity()`).
 箱ひげ図やバイオリンプロットから，東証1部と東証2部の上場企業のROEは中央値に差があるものの，分布の形は似ていますが，マザーズの企業は，ROEの分布が大きく異なることがわかります。
 
 --->
-</section></section><section id="図の保存" class="level3" data-number="12.4.3"><h3 data-number="12.4.3" class="anchored" data-anchor-id="図の保存">
-<span class="header-section-number">12.4.3</span> 図の保存</h3>
+</section></section><section id="図の保存" class="level3" data-number="13.4.3"><h3 data-number="13.4.3" class="anchored" data-anchor-id="図の保存">
+<span class="header-section-number">13.4.3</span> 図の保存</h3>
 <p>最後に，作成した図を保存するには，<code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code>関数を使います。 <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave()</a></code>関数は，次のような引数をとります。</p>
 <ul>
 <li>
@@ -949,7 +1015,7 @@ Warning: Removed 1168 rows containing non-finite values (`stat_ydensity()`).
 </ol>
 <p>という手順を踏むと，作業ディレクトリにグラフが保存されます。</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/quartz.html">quartz</a></span><span class="op">(</span><span class="st">"violin_plot.pdf"</span>, width <span class="op">=</span> <span class="fl">10</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/grDevices/quartz.html">quartz</a></span><span class="op">(</span><span class="st">"violin_plot.pdf"</span>, width <span class="op">=</span> <span class="fl">10</span>, height <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="co"># グラフが代入されたオブジェクトを表示</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1037,7 +1103,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/so-ichi\.com");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1358,22 +1424,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chap12_ggpubr.html" class="pagination-link" aria-label="<span class='chapter-number'>13</span>&nbsp; <span class='chapter-title'>ggpubrで可視化</span>">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chap12_ggpubr.html" class="pagination-link" aria-label="<span class='chapter-number'>14</span>&nbsp; <span class='chapter-title'>ggpubrで可視化</span>">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ggpubrで可視化</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">
 <p>Copyright 2024, Soichi Matsuura</p>
-</div>
-    <div class="nav-footer-right">
+</div>   
+    <div class="nav-footer-center">
       &nbsp;
     </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/ma2ura">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/matsuura_rits">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
   </div>
 </footer>
 
