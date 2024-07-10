@@ -2,6 +2,8 @@
 title: "準備"
 ---
 
+ここでは，Rをインストールし，Rを使いやすくするソフトウェアとしてRstudioやVS Code，Positronをインストールし，そこで利用するプログラミング用のフォントをインストールして，プログラミングの準備を整えます。
+
 
 ::: {.callout-important}
 ## 覚えておくべき内容
@@ -9,6 +11,7 @@ title: "準備"
 1. Rをインストール
 2. RstudioとVS Codeをインストール
 3. RstudioのProject機能を使う / VS Codeでフォルダを使う
+4. Positronを使ってみる
 4. 等幅フォントを使う
 :::
 
@@ -185,6 +188,21 @@ VS Codeを起動すると、以下のような画面が表示されます。
 - `Rainbow CSV` : CSVファイルを読みやすくする
 - `Color Highlight` : カラーコードを色で表示する
 
+## Positronの準備
+
+Posit社が新たに開発したRとPythonのための統合環境(IDE)である`Positron`も良さそうです。
+見た目はVS Codeですが，RとPythonのための環境に特化しているのが特徴のようです。
+以下のサイトでダウンロードすることができます。
+
+[Positron](https://github.com/posit-dev/positron)
+
+
+![Positron Top](img/positron_top.png)
+
+インストールするには，以下のサイトの「>Assets」をクリックし，自分のOSにあったPositronを入手してください。
+
+[Positron Install](https://github.com/posit-dev/positron/releases)
+
 ## フォント
 
 プログラミングをするときには、ソースコードを書くエディタで使うフォント選びも重要です。
@@ -196,8 +214,9 @@ VS Codeを起動すると、以下のような画面が表示されます。
 
 ### 等幅フォント
 
-等幅フォントの中でも，**リガチャ**(ligature)に対応したフォントを使うと，コードの見た目が改善されます。
+等幅フォント(mono font)の中でも，**リガチャ**(ligature)に対応したフォントを使うと，コードの見た目が改善されるかもしれません。
 リガチャに対応したフォントは，複数の文字を1つの文字のように表示することができます。
+Rでよく用いる`<-`が矢印っぽく表示されたり，`>=`が数式っぽく表示されたりします。
 リガチャに対応した無料フォントでオススメなものが，
 
 - [0xProto](https://github.com/0xType/0xProto)
