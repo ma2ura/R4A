@@ -189,8 +189,8 @@
     "objectID": "part01.html#第1部の目次",
     "href": "part01.html#第1部の目次",
     "title": "第1部 R言語の基礎",
-    "section": "第1部の目次",
-    "text": "第1部の目次\n\n第2章 準備と基本操作\n第3章 コード作成の作法\n第4章 Rの基礎\n第5章 データフレーム",
+    "section": "",
+    "text": "第2章 準備と基本操作\n第3章 コード作成の作法\n第4章 Rの基礎\n第5章 データフレーム",
     "crumbs": [
       "第1部 R言語の基礎"
     ]
@@ -562,7 +562,7 @@
     "href": "chap11_visualization.html#ggplotパッケージの基礎",
     "title": "\n13  ggplot2で可視化\n",
     "section": "\n13.2 ggplotパッケージの基礎",
-    "text": "13.2 ggplotパッケージの基礎\n前節で、カテゴリー変数のファクター化，with()関数とtable()関数を使ったクロス集計表の作成，group_by()関数とsummarize()関数を使ったグループごとの統計量の計算について学んだので，これらの結果を使ってグラフを作ることで，読者に伝わるデータの可視化を行いたいと思います。 キレイなグラフを比較的簡単に作ることができるggplot2パッケージを使います。\n\n13.2.1 ggplot()関数の基本的な使い方と変数の特徴把握\nggplot2パッケージのggplot()関数は，次のような引数をとります。\n\n\ndata = : データフレーム\n\nmapping = aes() : グラフの構成要素を指定する関数\n\ngeom_*** : グラフの種類を指定する関数\n各種オプション\n\n\n\nggplot2の作図イメージ\n\n最初の注意点として，ggplot()関数は，第1引数data =でtibbleかdata.frameを指定する必要があります。 データの型に気をつけましょう。\nでは，年度ごとに平均ROEを示した折れ線グラフを作図していきます。 ROEの定義は， \nROE_{t} = \\frac{\\text{親会社株主に帰属する当期純利益}_t}{株主資本_{t-1}}\n となります。 計算してみましょう。 決算期の最初の4ケタを取り出し年度という変数も同時に作成しておきます。\n\ndf &lt;- df |&gt;\n  group_by(企業名) |&gt; # lag()関数を使うために企業ごとにグループ化\n  mutate( # ROEの計算\n    年度 = substr(決算期, 1,4),\n    ROE = 親会社株主に帰属する当期純利益 / lag(株主資本)\n  ) |&gt;\n  ungroup()\n\nROEの記述統計量を確認してみましょう。\n\nsummary(df$ROE)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n   -Inf   0.026   0.068     NaN   0.119     Inf    3321 \n\n\nMin.やMax.がInfとなっており， 欠損値NA'sが3321個もあることが分かります。 Infとは無限大を表す特殊な値で，ROEの計算プロセスで分母がゼロとなっている値があることが分かります。 分数を計算するときは，分母がゼロとなっている値がないかどうか，チェックするようにしましょう。 ついでに、総資産回転率も計算しておきます。\n\ndf &lt;- df |&gt;\n  filter(株主資本 &gt; 0, 資産合計 &gt; 0) |&gt; # ゼロのデータを除外\n  group_by(企業名) |&gt; # 企業名でグループ化\n  mutate(\n    ROE = 親会社株主に帰属する当期純利益 / lag(株主資本),\n    TURN = 売上高 / lag(資産合計) # 総資産回転率\n  ) |&gt;\n  ungroup() |&gt;\n  drop_na() # 欠損値NAを除外\nsummary(df$ROE)\n\n     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. \n-32.16667   0.02692   0.06837   0.06600   0.11938 136.14286 \n\n\nこれで最小値と最大値が計算されるようになりました。 次に，年度ごとの平均ROEを計算して、df_yearというオブジェクトに代入しておきます。\n\ndf_year &lt;- df |&gt;\n  group_by(年度) |&gt; # 年度ごとに\n  summarise( # ROE平均を計算\n    平均ROE = mean(ROE, na.rm = TRUE)\n  ) |&gt;\n  ungroup() # グループ化解除\n\nこれで準備が整ったので、ggplot()関数を使ってグラフを作成していきます。",
+    "text": "13.2 ggplotパッケージの基礎\n前節で、カテゴリー変数のファクター化，with()関数とtable()関数を使ったクロス集計表の作成，group_by()関数とsummarize()関数を使ったグループごとの統計量の計算について学んだので，これらの結果を使ってグラフを作ることで，読者に伝わるデータの可視化を行いたいと思います。 キレイなグラフを比較的簡単に作ることができるggplot2パッケージを使います。\n\n13.2.1 ggplot()関数の基本的な使い方と変数の特徴把握\nggplot2パッケージのggplot()関数は，次のような引数をとります。\n\n\ndata = : データフレーム\n\nmapping = aes() : グラフの構成要素を指定する関数\n\ngeom_*** : グラフの種類を指定する関数\n各種オプション\n\n\n\nggplot2の作図イメージ\n\n最初の注意点として，ggplot()関数は，第1引数data =でtibbleかdata.frameを指定する必要があります。 データの型に気をつけましょう。\nでは，年度ごとに平均ROEを示した折れ線グラフを作図していきます。 ROEの定義は， \nROE_{t} = \\frac{\\text{親会社株主に帰属する当期純利益}_t}{株主資本_{t-1}}\n となります。 計算してみましょう。 決算期の最初の4ケタを取り出し年度という変数も同時に作成しておきます。\n\ndf &lt;- df |&gt;\n  group_by(企業名) |&gt; # lag()関数を使うために企業ごとにグループ化\n  mutate( # ROEの計算\n    年度 = substr(決算期, 1,4),\n    ROE = 親会社株主に帰属する当期純利益 / lag(株主資本)\n  ) |&gt;\n  ungroup()\n\nROEの記述統計量を確認してみましょう。\n\nsummary(df$ROE)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs \n   -Inf 0.02638 0.06809     NaN 0.11922     Inf    3321 \n\n\nMin.やMax.がInfとなっており， 欠損値NA'sが3321個もあることが分かります。 Infとは無限大を表す特殊な値で，ROEの計算プロセスで分母がゼロとなっている値があることが分かります。 分数を計算するときは，分母がゼロとなっている値がないかどうか，チェックするようにしましょう。 ついでに、総資産回転率も計算しておきます。\n\ndf &lt;- df |&gt;\n  filter(株主資本 &gt; 0, 資産合計 &gt; 0) |&gt; # ゼロのデータを除外\n  group_by(企業名) |&gt; # 企業名でグループ化\n  mutate(\n    ROE = 親会社株主に帰属する当期純利益 / lag(株主資本),\n    TURN = 売上高 / lag(資産合計) # 総資産回転率\n  ) |&gt;\n  ungroup() |&gt;\n  drop_na() # 欠損値NAを除外\nsummary(df$ROE)\n\n     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. \n-32.16667   0.02692   0.06836   0.06600   0.11938 136.14286 \n\n\nこれで最小値と最大値が計算されるようになりました。 次に，年度ごとの平均ROEを計算して、df_yearというオブジェクトに代入しておきます。\n\ndf_year &lt;- df |&gt;\n  group_by(年度) |&gt; # 年度ごとに\n  summarise( # ROE平均を計算\n    平均ROE = mean(ROE, na.rm = TRUE)\n  ) |&gt;\n  ungroup() # グループ化解除\n\nこれで準備が整ったので、ggplot()関数を使ってグラフを作成していきます。",
     "crumbs": [
       "第3部 データの可視化",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>ggplot2で可視化</span>"
@@ -573,7 +573,7 @@
     "href": "chap11_visualization.html#変数の可視化",
     "title": "\n13  ggplot2で可視化\n",
     "section": "\n13.3 1変数の可視化",
-    "text": "13.3 1変数の可視化\nまずは，1変数の可視化から始めていきましょう。 1変数の可視化とは，1つの変数の分布を可視化することです。 1変数のグラフの代表的なものとして、ヒストグラム(histogram)があります。 ggplot2パッケージでは、\n\ngeom_histogram()\n\nで作図します。\nまず土台となるデータフレームを指定します。 ここでは、年度別に集計する前のdfを使います。\n\nggplot(data = df)\n\n\n\n\n\n\n\n土台ができましたが，まだ何も表示されていません。 次に，グラフの構成要素を指定するために，mapping = aes()で，軸を指定します。 1変数のグラフの場合、aes(x = 変数名)とすることで、変数を指定します。\n\nggplot(data = df, mapping = aes(x = ROE))\n\n\n\n\n\n\n\n作図する変数としてROEが指定されました。\n\n13.3.1 ヒストグラム\nヒストグラムは、横軸に連続変数の区間をとり、その区間ごとの度数を縦軸にとったグラフで、連続変数の分布を可視化するのに適しています。 分布の偏りや外れ値の有無を確認するのに有用で、重要な変数に対して必ず作図するものと言えます。\nヒストグラムを作成するには、geom_histogram()を使います。 ggplot()関数の引数を全て書くのは面倒なので、data =とかmapping =は省略します。 ついでに、関数の入れ子構造を回避するため、aes()関数は外に出しておきます。\n\nggplot(df) + aes(ROE) + geom_histogram()\n\n`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.\n\n\n\n\n\n\n\n\n\n\n「stat_bin() using bins = 30. Pick better value with binwidth.」というメッセージが出ました。 ヒストグラムを作成する際に区間幅やビンの数(棒の数)を指定しないと、ggplot2が自動的に30本の棒になるように区間幅を指定していますよ，というメッセージです。 無視しても問題ないです。 好みの区間幅や棒の数を指定したい場合は，binwidth = 0.1のように指定してみてください。\nヒストグラムがただの棒になっています。これは大部分のROEがゼロ付近の値を取っているけれど、異常値があるせいで、ROEの範囲が広くなってしまっているためです。 区間幅を0.1に狭めて、もう少し分布の形状が分かるようにしてみます。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.1)\n\n\n\n\n\n\n\nヒストグラムが細い棒になりました。\n先ほど計算したROEの記述統計量でも、最小値は-32.167、最大値は136.143となっています。 当期純利益が株主資本の136倍というのは、異常な値ですね。 そこで、棒の周辺の様子を確認するために、x軸の範囲を[-1,1]に限定してみましょう。 ggplot()関数にxlim()を追加して、x軸の範囲を指定します。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.01) + xlim(-1,1)\n\nWarning: Removed 319 rows containing non-finite outside the scale range\n(`stat_bin()`).\n\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_bar()`).\n\n\n\n\n\n\n\n\n\n\nなにやらWarningが出ていますが、区間を区切ったことでグラフに入らなかったデータがあることを教えてくれているだけなので，無視します。\nまともなヒストグラムが描けました。 分布の形や異常値を確認するためにも，分析する重要な変数に対してヒストグラムを作成するように心がけましょう。\n次にROEの平均値を計算し、ヒストグラムに書き込んでみましょう。\n\nmean_ROE &lt;- mean(df$ROE, na.rm = TRUE)\n\nROEの平均値は、0.0660036でした。 この値をヒストグラムに書き込むには、垂直線を引くgeom_vline()を使います。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.01) + xlim(-1,1) +\n  geom_vline(xintercept = mean_ROE, color = \"red\", linetype = \"dashed\")\n\nWarning: Removed 319 rows containing non-finite outside the scale range\n(`stat_bin()`).\n\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_bar()`).",
+    "text": "13.3 1変数の可視化\nまずは，1変数の可視化から始めていきましょう。 1変数の可視化とは，1つの変数の分布を可視化することです。 1変数のグラフの代表的なものとして、ヒストグラム(histogram)があります。 ggplot2パッケージでは、\n\ngeom_histogram()\n\nで作図します。\nまず土台となるデータフレームを指定します。 ここでは、年度別に集計する前のdfを使います。\n\nggplot(data = df)\n\n\n\n\n\n\n\n土台ができましたが，まだ何も表示されていません。 次に，グラフの構成要素を指定するために，mapping = aes()で，軸を指定します。 1変数のグラフの場合、aes(x = 変数名)とすることで、変数を指定します。\n\nggplot(data = df, mapping = aes(x = ROE))\n\n\n\n\n\n\n\n作図する変数としてROEが指定されました。\n\n13.3.1 ヒストグラム\nヒストグラムは、横軸に連続変数の区間をとり、その区間ごとの度数を縦軸にとったグラフで、連続変数の分布を可視化するのに適しています。 分布の偏りや外れ値の有無を確認するのに有用で、重要な変数に対して必ず作図するものと言えます。\nヒストグラムを作成するには、geom_histogram()を使います。 ggplot()関数の引数を全て書くのは面倒なので、data =とかmapping =は省略します。 ついでに、関数の入れ子構造を回避するため、aes()関数は外に出しておきます。\n\nggplot(df) + aes(ROE) + geom_histogram()\n\n`stat_bin()` using `bins = 30`. Pick better value `binwidth`.\n\n\n\n\n\n\n\n\n\n\n「stat_bin() using bins = 30. Pick better value with binwidth.」というメッセージが出ました。 ヒストグラムを作成する際に区間幅やビンの数(棒の数)を指定しないと、ggplot2が自動的に30本の棒になるように区間幅を指定していますよ，というメッセージです。 無視しても問題ないです。 好みの区間幅や棒の数を指定したい場合は，binwidth = 0.1のように指定してみてください。\nヒストグラムがただの棒になっています。これは大部分のROEがゼロ付近の値を取っているけれど、異常値があるせいで、ROEの範囲が広くなってしまっているためです。 区間幅を0.1に狭めて、もう少し分布の形状が分かるようにしてみます。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.1)\n\n\n\n\n\n\n\nヒストグラムが細い棒になりました。\n先ほど計算したROEの記述統計量でも、最小値は-32.167、最大値は136.143となっています。 当期純利益が株主資本の136倍というのは、異常な値ですね。 そこで、棒の周辺の様子を確認するために、x軸の範囲を[-1,1]に限定してみましょう。 ggplot()関数にxlim()を追加して、x軸の範囲を指定します。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.01) + xlim(-1,1)\n\nWarning: Removed 319 rows containing non-finite outside the scale range\n(`stat_bin()`).\n\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_bar()`).\n\n\n\n\n\n\n\n\n\n\nなにやらWarningが出ていますが、区間を区切ったことでグラフに入らなかったデータがあることを教えてくれているだけなので，無視します。\nまともなヒストグラムが描けました。 分布の形や異常値を確認するためにも，分析する重要な変数に対してヒストグラムを作成するように心がけましょう。\n次にROEの平均値を計算し、ヒストグラムに書き込んでみましょう。\n\nmean_ROE &lt;- mean(df$ROE, na.rm = TRUE)\n\nROEの平均値は、0.0660036でした。 この値をヒストグラムに書き込むには、垂直線を引くgeom_vline()を使います。\n\nggplot(df) + aes(ROE) + geom_histogram(binwidth = 0.01) + xlim(-1,1) +\n  geom_vline(xintercept = mean_ROE, color = \"red\", linetype = \"dashed\")\n\nWarning: Removed 319 rows containing non-finite outside the scale range\n(`stat_bin()`).\n\n\nWarning: Removed 2 rows containing missing values or values outside the scale range\n(`geom_bar()`).",
     "crumbs": [
       "第3部 データの可視化",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>ggplot2で可視化</span>"
@@ -606,7 +606,7 @@
     "href": "part03.html",
     "title": "第3部 データの可視化",
     "section": "",
-    "text": "Rが得意とするデータの可視化について学習します。 主に、ggplot2パッケージを使ったデータの可視化の方法を学び，次にどんなデータをどのように可視化するのかについて考えます。\nhttps://so-ichi.com/presemi_part_two.csv\n&lt;!–\nこのデータには、以下の変数が含まれています。\n\n日経会社コード : 会社固有コード\n企業名称 : 企業の名称\n決算期 : 決算年月 YYYY/MM\n決算種別 : 10が本決算、20が中間決算\n連結基準 : 1が連結、2が非連結\n決算月数 : 決算期の月数\n上場場部：コード : 11が東証1部、12が東証2部、13がマザーズ\n日経業種：コード : 日経業種のコード6ケタ\n売上高\n親会社株主に帰属する当期純利益\n資産合計\n株主資本",
+    "text": "第1部の目次\nRが得意とするデータの可視化について学習します。 主に、ggplot2パッケージを使ったデータの可視化の方法を学び，次にどんなデータをどのように可視化するのかについて考えます。",
     "crumbs": [
       "第3部 データの可視化"
     ]
@@ -614,12 +614,12 @@
   {
     "objectID": "chap11_visualization.html",
     "href": "chap11_visualization.html",
-    "title": "\n11  データの可視化\n",
+    "title": "\n13  ggplot2で可視化\n",
     "section": "",
-    "text": "12 ggpubrパッケージ\nggpubrパッケージは，ggplot2パッケージのグラフをさらにカスタマイズするためのパッケージで，論文や書籍に掲載するためのグラフを作成するのに便利です。\nlibrary(ggpubr)で読み込みます。インストールしていない場合は，install.packages(\"ggpubr\")を実行してから，再度読み込んでください。\n# install.packages(\"ggpubr\") # first time only\nlibrary(ggpubr)",
+    "text": "13.1 可視化のパッケージ\nここではRの得意とするデータの可視化(data visualization)について学びます。 いままで利用してきたtidyverseにはグラフ作成のためのパッケージとしてggplot2があります。 本章では，ggplot2の使い方を学習し，読者にもデータの特徴を伝えやすく，シンプルで，美しいグラフの作成を目指します。 ビッグデータを容易に扱えるようになった昨今において、データの可視化スキルの重要性は高まってきており、以下のような書籍が出版されています。いずれも非常に良い書籍ですので、興味のある方は読んでみてください。\nいままで利用してきたtidyverseにはグラフ作成のためのパッケージとしてggplot2が含まれています。 本章では，このggplot2パッケージの使い方を学習し，読者にもデータの特徴を伝えやすく，シンプルで，美しいグラフの作成を目指します。 またggplot2の機能を拡張するためのggthemesとpatchworkも一緒に読み込んでおきます。 まだインストールできていなければ，始めにインストールしておいてください。\n# install.packages(\"ggthemes\") # fist time only\n# install.packages(\"patchwork\") # first time only\nlibrary(tidyverse) # とりあえずこれ\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ readr     2.2.0\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n✔ purrr     1.2.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ggthemes) # ggplotのテーマ拡張\nlibrary(patchwork) # ggplotの図を並べる\nまた、Macだとggplot2で作図したグラフで日本語が表示されないことがあります。 以下の設定をすることで文字化けを回避することができます。\n# グラフ内の日本語文字化け対策のおまじない\nknitr::opts_chunk$set(dev = \"ragg_png\")\nあるいは，ggplotのグラフ作成時に，base_family = \"フォント名\"として，作図で用いるフォントを指定することでも文字化けを回避できます。 たとえば次のように，list()関数を使ってグラフの設定を前もってmystyleというオブジェクトに入れておけば，作図時に+ mystyleを付けるだけで， フォントやグラフの見た目を指定できます。\nmystyle &lt;- list ( # mystyleとして設定を保存\n  theme_few(), # ggthemesのテーマ\n  theme(\n    text = element_text(\n      size=16,  #  フォントサイズ\n      family = \"HiraKakuProN-W3\" # ヒラギノフォント\n    )))\n以下の作図で使うデータを読み込んでおきましょう。\ndf &lt;- read_csv(\"data/presemi_part_two.csv\")\n\nRows: 44527 Columns: 12\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (3): 会社コード, 企業名, 決算期\ndbl (9): 決算種別, 連結基準, 決算月数, 上場コード, 日経業種コード, 売上高, 親会社株主に帰属する当期純利益, 資産合計, 株主資本...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n# df &lt;- read_csv(\"https://so-ichi.com/presemi_part_two.csv\")\nnames(df)\n\n [1] \"会社コード\"                     \"企業名\"                        \n [3] \"決算期\"                         \"決算種別\"                      \n [5] \"連結基準\"                       \"決算月数\"                      \n [7] \"上場コード\"                     \"日経業種コード\"                \n [9] \"売上高\"                         \"親会社株主に帰属する当期純利益\"\n[11] \"資産合計\"                       \"株主資本\"\n練習用の財務データを読み込み，オブジェクトdfに代入しました。 dfのクラスはspec_tbl_df, tbl_df, tbl, data.frameです。",
     "crumbs": [
       "第3部 データの可視化",
-      "<span class='chapter-number'>11</span>  <span class='chapter-title'>データの可視化</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>ggplot2で可視化</span>"
     ]
   },
   {
@@ -835,8 +835,8 @@
     "objectID": "part03.html#第1部の目次",
     "href": "part03.html#第1部の目次",
     "title": "第3部 データの可視化",
-    "section": "第1部の目次",
-    "text": "第1部の目次\n\n第11章 ggplot2の基礎\n第12章 ggpubrの基礎\n第13章 ggplotを関数\n第14章 ジブリ",
+    "section": "",
+    "text": "第11章 ggplot2の基礎\n第12章 ggpubrの基礎\n第13章 ggplotを関数\n第14章 ジブリ",
     "crumbs": [
       "第3部 データの可視化"
     ]
@@ -987,8 +987,8 @@
     "objectID": "part00.html#第2部の目次",
     "href": "part00.html#第2部の目次",
     "title": "第2部 日経NEEDSの使い方",
-    "section": "第2部の目次",
-    "text": "第2部の目次\n\n財務データの取得\n株式データの取得\nマクロデータの取得",
+    "section": "",
+    "text": "財務データの取得\n株式データの取得\nマクロデータの取得",
     "crumbs": [
       "第2部 日経NEEDSの使い方"
     ]
@@ -1145,6 +1145,36 @@
     "crumbs": [
       "第1部 R言語の基礎",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Rの基礎</span>"
+    ]
+  },
+  {
+    "objectID": "part01.html",
+    "href": "part01.html",
+    "title": "第1部 R言語の基礎",
+    "section": "",
+    "text": "第1部の目次\n第1部はRの導入からコードの書き方、Rの基本操作について学びます。",
+    "crumbs": [
+      "第1部 R言語の基礎"
+    ]
+  },
+  {
+    "objectID": "part00.html",
+    "href": "part00.html",
+    "title": "第2部 日経NEEDSの使い方",
+    "section": "",
+    "text": "第2部の目次\n第2部は，立命館大学が契約している日経NEEDS社会科学情報検索システムを使ったデータの取得方法について学びます。",
+    "crumbs": [
+      "第2部 日経NEEDSの使い方"
+    ]
+  },
+  {
+    "objectID": "part04.html",
+    "href": "part04.html",
+    "title": "第4部 財務分析",
+    "section": "",
+    "text": "第1部の目次\nここでは，「ビジネス会計検定1級」の受験対策にもなるように，財務分析について学習します。",
+    "crumbs": [
+      "第4部 財務分析"
     ]
   }
 ]
